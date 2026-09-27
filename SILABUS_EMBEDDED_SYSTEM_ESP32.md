@@ -284,14 +284,16 @@ Total pengadaan kit praktikum per kelompok (2 mahasiswa) dirancang sangat ekonom
 
 ## 8. BOBOT & KOMPONEN PENILAIAN
 
+*(Komponen dan bobot penilaian akan disesuaikan kemudian sesuai ketentuan Program Studi / Fakultas).*
+
 | Komponen Penilaian | Bobot | Rincian Penilaian |
 | :--- | :---: | :--- |
-| **Praktikum Lab Mingguan (Hands-on)** | 25% | Kelengkapan tugas terpandu Level 1-2, pemahaman kode, kebersihan penulisan |
-| **Kuis Pemahaman Teori & Diagnostik** | 10% | Kuis bitwise, pemahaman diagram waktu serial, dan analisis pesan crash error |
-| **Ujian Tengah Semester (UTS)** | 25% | Teori pemahaman sistem (40%) + Ujian Praktik Live Coding (60%) |
-| **Capstone Project (UAS)** | 35% | Fungsionalitas alat (30%), Arsitektur firmware (30%), Desain hardware (20%), Laporan & Demo (20%) |
-| **Soft Skills & Etika Enjiniring** | 5% | Penggunaan Git version control, kerapian dokumentasi teknis, dan etika keselamatan lab |
-| **TOTAL** | **100%** | |
+| **Praktikum Lab Mingguan (Hands-on)** | - | - |
+| **Kuis Pemahaman Teori & Diagnostik** | - | - |
+| **Ujian Tengah Semester (UTS)** | - | - |
+| **Capstone Project (UAS)** | - | - |
+| **Soft Skills & Etika Enjiniring** | - | - |
+| **TOTAL** | **-** | - |
 
 ---
 
