@@ -38,27 +38,32 @@ flowchart LR
 ## 📚 1. FONDASI TEORI: ANATOMI REGISTER & 4 RUMUS EMAS BIT-MASKING
 
 ### A. Anatomi Register 8-Bit
-Bayangkan satu register 8-bit (*byte*) seperti kotak yang berisi **8 buah sakelar lampu fisik berjejer**, dinomori dari kanan ke kiri:
+Bayangkan satu register 8-bit (*byte*) seperti kotak yang berisi **8 buah sakelar lampu fisik berjejer**, dinomori dari Bit 7 (kiri) ke Bit 0 (kanan):
 
-$$\text{Bit 7 (MSB)} \quad \text{Bit 6} \quad \text{Bit 5} \quad \text{Bit 4} \quad \text{Bit 3} \quad \text{Bit 2} \quad \text{Bit 1} \quad \text{Bit 0 (LSB)}$$
+| Posisi Bit | Bit 7 (MSB) | Bit 6 | Bit 5 | Bit 4 | Bit 3 | Bit 2 | Bit 1 | Bit 0 (LSB) |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Bobot Biner** | 2⁷ | 2⁶ | 2⁵ | 2⁴ | 2³ | 2² | 2¹ | 2⁰ |
+| **Nilai Desimal**| 128 | 64 | 32 | 16 | 8 | 4 | 2 | 1 |
 
-* **LSB (*Least Significant Bit*):** Bit paling kanan (bobot $2^0 = 1$).
-* **MSB (*Most Significant Bit*):** Bit paling kiri (bobot $2^7 = 128$).
+* **LSB (*Least Significant Bit*):** Bit paling kanan (bobot 2⁰ = 1).
+* **MSB (*Most Significant Bit*):** Bit paling kiri (bobot 2⁷ = 128).
 
 Untuk memilih bit mana yang ingin kita ubah tanpa mengganggu bit lainnya, kita menggunakan konsep **Bit-Mask** (topeng bit). Di bahasa C, topeng bit dibuat menggunakan operator pergeseran bit ke kiri (*left shift* / `<<`):
 
-$$\text{Mask} = (1 \ll n)$$
+```c
+mask = (1 << n);
+```
 
-Artinya: ambil angka `1` (biner: `0000 0001`), lalu geser ke kiri sebanyak $n$ langkah.  
-* Jika $n = 0 \implies (1 \ll 0) = \text{0b00000001}$ (memilih Bit 0)
-* Jika $n = 1 \implies (1 \ll 1) = \text{0b00000010}$ (memilih Bit 1)
-* Jika $n = 2 \implies (1 \ll 2) = \text{0b00000100}$ (memilih Bit 2)
-* Jika $n = 3 \implies (1 \ll 3) = \text{0b00001000}$ (memilih Bit 3)
+Artinya: ambil angka `1` (biner: `0000 0001`), lalu geser posisi angka 1 ke kiri sebanyak `n` langkah:
+* Jika `n = 0` → `(1 << 0) = 0b00000001` (memilih Bit 0)
+* Jika `n = 1` → `(1 << 1) = 0b00000010` (memilih Bit 1)
+* Jika `n = 2` → `(1 << 2) = 0b00000100` (memilih Bit 2)
+* Jika `n = 3` → `(1 << 3) = 0b00001000` (memilih Bit 3)
 
 ---
 
 ### B. Visualisasi 4 Rumus Emas Bit-Masking
-Perhatikan diagram teknis berikut untuk melihat bagaimana setiap operator matematika biner bekerja:
+Perhatikan diagram teknis berikut untuk melihat bagaimana setiap operator matematika biner bekerja pada register:
 
 ![Visualisasi Operasi Bitwise dan Bit-Masking](images/bitwise_operations_visual.png)
 
@@ -66,36 +71,52 @@ Perhatikan diagram teknis berikut untuk melihat bagaimana setiap operator matema
 
 Berikut penjelasan logikanya secara mendalam:
 
-#### 1. Menyalakan Bit Tertentu (Set to 1) $\to$ Gunakan Operator OR (`|`)
-* **Rumus:**  
-  $$\text{Reg} \mid= (1 \ll n)$$
+#### 1. Menyalakan Bit Tertentu (Set to 1) → Gunakan Operator OR (`|`)
+* **Rumus C:**  
+  ```c
+  reg |= (1 << n);
+  ```
 * **Cara Kerja:** Sifat operasi logika OR adalah: apa pun nilainya, jika di-OR-kan dengan `1`, hasilnya pasti `1`. Jika di-OR-kan dengan `0`, nilainya tidak berubah.
 * **Contoh Praktis:**  
   Menyalakan Bit 2 pada register `0b00000000`:  
-  `reg |= (1 << 2);` $\to$ Register menjadi `0b00000100`.
+  `reg |= (1 << 2);` → Register menjadi `0b00000100`.
 
-#### 2. Mematikan Bit Tertentu (Clear to 0) $\to$ Gunakan Operator AND (`&`) dan NOT (`~`)
-* **Rumus:**  
-  $$\text{Reg} \ \&= \sim(1 \ll n)$$
+#### 2. Mematikan Bit Tertentu (Clear to 0) → Gunakan Operator AND (`&`) dan NOT (`~`)
+* **Rumus C:**  
+  ```c
+  reg &= ~(1 << n);
+  ```
 * **Cara Kerja:** Operator `~` (NOT / inversi) membalik nilai topeng. Misal `(1 << 2)` bernilai `0000 0100`, saat di-NOT-kan berubah menjadi `1111 1011`. Ketika di-AND-kan dengan register, hanya Bit 2 yang dikalikan dengan `0` (sehingga otomatis mati menjadi `0`), sedangkan 7 bit lainnya dikalikan dengan `1` (nilainya tetap terjaga aman).
 * **Contoh Praktis:**  
   Mematikan Bit 2 pada register `0b00000110`:  
-  `reg &= ~(1 << 2);` $\to$ Register menjadi `0b00000010`.
+  `reg &= ~(1 << 2);` → Register menjadi `0b00000010`.
 
-#### 3. Membalik Status Bit (Toggle 0 $\to$ 1 atau 1 $\to$ 0) $\to$ Gunakan Operator XOR (`^`)
-* **Rumus:**  
-  $$\text{Reg} \ \text{^}= (1 \ll n)$$
+#### 3. Membalik Status Bit (Toggle 0 ↔ 1) → Gunakan Operator XOR (`^`)
+* **Rumus C:**  
+  ```c
+  reg ^= (1 << n);
+  ```
 * **Cara Kerja:** Sifat operasi XOR (*Exclusive OR*) adalah membalik bit jika pasangannya bernilai `1`. Jika bit asal `0` di-XOR dengan `1` menjadi `1`. Jika bit asal `1` di-XOR dengan `1` menjadi `0`.
 * **Contoh Praktis:**  
   Membalik status Bit 1 pada register `0b00000010`:  
-  `reg ^= (1 << 1);` $\to$ Register menjadi `0b00000000`.
+  `reg ^= (1 << 1);` → Register menjadi `0b00000000`.
 
-#### 4. Memeriksa Status Bit (Check Bit Status) $\to$ Gunakan Operator AND (`&`)
-* **Rumus:**  
-  $$\text{bool status} = (\text{Reg} \ \& \ (1 \ll n)) \neq 0$$
+#### 4. Memeriksa Status Bit (Check Bit Status) → Gunakan Operator AND (`&`)
+* **Rumus C:**  
+  ```c
+  bool status = (reg & (1 << n)) != 0;
+  ```
 * **Cara Kerja:** Kita mengisolasi bit yang ingin dibaca. Jika bit target bernilai `1`, hasil perkalian biner bukan nol (`true`). Jika bit target bernilai `0`, hasilnya tepat nol (`false`).
 * **Contoh Praktis:**  
   `if (reg & (1 << 3)) { Serial.println("Komunikasi OK!"); }`
+
+#### 📑 Tabel Rangkuman 4 Rumus Emas Bit-Masking
+| Operasi | Operator | Rumus Kode C | Efek pada Bit Target | Status Bit Lain |
+| :--- | :---: | :--- | :---: | :---: |
+| **Set (Nyalakan)** | `\|` | `reg \|= (1 << n);` | Menjadi `1` | Tetap (tidak berubah) |
+| **Clear (Matikan)** | `& ~` | `reg &= ~(1 << n);` | Menjadi `0` | Tetap (tidak berubah) |
+| **Toggle (Balik)** | `^` | `reg ^= (1 << n);` | Dibalik (`0 ↔ 1`) | Tetap (tidak berubah) |
+| **Check (Uji Status)**| `&` | `(reg & (1 << n)) != 0` | Dibaca (`true/false`)| Hanya membaca (*read-only*) |
 
 ---
 
@@ -138,7 +159,7 @@ Untuk menjalankan dan menguji materi minggu ini, ikuti langkah-langkah praktis b
 
 ### Langkah 1: Buka Proyek di Visual Studio Code
 1. Jalankan aplikasi **Visual Studio Code** di laptop Anda.
-2. Klik menu **File** $\to$ **Open Folder...** (atau tekan `Ctrl + K`, lalu `Ctrl + O`).
+2. Klik menu **File** → **Open Folder...** (atau tekan `Ctrl + K`, lalu `Ctrl + O`).
 3. Arahkan dan pilih folder:
    `EmbeddedSystem/labs/week-01-bitwise-c`
 4. Tunggu beberapa detik hingga ekstensi PlatformIO selesai memuat konfigurasi proyek. Anda akan melihat struktur folder berikut pada panel Explorer:
@@ -229,10 +250,10 @@ Praktikum ini menggunakan sistem nilai bertingkat. Selesaikan level demi level s
 ### 🟢 Level 1: Penguasaan Operator Bitwise (Wajib - Skor: 70)
 1. Buka file `src/main.cpp`.
 2. Pelajari dan pahami implementasi 4 fungsi bitwise dasar:
-   * `set_register_bit()` $\to$ menggunakan operator `|=`
-   * `clear_register_bit()` $\to$ menggunakan operator `&= ~`
-   * `toggle_register_bit()` $\to$ menggunakan operator `^=`
-   * `check_register_bit()` $\to$ menggunakan operator `&`
+   * `set_register_bit()` → menggunakan operator `|=`
+   * `clear_register_bit()` → menggunakan operator `&= ~`
+   * `toggle_register_bit()` → menggunakan operator `^=`
+   * `check_register_bit()` → menggunakan operator `&`
 3. Tambahkan pengujian mandiri di dalam fungsi `setup()`:
    * Nyalakan bit `BIT_ALARM` (Bit 0).
    * Lakukan pengecekan menggunakan `check_register_bit(virtual_register, BIT_ALARM)`.
@@ -281,7 +302,7 @@ Praktikum ini menggunakan sistem nilai bertingkat. Selesaikan level demi level s
 | **Serial Monitor menampilkan karakter aneh / kotak-kotak / tanda tanya.** | Perbedaan kecepatan komunikasi (*baud rate* mismatch). | Pastikan setting di `platformio.ini` tertulis `monitor_speed = 115200`. Jika monitor sudah terbuka di kecepatan lain, tutup monitor lalu buka kembali. |
 | **Gagal Upload: `Timed out waiting for packet header` atau `A fatal error occurred`.** | Chip ESP32 tidak otomatis masuk ke mode *flashing/download*. | Tekan dan tahan tombol fisik **BOOT** saat terminal menampilkan teks `Connecting........_____.....`, tahan selama 1–2 detik lalu lepaskan. |
 | **Port COM tidak muncul sama sekali di PlatformIO.** | Kabel yang digunakan hanya kabel charger daya (2 kawat), atau driver belum terinstal. | Gunakan kabel data berkualitas (4 kawat). Periksa Device Manager di Windows untuk memastikan driver CP210x atau CH340 sudah terpasang (lihat modul Minggu 0). |
-| **Lampu LED onboard tidak menyala sama sekali.** | Variasi layout pin hardware antar varian board. | Board klasik ESP32 DevKit V1 menggunakan **GPIO 2** untuk LED biru bawaan. Namun, board ESP32-S3 atau board klon tertentu tidak memiliki LED sederhana di GPIO 2 (sering kali memakai LED WS2812 pada GPIO 48). Mahasiswa tetap bisa mengamati pergantian status LED melalui Serial Monitor, atau memasang LED eksternal pada breadboard di GPIO 18 dengan resistor pembatas 220 $\Omega$. |
+| **Lampu LED onboard tidak menyala sama sekali.** | Variasi layout pin hardware antar varian board. | Board klasik ESP32 DevKit V1 menggunakan **GPIO 2** untuk LED biru bawaan. Namun, board ESP32-S3 atau board klon tertentu tidak memiliki LED sederhana di GPIO 2 (sering kali memakai LED WS2812 pada GPIO 48). Mahasiswa tetap bisa mengamati pergantian status LED melalui Serial Monitor, atau memasang LED eksternal pada breadboard di GPIO 18 dengan resistor pembatas 220 Ω. |
 
 ---
 

@@ -11,7 +11,7 @@ Selamat datang di repositori resmi perkuliahan **Sistem Tertanam (Embedded Syste
 * 🛠️ **[Minggu 0: Panduan Onboarding & Driver Clinic](labs/week-00-onboarding/README.md)**
 * 📝 **[Minggu 1: Fondasi Bahasa C & Manipulasi Bitwise](labs/week-01-bitwise-c/README.md)**
 * 💻 **Platform:** ESP32-WROOM-32D / ESP32-S3
-* ⚙️ **Toolchain:** Visual Studio Code + PlatformIO (Hybrid: Arduino Core $\to$ Native FreeRTOS/ESP-IDF)
+* ⚙️ **Toolchain:** Visual Studio Code + PlatformIO (Hybrid: Arduino Core → Native FreeRTOS/ESP-IDF)
 
 ---
 

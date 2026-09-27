@@ -125,7 +125,7 @@ Mari kita uji apakah laptop Anda sudah bisa mengompilasi kode dan mengunggahnya 
 
 ### 1. Membuat Proyek Baru:
 1. Klik ikon semut **PlatformIO** di bilah menu kiri VS Code.
-2. Pada menu **Quick Access**, pilih **PIO Home** $\rightarrow$ klik **Open**.
+2. Pada menu **Quick Access**, pilih **PIO Home** → klik **Open**.
 3. Di halaman beranda PlatformIO yang muncul, klik tombol besar **+ New Project**.
 4. Isi formulir pembuatan proyek seperti berikut:
    * **Name:** `smoke_test_esp32`
@@ -137,7 +137,7 @@ Mari kita uji apakah laptop Anda sudah bisa mengompilasi kode dan mengunggahnya 
 ---
 
 ### 2. Memasukkan Kode Uji Coba:
-Buka file explorer proyek di sisi kiri: buka folder `src` $\rightarrow$ klik file `main.cpp`.  
+Buka file explorer proyek di sisi kiri: buka folder `src` → klik file `main.cpp`.  
 Hapus seluruh isi file tersebut, lalu ganti dengan kode pengujian resmi di bawah ini:
 
 ```cpp
