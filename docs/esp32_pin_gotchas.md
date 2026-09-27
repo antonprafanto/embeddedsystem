@@ -21,7 +21,7 @@ Simak panduan saku ini agar eksperimen Anda selalu aman, lancar, dan bebas dari 
 
 Berikut adalah referensi tata letak komponen resmi dan header pin ESP32 DevKit langsung dari dokumentasi pabrikan Espressif:
 
-![Tata Letak Fisik ESP32 DevKit Resmi Espressif](images/esp32_s3_devkitc_annotated.png)  
+![Tata Letak Fisik ESP32 DevKit Resmi Espressif](images/esp32_s3_devkitc_v2.png)  
 *Gambar 1: Tata letak fisik, port pemrograman USB, tombol BOOT/RESET, dan header pin pada board DevKit resmi. Sumber gambar: [Espressif Systems Official Documentation](https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s3/esp32-s3-devkitc-1/index.html).*
 
 ---
@@ -30,7 +30,7 @@ Berikut adalah referensi tata letak komponen resmi dan header pin ESP32 DevKit l
 
 Sebelum mencolokkan kabel *jumper* ke *breadboard*, perhatikan peta pembagian 4 kelompok pin berikut:
 
-![Peta Klasifikasi Pin ESP32](images/esp32_pin_classification.png)
+![Peta Klasifikasi Pin ESP32](images/esp32_pin_classification_v2.png)
 
 ---
 
@@ -97,7 +97,7 @@ Mahasiswa Teknik Elektro wajib memahami batasan fisik semikonduktor:
 
 Untuk menyalakan beban induktif dengan aman, gunakan standar skematik berikut:
 
-![Skematik Rangkaian Penggerak Beban Induktif](images/transistor_flyback_protection.png)
+![Skematik Rangkaian Penggerak Beban Induktif](images/transistor_flyback_protection_v2.png)
 
 ### 💡 Mengapa Butuh Dioda Flyback (1N4007)?
 Ketika saklar transistor dimatikan seketika, medan magnet yang tersimpan pada koil relay runtuh secara mendadak. Peristiwa ini memicu lonjakan tegangan induksi balik (*Back-Electromotive Force / Back-EMF*) yang bisa melonjak hingga **di atas $100\text{ Volt}$**! Dioda 1N4007 yang dipasang antiparalel akan mengalirkan lonjakan tegangan ini kembali ke sumber daya, sehingga transistor dan chip ESP32 Anda terlindungi 100%.
