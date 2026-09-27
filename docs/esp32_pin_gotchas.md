@@ -17,15 +17,24 @@ Simak panduan saku ini agar eksperimen Anda selalu aman, lancar, dan bebas dari 
 
 ---
 
-## 🗺️ 1. PETA KLASIFIKASI PIN ESP32 (ATURAN EMAS)
+## 🔍 1. TATA LETAK FISIK & ANATOMI BOARD RESMI ESPRESSIF
 
-Sebelum mencolokkan kabel *jumper* ke *breadboard*, perhatikan peta pembagian kategori pin berikut:
+Berikut adalah referensi tata letak komponen resmi dan header pin ESP32 DevKit langsung dari dokumentasi pabrikan Espressif:
 
-![Peta Klasifikasi Pin ESP32](images/esp32_pin_categories.svg)
+![Tata Letak Fisik ESP32 DevKit Resmi Espressif](images/esp32_s3_devkitc_annotated.png)  
+*Gambar 1: Tata letak fisik, port pemrograman USB, tombol BOOT/RESET, dan header pin pada board DevKit resmi. Sumber gambar: [Espressif Systems Official Documentation](https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s3/esp32-s3-devkitc-1/index.html).*
 
 ---
 
-## 📊 2. TABEL DIAGNOSTIK PIN SECARA LENGKAP (38-PIN DEVKIT)
+## 🗺️ 2. PETA KLASIFIKASI PIN ESP32 (ATURAN EMAS)
+
+Sebelum mencolokkan kabel *jumper* ke *breadboard*, perhatikan peta pembagian 4 kelompok pin berikut:
+
+![Peta Klasifikasi Pin ESP32](images/esp32_pin_classification.png)
+
+---
+
+## 📊 3. TABEL DIAGNOSTIK PIN SECARA LENGKAP (38-PIN DEVKIT)
 
 Gunakan tabel ini sebagai kamus rujukan cepat setiap kali Anda merancang rangkaian:
 
@@ -57,7 +66,7 @@ Gunakan tabel ini sebagai kamus rujukan cepat setiap kali Anda merancang rangkai
 
 ---
 
-## ⚡ 3. DUA JEBAKAN HARDWARE PALING SERING MEMBINGUNGKAN MAHASISWA
+## ⚡ 4. DUA JEBAKAN HARDWARE PALING SERING MEMBINGUNGKAN MAHASISWA
 
 ### 🛑 Jebakan #1: Mengapa ADC2 Mati Saat Wi-Fi Menyala?
 
@@ -80,7 +89,7 @@ GPIO 34, 35, 36, dan 39 adalah pin **General Purpose Input (GPI)**, bukan **GPIO
 
 ---
 
-## 🔌 4. BATASAN ELEKTRIKAL & RANGKAIAN PROTEKSI BEBAN INDUKTIF
+## 🔌 5. BATASAN ELEKTRIKAL & RANGKAIAN PROTEKSI BEBAN INDUKTIF
 
 Mahasiswa Teknik Elektro wajib memahami batasan fisik semikonduktor:
 * **Tegangan Operasional:** $3.3\text{ Volt}$. Jangan pernah menghubungkan output sensor $5\text{V}$ secara langsung ke pin ESP32 tanpa *Logic Level Shifter* atau rangkaian pembagi tegangan (*voltage divider*).
@@ -88,14 +97,14 @@ Mahasiswa Teknik Elektro wajib memahami batasan fisik semikonduktor:
 
 Untuk menyalakan beban induktif dengan aman, gunakan standar skematik berikut:
 
-![Skematik Rangkaian Penggerak Beban Induktif](images/transistor_flyback_protection.svg)
+![Skematik Rangkaian Penggerak Beban Induktif](images/transistor_flyback_protection.png)
 
 ### 💡 Mengapa Butuh Dioda Flyback (1N4007)?
 Ketika saklar transistor dimatikan seketika, medan magnet yang tersimpan pada koil relay runtuh secara mendadak. Peristiwa ini memicu lonjakan tegangan induksi balik (*Back-Electromotive Force / Back-EMF*) yang bisa melonjak hingga **di atas $100\text{ Volt}$**! Dioda 1N4007 yang dipasang antiparalel akan mengalirkan lonjakan tegangan ini kembali ke sumber daya, sehingga transistor dan chip ESP32 Anda terlindungi 100%.
 
 ---
 
-## 🛠️ 5. PRAKTIK MANDIRI: CARA MENGUJI PIN SECARA AMAN DENGAN PLATFORMIO
+## 🛠️ 6. PRAKTIK MANDIRI: CARA MENGUJI PIN SECARA AMAN DENGAN PLATFORMIO
 
 Bagaimana cara mahasiswa awam menguji dan membuktikan aturan pin di atas secara mandiri? Ikuti langkah praktikum cepat berikut:
 
@@ -151,7 +160,7 @@ void loop() {
 
 ---
 
-## ✅ 6. CHECKLIST 5 DETIK SEBELUM MENCOLOKKAN KABEL
+## ✅ 7. CHECKLIST 5 DETIK SEBELUM MENCOLOKKAN KABEL
 
 Sebelum menyalakan sumber daya listrik pada rangkaian Anda, lakukan pengecekan cepat ini:
 * [ ] **Apakah sensor analog terpasang di ADC1 (GPIO 32–39)?** (Bukan di ADC2!).
