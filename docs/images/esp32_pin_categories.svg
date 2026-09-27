@@ -18,10 +18,6 @@
       .badge-red { fill: #020617; }
       .badge-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 11px; font-weight: 700; fill: #ffffff; }
 
-      .pin-pill { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1; rx: 3px; }
-      .pin-pill-danger { fill: #0f172a; stroke: #020617; stroke-width: 1; rx: 3px; }
-      .pin-name { font-family: "SFMono-Regular", Consolas, monospace; font-size: 11px; font-weight: 700; fill: #0f172a; }
-      .pin-name-white { font-family: "SFMono-Regular", Consolas, monospace; font-size: 11px; font-weight: 700; fill: #ffffff; }
       .pin-desc { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 11px; fill: #334155; }
       .rule-title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 11.5px; font-weight: 700; fill: #0f172a; }
     </style>
@@ -46,8 +42,8 @@
   <text x="42" y="156" class="pin-desc">GPIO 16, 17, 18, 19, 21, 22, 23, 25, 26, 32, 33</text>
 
   <rect x="42" y="170" width="350" height="65" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" rx="4" />
-  <text x="52" y="188" class="pin-desc">• <tspan font-weight="700">Digital I/O &amp; PWM:</text> Semua pin di atas aman untuk LED/Relay.</tspan>
-  <text x="52" y="206" class="pin-desc">• <tspan font-weight="700">I2C Default:</text> SDA (GPIO 21), SCL (GPIO 22).</tspan>
+  <text x="52" y="188" class="pin-desc">• <tspan font-weight="700">Digital I/O &amp; PWM:</tspan> Semua pin di atas aman untuk LED/Relay.</text>
+  <text x="52" y="206" class="pin-desc">• <tspan font-weight="700">I2C Default:</tspan> SDA (GPIO 21), SCL (GPIO 22).</text>
   <text x="52" y="224" class="pin-desc">• <tspan font-weight="700">Sensor Analog Terbaik:</tspan> GPIO 32 &amp; 33 (ADC1, kebal Wi-Fi).</text>
 
 
@@ -62,8 +58,8 @@
   <text x="447" y="156" class="pin-desc">GPIO 34, 35, 36 (VP), 39 (VN)</text>
 
   <rect x="447" y="170" width="350" height="65" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" rx="4" />
-  <text x="457" y="188" class="pin-desc">• <tspan font-weight="700">TIDAK BISA OUTPUT:</text> Jangan hubungkan ke LED/Aktuator.</tspan>
-  <text x="457" y="206" class="pin-desc">• <tspan font-weight="700">TANPA PULL-UP INTERNAL:</text> Wajib resistor eksternal.</tspan>
+  <text x="457" y="188" class="pin-desc">• <tspan font-weight="700">TIDAK BISA OUTPUT:</tspan> Jangan hubungkan ke LED/Aktuator.</text>
+  <text x="457" y="206" class="pin-desc">• <tspan font-weight="700">TANPA PULL-UP INTERNAL:</tspan> Wajib resistor eksternal.</text>
   <text x="457" y="224" class="pin-desc">• Sangat ideal untuk sensor analog ADC1 (kebal Wi-Fi).</text>
 
 
