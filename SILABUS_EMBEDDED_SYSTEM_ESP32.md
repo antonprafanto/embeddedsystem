@@ -101,7 +101,7 @@ Total pengadaan kit praktikum per kelompok (2 mahasiswa) dirancang sangat ekonom
 
 #### Minggu 2: Karakteristik Elektrikal Pin, Interupsi, & Crash Debugging
 * **Materi Teori:**
-  * Batasan fisik pin: Batas tegangan 3.3V (mengapa logika 5V membakar pin), arus maksimum per pin ($\le 12\text{ mA}$ aman), pull-up/down internal.
+  * Batasan fisik pin: Batas tegangan 3.3V (mengapa logika 5V membakar pin), arus maksimum per pin (≤ 12 mA aman), pull-up/down internal.
   * Gotchas Pin ESP32: Menghindari pin SPI Flash (GPIO 6-11) dan memahami pin input-only (GPIO 34-39).
   * Mekanisme Hardware Interrupt: Edge triggers (RISING, FALLING, CHANGE), fungsi ISR, atribut `IRAM_ATTR`.
   * **Keahlian Wajib Pemula (Debugging):** Mengenal *Guru Meditation Error*, membaca alamat *Backtrace*, menggunakan *ESP Exception Decoder*, dan sistem logging bertingkat (`ESP_LOGI`, `ESP_LOGW`, `ESP_LOGE`).
@@ -210,7 +210,7 @@ Total pengadaan kit praktikum per kelompok (2 mahasiswa) dirancang sangat ekonom
   * Perhitungan matematis masa pakai baterai Li-Ion (mAh) berdasarkan *Duty Cycle*.
 * **Praktikum / Hands-on:**
   * Merancang node sensor nirkabel: Bangun dari Deep Sleep, baca sensor dalam 50 ms, simpan ke RTC memory, kembali tidur lelap selama 10 menit.
-  * Mengukur arus Deep Sleep secara riil menggunakan multimeter pada skala mikroampere ($\mu\text{A}$).
+  * Mengukur arus Deep Sleep secara riil menggunakan multimeter pada skala mikroampere (µA).
 * **Asesmen:** Menghitung estimasi umur baterai 18650 pada sistem yang dirancang.
 
 #### Minggu 12: Jaringan Nirkabel (Wi-Fi) & Protokol Telemetri MQTT yang Andal
@@ -303,7 +303,7 @@ Setiap meja kerja lab dialokasikan perangkat keras berikut:
 * **Board Utama:** ESP32-WROOM-32D Development Board (38-pin).
 * **Alat Ukur & Diagnostik:**
   * 8-Channel USB Logic Analyzer 24 MHz (Didukung software open-source *PulseView/Sigrok*).
-  * Multimeter Digital presisi dengan rentang ukur mikroampere ($\mu\text{A}$).
+  * Multimeter Digital presisi dengan rentang ukur mikroampere (µA).
 * **Komponen & Modul Sensor/Aktuator:**
   * Sensor Lingkungan: BME280 (I2C/SPI) atau AHT10/BMP280.
   * Sensor Gerak: MPU-6050 (I2C Akselerometer & Giroskop).

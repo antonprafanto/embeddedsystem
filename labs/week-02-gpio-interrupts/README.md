@@ -159,20 +159,30 @@ monitor_filters = esp32_exception_decoder
 ```
 Saat filter ini aktif, PlatformIO secara otomatis menjalankan utilitas `addr2line` di latar belakang, sehingga output di Serial Monitor langsung berubah menjadi:
 ```text
-0x400d1640: trigger_controlled_crash() at src/main.cpp:58
+0x400d1640: trigger_controlled_crash() at src/main.cpp:71
 ```
-Anda langsung mengetahui secara pasti bahwa baris 58 pada file `src/main.cpp` adalah biang keladi penyebab crash!
+Anda langsung mengetahui secara pasti bahwa baris 71 pada file `src/main.cpp` adalah biang keladi penyebab crash!
 
 ---
 
 ## 🛠️ 4. PANDUAN PENGUJIAN ALAT (LANGKAH DEMI LANGKAH)
 
 ### Langkah 1: Merangkai Komponen Perangkat Keras
-Ambil board ESP32, breadboard, 1 buah push button, dan kabel jumper:
-1. Tancapkan push button pada sekat tengah breadboard.
-2. Hubungkan salah satu kaki tombol ke pin **GPIO 18** pada ESP32.
-3. Hubungkan kaki tombol pasangannya ke pin **GND** pada ESP32.
-   *(Catatan: Anda TIDAK memerlukan resistor eksternal karena kita menggunakan fitur `INPUT_PULLUP` internal ESP32).*
+Ambil board ESP32, breadboard, 1 buah push button 4 kaki, dan kabel jumper (male-to-male). Rangkai komponen sesuai panduan visual di bawah ini:
+
+![Panduan Rangkaian Hardware Push Button](images/button_breadboard_wiring.png)
+
+*Sumber ilustrasi: Diagram orisinal laboratorium Sistem Tertanam.*
+
+#### 💡 Petunjuk Penting Bagi Pemula (Menghindari Salah Sambung):
+1. **Pasang Tombol Melintasi Parit Tengah Breadboard:**  
+   Tancapkan push button tepat di atas parit pemisah tengah (*center divider*) breadboard. Kaki-kaki tombol push button standar terhubung secara horizontal berpasangan (Pin 1 tersambung ke Pin 2, dan Pin 3 tersambung ke Pin 4). Dengan memasangnya melintasi parit tengah, kita memastikan kedua sisi tidak korslet sebelum tombol ditekan.
+2. **Koneksi Kabel Jumper Sinyal:**  
+   Hubungkan kaki tombol bagian kiri atas (**Pin 1**) ke pin **GPIO 18** pada ESP32 (gunakan kabel warna biru/cerah).
+3. **Koneksi Kabel Jumper Ground:**  
+   Hubungkan kaki tombol bagian kiri bawah (**Pin 3**) ke pin **GND** pada ESP32 (gunakan kabel warna hitam).
+4. **Tanpa Resistor Eksternal:**  
+   Anda **TIDAK memerlukan resistor fisik tambahan** di breadboard karena ESP32 sudah dilengkapi resistor *Internal Pull-Up* sebesar 45 kΩ yang diaktifkan melalui baris kode `pinMode(BUTTON_PIN, INPUT_PULLUP)`. Rangkaian menjadi sangat ringkas, rapi, dan minim risiko salah tancap!
 
 ---
 
@@ -236,12 +246,12 @@ Mengakses alamat pointer kosong (Null Pointer Dereference)...
 Guru Meditation Error: Core 1 panic'ed (LoadProhibited). Exception was unhandled.
 
 Backtrace: 0x400d1640:0x3ffb1f10 0x400d182c:0x3ffb1f30 ...
-  #0  0x400d1640 in trigger_controlled_crash() at src/main.cpp:58
-  #1  0x400d182c in loop() at src/main.cpp:115
+  #0  0x400d1640 in trigger_controlled_crash() at src/main.cpp:71
+  #1  0x400d182c in loop() at src/main.cpp:141
 ```
 4. Perhatikan baris decoder:  
-   `#0 0x400d1640 in trigger_controlled_crash() at src/main.cpp:58`  
-   PlatformIO langsung menunjuk file `src/main.cpp` baris 58! Anda telah berhasil melakukan investigasi crash menggunakan Exception Decoder.
+   `#0 0x400d1640 in trigger_controlled_crash() at src/main.cpp:71`  
+   PlatformIO langsung menunjuk file `src/main.cpp` baris 71! Anda telah berhasil melakukan investigasi crash menggunakan Exception Decoder.
 
 ---
 
