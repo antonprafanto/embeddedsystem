@@ -97,7 +97,7 @@ Mahasiswa Teknik Elektro wajib memahami batasan fisik semikonduktor:
 
 Untuk menyalakan beban induktif dengan aman, gunakan standar skematik berikut:
 
-![Skematik Rangkaian Penggerak Beban Induktif](images/transistor_flyback_protection_v2.png)
+![Skematik Rangkaian Penggerak Beban Induktif](images/transistor_flyback_protection_v3.png)
 
 ### 💡 Mengapa Butuh Dioda Flyback (1N4007)?
 Ketika saklar transistor dimatikan seketika, medan magnet yang tersimpan pada koil relay runtuh secara mendadak. Peristiwa ini memicu lonjakan tegangan induksi balik (*Back-Electromotive Force / Back-EMF*) yang bisa melonjak hingga **di atas $100\text{ Volt}$**! Dioda 1N4007 yang dipasang antiparalel akan mengalirkan lonjakan tegangan ini kembali ke sumber daya, sehingga transistor dan chip ESP32 Anda terlindungi 100%.
