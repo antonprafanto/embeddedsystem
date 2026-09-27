@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 420" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #ffffff; stroke: #e2e8f0; stroke-width: 1.5; rx: 8px; }
+      .title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #0f172a; letter-spacing: -0.2px; }
+      .subtitle { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 12px; fill: #64748b; }
+      .box-data { fill: #f8fafc; stroke: #0f172a; stroke-width: 1.5; stroke-dasharray: none; rx: 6px; }
+      .box-charge { fill: #f8fafc; stroke: #94a3b8; stroke-width: 1.5; stroke-dasharray: 4 4; rx: 6px; }
+      .box-header { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 700; fill: #0f172a; }
+      .wire-label { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; font-size: 11px; font-weight: 600; fill: #1e293b; }
+      .wire-desc { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 11px; fill: #475569; }
+      .cable-outer { fill: #1e293b; stroke: #0f172a; stroke-width: 1.5; rx: 4px; }
+      .cable-inner { fill: #e2e8f0; }
+      .wire-core { stroke-width: 4; stroke-linecap: round; }
+      .wire-vbus { stroke: #0f172a; }
+      .wire-dminus { stroke: #475569; }
+      .wire-dplus { stroke: #64748b; }
+      .wire-gnd { stroke: #0f172a; stroke-dasharray: 2 2; }
+      .wire-missing { stroke: #cbd5e1; stroke-dasharray: 3 3; stroke-width: 2; }
+      .badge-ok { fill: #0f172a; rx: 4px; }
+      .badge-ok-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 700; fill: #ffffff; }
+      .badge-bad { fill: #ffffff; stroke: #0f172a; stroke-width: 1.5; rx: 4px; }
+      .badge-bad-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 700; fill: #0f172a; }
+      .footer-note { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 11px; fill: #475569; font-style: italic; }
+    </style>
+  </defs>
+
+  <!-- Canvas Background Card -->
+  <rect width="838" height="418" x="1" y="1" class="bg" />
+
+  <!-- Header -->
+  <text x="30" y="38" class="title">DIAGNOSTIK KABEL USB: KABEL DATA VS KABEL CHARGER SAJA</text>
+  <text x="30" y="58" class="subtitle">Perbedaan penampang kabel fisik yang menentukan apakah ESP32 dapat diprogram atau tidak.</text>
+  <line x1="30" y1="72" x2="810" y2="72" stroke="#e2e8f0" stroke-width="1" />
+
+  <!-- LEFT PANEL: KABEL DATA (4 KAWAT) -->
+  <rect x="30" y="90" width="375" height="270" class="box-data" />
+  <rect x="45" y="105" width="220" height="22" class="badge-ok" />
+  <text x="55" y="120" class="badge-ok-text">✓ KABEL DATA (4 KAWAT) - WAJIB</text>
+
+  <!-- Cable drawing Left -->
+  <!-- Outer Sheath -->
+  <rect x="50" y="150" width="70" height="150" class="cable-outer" />
+  <text x="58" y="230" fill="#ffffff" font-family="monospace" font-size="10px">KABEL</text>
+  <rect x="120" y="165" width="25" height="120" class="cable-inner" />
+
+  <!-- 4 Wires -->
+  <!-- Wire 1: VBUS -->
+  <line x1="145" y1="180" x2="220" y2="180" class="wire-core wire-vbus" />
+  <circle cx="220" cy="180" r="4" fill="#0f172a" />
+  <text x="235" y="184" class="wire-label">VBUS (+5V)</text>
+  <text x="315" y="184" class="wire-desc">Daya Listrik</text>
+
+  <!-- Wire 2: D- -->
+  <line x1="145" y1="210" x2="220" y2="210" class="wire-core wire-dminus" />
+  <circle cx="220" cy="210" r="4" fill="#475569" />
+  <text x="235" y="214" class="wire-label">D- (Data -)</text>
+  <text x="315" y="214" class="wire-desc">Jalur Data USB</text>
+
+  <!-- Wire 3: D+ -->
+  <line x1="145" y1="240" x2="220" y2="240" class="wire-core wire-dplus" />
+  <circle cx="220" cy="240" r="4" fill="#64748b" />
+  <text x="235" y="244" class="wire-label">D+ (Data +)</text>
+  <text x="315" y="244" class="wire-desc">Jalur Data USB</text>
+
+  <!-- Wire 4: GND -->
+  <line x1="145" y1="270" x2="220" y2="270" class="wire-core wire-gnd" />
+  <circle cx="220" cy="270" r="4" fill="#0f172a" />
+  <text x="235" y="274" class="wire-label">GND (Ground)</text>
+  <text x="315" y="274" class="wire-desc">Referensi 0V</text>
+
+  <!-- Status Left -->
+  <rect x="50" y="320" width="335" height="26" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1" rx="4" />
+  <text x="60" y="337" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="11px" font-weight="600" fill="#0f172a">
+    HASIL: Port COM terdeteksi &amp; Firmware dapat di-flash.
+  </text>
+
+
+  <!-- RIGHT PANEL: KABEL CHARGE-ONLY (2 KAWAT) -->
+  <rect x="435" y="90" width="375" height="270" class="box-charge" />
+  <rect x="450" y="105" width="250" height="22" class="badge-bad" />
+  <text x="460" y="120" class="badge-bad-text">✕ KABEL CHARGER MURAH (2 KAWAT)</text>
+
+  <!-- Cable drawing Right -->
+  <rect x="455" y="150" width="70" height="150" class="cable-outer" />
+  <text x="463" y="230" fill="#ffffff" font-family="monospace" font-size="10px">KABEL</text>
+  <rect x="525" y="165" width="25" height="120" class="cable-inner" />
+
+  <!-- Wire 1: VBUS -->
+  <line x1="550" y1="180" x2="625" y2="180" class="wire-core wire-vbus" />
+  <circle cx="625" cy="180" r="4" fill="#0f172a" />
+  <text x="640" y="184" class="wire-label">VBUS (+5V)</text>
+  <text x="720" y="184" class="wire-desc">Daya Saja</text>
+
+  <!-- Missing D- -->
+  <line x1="550" y1="210" x2="625" y2="210" class="wire-missing" />
+  <text x="640" y="214" font-family="monospace" font-size="11px" fill="#94a3b8">[TIDAK ADA KAWAT]</text>
+
+  <!-- Missing D+ -->
+  <line x1="550" y1="240" x2="625" y2="240" class="wire-missing" />
+  <text x="640" y="244" font-family="monospace" font-size="11px" fill="#94a3b8">[TIDAK ADA KAWAT]</text>
+
+  <!-- Wire 4: GND -->
+  <line x1="550" y1="270" x2="625" y2="270" class="wire-core wire-gnd" />
+  <circle cx="625" cy="270" r="4" fill="#0f172a" />
+  <text x="640" y="274" class="wire-label">GND (Ground)</text>
+  <text x="720" y="274" class="wire-desc">Referensi 0V</text>
+
+  <!-- Status Right -->
+  <rect x="455" y="320" width="335" height="26" fill="#fff1f2" stroke="#fecdd3" stroke-width="1" rx="4" />
+  <text x="465" y="337" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="11px" font-weight="600" fill="#991b1b">
+    HASIL: LED menyala tetapi COM Port TIDAK TERDETEKSI!
+  </text>
+
+  <!-- Footer Note -->
+  <text x="30" y="395" class="footer-note">
+    Uji cepat mandiri: Colokkan smartphone ke laptop menggunakan kabel tersebut. Jika opsi transfer file (MTP) tidak muncul, segera ganti kabel!
+  </text>
+</svg>

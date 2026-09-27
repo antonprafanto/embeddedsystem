@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 200" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #ffffff; stroke: #e2e8f0; stroke-width: 1.5; rx: 8px; }
+      .bar-bg { fill: #0f172a; stroke: #020617; stroke-width: 1.5; rx: 6px; }
+      .btn-box { fill: #1e293b; stroke: #334155; stroke-width: 1; rx: 4px; }
+      .btn-icon { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 16px; font-weight: 700; fill: #f8fafc; text-anchor: middle; }
+      .btn-label { font-family: "SFMono-Regular", Consolas, monospace; font-size: 11px; font-weight: 600; fill: #cbd5e1; text-anchor: middle; }
+      .pointer-line { stroke: #0f172a; stroke-width: 1.2; stroke-dasharray: 2 2; fill: none; }
+      .desc-title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 12px; font-weight: 700; fill: #0f172a; text-anchor: middle; }
+      .desc-sub { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 10px; fill: #64748b; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="778" height="198" x="1" y="1" class="bg" />
+
+  <!-- Status Bar Frame (Simulasi Bilah Bawah VS Code) -->
+  <text x="30" y="28" font-family="-apple-system, sans-serif" font-size="12px" font-weight="700" fill="#0f172a">BILAH ALAT PLATFORMIO (STATUS BAR BIRU/HITAM DI BAGIAN BAWAH VS CODE)</text>
+
+  <rect x="25" y="40" width="730" height="46" class="bar-bg" />
+
+  <!-- Item 1: Home -->
+  <rect x="40" y="47" width="32" height="32" class="btn-box" />
+  <text x="56" y="69" class="btn-icon">🏠</text>
+
+  <!-- Item 2: Build -->
+  <rect x="85" y="47" width="100" height="32" class="btn-box" />
+  <text x="105" y="69" class="btn-icon">✓</text>
+  <text x="145" y="68" class="btn-label">Build</text>
+
+  <!-- Item 3: Upload -->
+  <rect x="200" y="47" width="110" height="32" class="btn-box" />
+  <text x="220" y="69" class="btn-icon">→</text>
+  <text x="265" y="68" class="btn-label">Upload</text>
+
+  <!-- Item 4: Clean -->
+  <rect x="325" y="47" width="100" height="32" class="btn-box" />
+  <text x="345" y="68" class="btn-icon">🗑</text>
+  <text x="385" y="68" class="btn-label">Clean</text>
+
+  <!-- Item 5: Serial Monitor -->
+  <rect x="440" y="47" width="130" height="32" class="btn-box" />
+  <text x="460" y="69" class="btn-icon">🔌</text>
+  <text x="515" y="68" class="btn-label">Monitor</text>
+
+  <!-- Item 6: Terminal -->
+  <rect x="585" y="47" width="40" height="32" class="btn-box" />
+  <text x="605" y="69" class="btn-icon">⌨</text>
+
+
+  <!-- DESCRIPTIONS & POINTERS UNDERNEATH -->
+  <!-- Build Pointer -->
+  <line x1="135" y1="86" x2="135" y2="120" class="pointer-line" />
+  <circle cx="135" cy="120" r="3" fill="#0f172a" />
+  <text x="135" y="142" class="desc-title">1. BUILD (✓)</text>
+  <text x="135" y="158" class="desc-sub">Kompilasi kode C++</text>
+  <text x="135" y="172" class="desc-sub">ke file biner (.bin)</text>
+
+  <!-- Upload Pointer -->
+  <line x1="255" y1="86" x2="255" y2="120" class="pointer-line" />
+  <circle cx="255" cy="120" r="3" fill="#0f172a" />
+  <text x="255" y="142" class="desc-title">2. UPLOAD (→)</text>
+  <text x="255" y="158" class="desc-sub">Injeksi firmware</text>
+  <text x="255" y="172" class="desc-sub">ke chip Flash ESP32</text>
+
+  <!-- Clean Pointer -->
+  <line x1="375" y1="86" x2="375" y2="120" class="pointer-line" />
+  <circle cx="375" cy="120" r="3" fill="#0f172a" />
+  <text x="375" y="142" class="desc-title">3. CLEAN (🗑)</text>
+  <text x="375" y="158" class="desc-sub">Hapus cache build jika</text>
+  <text x="375" y="172" class="desc-sub">kompilasi error/aneh</text>
+
+  <!-- Monitor Pointer -->
+  <line x1="505" y1="86" x2="505" y2="120" class="pointer-line" />
+  <circle cx="505" cy="120" r="3" fill="#0f172a" />
+  <text x="505" y="142" class="desc-title">4. MONITOR (🔌)</text>
+  <text x="505" y="158" class="desc-sub">Buka Serial Monitor</text>
+  <text x="505" y="172" class="desc-sub">melihat output print data</text>
+</svg>

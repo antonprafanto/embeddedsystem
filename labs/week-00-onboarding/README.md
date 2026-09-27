@@ -1,8 +1,8 @@
 # 🛠️ MINGGU 0: ONBOARDING & DRIVER CLINIC
 ### Panduan Praktis Menyiapkan Lingkungan Belajar ESP32 dari Nol
 
-> **Status Modul:** Wajib Selesai Sebelum Pertemuan Pertama  
-> **Target Pengguna:** Mahasiswa S1 Teknik Elektro (Pemula / Awam)  
+> **Status Modul:** Wajib Selesai Sebelum Pertemuan Tatap Muka Perdana  
+> **Target Pengguna:** Mahasiswa S1 Teknik Elektro (Tingkat Pemula / Awam)  
 > **Estimasi Waktu Pengerjaan:** 20 – 30 Menit  
 
 ---
@@ -35,8 +35,7 @@ Sebelum menyalahkan software atau mencurigai board rusak, periksa kabel USB Anda
 ### ⚠️ Masalah Klasik:
 Banyak kabel di pasaran (terutama kabel charger hadiah powerbank atau kabel murah) adalah **kabel *charge-only*** yang **hanya memiliki 2 kawat internal** (kutub positif $+5\text{V}$ dan *Ground*). Kabel jenis ini **tidak memiliki jalur transfer data ($D+$ dan $D-$)**, sehingga komputer tidak akan pernah mendeteksi keberadaan ESP32!
 
-![Kabel USB Data 4 Kawat](https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Braid_and_foil_shielded_usb_cable.jpg/640px-Braid_and_foil_shielded_usb_cable.jpg)  
-*Gambar 1: Struktur internal kabel data USB standar yang memiliki 4 kawat (Merah: $+5\text{V}$, Hitam: *GND*, Putih: $D-$, Hijau: $D+$). Sumber gambar: [Wikimedia Commons (CC BY-SA 3.0)](https://commons.wikimedia.org/wiki/File:Braid_and_foil_shielded_usb_cable.jpg).*
+![Diagnostik Kabel USB Data vs Charger Saja](images/usb_cable_comparison.svg)
 
 ---
 
@@ -51,26 +50,25 @@ Banyak kabel di pasaran (terutama kabel charger hadiah powerbank atau kabel mura
 
 ## 🔍 LANGKAH 2: ANATOMI BOARD ESP32 & IDENTIFIKASI CHIP USB-TO-UART
 
-Sekarang, ambil board ESP32 Anda dan perhatikan komponen-komponen utamanya.
+Sekarang, ambil board ESP32 Anda dan perhatikan komponen-komponen utamanya pada diagram teknik berikut:
 
-![ESP32 Development Board](https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/ESP32_Espressif_ESP-WROOM-32_Dev_Board_%282%29.jpg/640px-ESP32_Espressif_ESP-WROOM-32_Dev_Board_%282%29.jpg)  
-*Gambar 2: Board ESP32-WROOM-32D dengan tombol BOOT, tombol EN, dan chip konverter USB-to-UART di dekat port micro-USB. Sumber gambar: [Wikimedia Commons (CC0 Public Domain)](https://commons.wikimedia.org/wiki/File:ESP32_Espressif_ESP-WROOM-32_Dev_Board_(2).jpg).*
+![Anatomi Perangkat Keras ESP32](images/esp32_board_anatomy.svg)
 
 ---
 
 ### Bagian Penting yang Wajib Anda Kenali:
-1. **Port Micro-USB / Type-C:** Gerbang daya sekaligus jalur pemrograman.
-2. **Chip Converter USB-to-UART (IC Hitam Kecil di Dekat Port USB):** Chip jembatan yang menerjemahkan protokol USB laptop menjadi sinyal serial UART mikrokontroler.
+1. **Port Micro-USB / Type-C:** Gerbang pasokan daya sekaligus jalur transfer data pemrograman.
+2. **Chip Converter USB-to-UART (IC Persegi di Dekat Port USB):** Chip jembatan yang menerjemahkan protokol USB laptop menjadi sinyal serial UART mikrokontroler.
 3. **Tombol BOOT (GPIO 0):** Tombol manual untuk memaksa ESP32 masuk ke *Download/Flashing Mode*.
-4. **Tombol EN / RST:** Tombol *Reset* untuk memulai ulang program dari awal.
+4. **Tombol EN / RST:** Tombol *Reset* untuk memulai ulang eksekusi program dari baris awal.
 5. **LED Indikator Merah (PWR):** Menandakan board menerima pasokan daya $5\text{V}$ atau $3.3\text{V}$.
-6. **LED Indikator Biru (GPIO 2):** LED internal yang bisa diprogram melalui kode program (*built-in user LED*).
+6. **LED Indikator Biru (GPIO 2):** LED internal yang terhubung ke pin GPIO 2 dan dapat diprogram melalui kode (*built-in user LED*).
 
 ---
 
 ### Cara Mengetahui Chip & Menginstal Driver:
 
-Lihat tulisan kecil pada chip IC hitam persegi di dekat port USB:
+Lihat tulisan kecil pada chip IC hitam persegi di dekat port USB board Anda:
 
 | Jenis Chip | Ciri Fisik | Link Download Driver Resmi |
 | :--- | :--- | :--- |
@@ -105,15 +103,9 @@ Cari baris yang memuat nama `/dev/ttyUSB0` (Linux) atau `/dev/tty.usbserial-xxxx
 Mengapa kita tidak memakai Arduino IDE lama?  
 Di dunia industri teknik elektro modern, proyek sistem tertanam dikembangkan menggunakan IDE profesional dengan fitur manajemen dependensi otomatis, *autocomplete*, pelacak bug (*code linter*), dan struktur file standar Git. Oleh karena itu, kita menggunakan **VS Code + PlatformIO**.
 
-```
-┌────────────────────────────────────────────────────────┐
-│                   Visual Studio Code                   │
-│   ┌────────────────────────────────────────────────┐   │
-│   │         PlatformIO IDE Extension               │   │
-│   │   [ Toolchain Xtensa GCC + SDK ESP-IDF/Core ]   │   │
-│   └────────────────────────────────────────────────┘   │
-└────────────────────────────────────────────────────────┘
-```
+![Arsitektur Toolchain VS Code dan PlatformIO](images/toolchain_stack.svg)
+
+---
 
 ### Langkah Pemasangan:
 1. Unduh dan pasang aplikasi [Visual Studio Code](https://code.visualstudio.com/) untuk sistem operasi Anda.
@@ -206,15 +198,9 @@ monitor_speed = 115200
 ---
 
 ### 4. Menjalankan Kode (Build, Upload & Monitor):
-Perhatikan bilah status berwarna biru di bagian bawah layar VS Code Anda:
+Perhatikan bilah status berwarna biru/gelap di bagian bawah layar VS Code Anda:
 
-```
-[ PlatformIO Toolbar di Bawah Layar ]
-┌───────┬───────┬───────┬───────┬─────────────────┐
-│   ✓   │   →   │   🗑   │   ⭐  │       🔌        │
-│ Build │Upload │ Clean │ Test  │ Serial Monitor  │
-└───────┴───────┴───────┴───────┴─────────────────┘
-```
+![Bilah Alat PlatformIO](images/platformio_toolbar.svg)
 
 1. **Build (Kompilasi):** Klik ikon centang (`✓`). VS Code akan mengompilasi kode C++ menjadi file biner `.bin`. Pastikan di terminal muncul tulisan hijau `[SUCCESS]`.
 2. **Upload (Mengunggah):** Hubungkan ESP32 ke laptop, lalu klik ikon tanda panah kanan (`→`). PlatformIO akan mendeteksi port COM secara otomatis dan menyuntikkan firmware ke chip Flash ESP32.

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 280" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #ffffff; stroke: #e2e8f0; stroke-width: 1.5; rx: 8px; }
+      .layer-vscode { fill: #f8fafc; stroke: #0f172a; stroke-width: 1.5; rx: 6px; }
+      .layer-pio { fill: #ffffff; stroke: #0f172a; stroke-width: 1.5; stroke-dasharray: 4 4; rx: 6px; }
+      .layer-engine { fill: #0f172a; stroke: #020617; stroke-width: 1.5; rx: 4px; }
+      .title-outer { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 13px; font-weight: 700; fill: #0f172a; }
+      .title-mid { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 13px; font-weight: 700; fill: #0f172a; }
+      .title-core { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 12px; font-weight: 700; fill: #f8fafc; }
+      .desc-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 11px; fill: #475569; }
+      .core-pill { fill: #1e293b; stroke: #475569; stroke-width: 1; rx: 3px; }
+      .pill-text { font-family: "SFMono-Regular", Consolas, Menlo, monospace; font-size: 10px; font-weight: 600; fill: #e2e8f0; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="778" height="278" x="1" y="1" class="bg" />
+
+  <!-- Layer 1: Visual Studio Code -->
+  <rect x="25" y="25" width="730" height="230" class="layer-vscode" />
+  <text x="45" y="52" class="title-outer">LAYER 1: VISUAL STUDIO CODE</text>
+  <text x="280" y="52" class="desc-text">(Text Editor, Manajemen Workspace Proyek, Git Version Control)</text>
+
+  <!-- Layer 2: PlatformIO IDE Extension -->
+  <rect x="50" y="70" width="680" height="165" class="layer-pio" />
+  <text x="70" y="96" class="title-mid">LAYER 2: PLATFORMIO IDE EXTENSION</text>
+  <text x="350" y="96" class="desc-text">(Build System, Library Manager, Auto Port Detection &amp; Terminal)</text>
+
+  <!-- Layer 3: Toolchain Core Engine -->
+  <rect x="75" y="115" width="630" height="100" class="layer-engine" />
+  <text x="95" y="142" class="title-core">LAYER 3: COMPILER &amp; EMBEDDED SDK ENGINE (DIJALANKAN DI BELAKANG LAYAR)</text>
+
+  <!-- Sub-components inside Layer 3 -->
+  <!-- Box A: Compiler -->
+  <rect x="95" y="155" width="180" height="45" class="core-pill" />
+  <text x="110" y="174" class="pill-text">XTENSA-ESP32-ELF-GCC</text>
+  <text x="110" y="190" font-family="-apple-system, sans-serif" font-size="9.5px" fill="#94a3b8">Compiler C/C++ 32-bit</text>
+
+  <!-- Box B: Framework SDK -->
+  <rect x="290" y="155" width="200" height="45" class="core-pill" />
+  <text x="305" y="174" class="pill-text">ESP32 ARDUINO CORE / IDF</text>
+  <text x="305" y="190" font-family="-apple-system, sans-serif" font-size="9.5px" fill="#94a3b8">Pustaka Driver &amp; Header Board</text>
+
+  <!-- Box C: Flasher Tool -->
+  <rect x="505" y="155" width="180" height="45" class="core-pill" />
+  <text x="520" y="174" class="pill-text">ESPTOOL.PY (FLASHER)</text>
+  <text x="520" y="190" font-family="-apple-system, sans-serif" font-size="9.5px" fill="#94a3b8">Injektor Biner ke Flash SPI</text>
+</svg>
