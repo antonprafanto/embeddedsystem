@@ -1,38 +1,45 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 540" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 600" width="100%" height="100%">
   <defs>
     <style>
       .bg { fill: #ffffff; stroke: #e2e8f0; stroke-width: 1.5; rx: 8px; }
       .title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #0f172a; }
       .subtitle { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 12px; fill: #64748b; }
       .board-body { fill: #0f172a; stroke: #020617; stroke-width: 2; rx: 8px; }
-      .shield { fill: #334155; stroke: #64748b; stroke-width: 1.5; rx: 4px; }
-      .antenna-zone { fill: #1e293b; stroke: #475569; stroke-width: 1; rx: 2px; }
-      .antenna-trace { stroke: #94a3b8; stroke-width: 2; fill: none; stroke-linecap: round; }
+      .shield { fill: #1e293b; stroke: #475569; stroke-width: 1.5; rx: 4px; }
+      .antenna-zone { fill: #020617; stroke: #334155; stroke-width: 1; rx: 2px; }
+      .antenna-trace { stroke: #94a3b8; stroke-width: 2.5; fill: none; stroke-linecap: round; }
       .ic-chip { fill: #1e293b; stroke: #94a3b8; stroke-width: 1.5; rx: 2px; }
       .usb-port { fill: #e2e8f0; stroke: #0f172a; stroke-width: 1.5; rx: 3px; }
       .btn-body { fill: #e2e8f0; stroke: #0f172a; stroke-width: 1.5; rx: 2px; }
       .btn-actuator { fill: #0f172a; rx: 2px; }
-      .pin-header { fill: #1e293b; stroke: #64748b; stroke-width: 1; }
-      .pin-hole { fill: #f8fafc; stroke: #94a3b8; stroke-width: 1; }
-      .callout-line { stroke: #0f172a; stroke-width: 1.2; stroke-dasharray: 2 2; fill: none; }
-      .callout-dot { fill: #0f172a; }
-      .card-tag { fill: #f8fafc; stroke: #0f172a; stroke-width: 1.2; rx: 4px; }
+      .pin-header { fill: #1e293b; stroke: #475569; stroke-width: 1; }
+      .pin-hole { fill: #f8fafc; stroke: #64748b; stroke-width: 1; }
+      
+      /* High-contrast Leader Lines (Visible on both white canvas and dark board) */
+      .pointer-line-outer { stroke: #0284c7; stroke-width: 1.8; fill: none; }
+      .pointer-line-inner { stroke: #38bdf8; stroke-width: 1.8; stroke-dasharray: 4 3; fill: none; }
+      .target-bullseye { fill: #38bdf8; stroke: #ffffff; stroke-width: 2; }
+      .target-center { fill: #0f172a; }
+
+      .card-tag { fill: #f8fafc; stroke: #0f172a; stroke-width: 1.5; rx: 6px; }
       .tag-title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 12px; font-weight: 700; fill: #0f172a; }
-      .tag-desc { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 10.5px; fill: #475569; }
+      .tag-desc { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 10.5px; fill: #334155; }
       .tech-label { font-family: "SFMono-Regular", Consolas, Menlo, monospace; font-size: 9px; fill: #94a3b8; }
     </style>
   </defs>
 
-  <!-- Background -->
-  <rect width="838" height="538" x="1" y="1" class="bg" />
+  <!-- Background Canvas Card -->
+  <rect width="858" height="598" x="1" y="1" class="bg" />
 
   <!-- Header -->
   <text x="30" y="38" class="title">ANATOMI PERANGKAT KERAS: ESP32-WROOM-32 DEVKIT</text>
   <text x="30" y="58" class="subtitle">Identifikasi komponen kritis: Tombol Boot/Reset, Port Pemrograman, dan Chip Converter Serial.</text>
-  <line x1="30" y1="72" x2="810" y2="72" stroke="#e2e8f0" stroke-width="1" />
+  <line x1="30" y1="72" x2="830" y2="72" stroke="#e2e8f0" stroke-width="1" />
 
-  <!-- MAIN BOARD DRAWING (Center) -->
-  <g transform="translate(305, 95)">
+  <!-- ==================================================================== -->
+  <!-- MAIN ESP32 BOARD DRAWING (Centered at x=315, y=90)                   -->
+  <!-- ==================================================================== -->
+  <g transform="translate(315, 85)">
     <!-- PCB Base -->
     <rect x="0" y="0" width="230" height="410" class="board-body" />
 
@@ -87,14 +94,14 @@
     <text x="54" y="258" class="tech-label">AMS1117</text>
 
     <!-- LEDs -->
-    <!-- Power LED (Red/PWR) -->
+    <!-- Power LED (PWR) -->
     <rect x="55" y="310" width="10" height="8" fill="#e2e8f0" stroke="#0f172a" stroke-width="1" />
-    <circle cx="60" cy="314" r="2.5" fill="#0f172a" />
+    <circle cx="60" cy="314" r="2.5" fill="#ef4444" />
     <text x="40" y="332" class="tech-label">PWR LED</text>
 
-    <!-- Builtin User LED (Blue/GPIO 2) -->
+    <!-- Builtin User LED (GPIO 2) -->
     <rect x="165" y="310" width="10" height="8" fill="#e2e8f0" stroke="#0f172a" stroke-width="1" />
-    <circle cx="170" cy="314" r="2.5" fill="#475569" />
+    <circle cx="170" cy="314" r="2.5" fill="#3b82f6" />
     <text x="155" y="332" class="tech-label">GPIO 2 (LED)</text>
 
     <!-- Left Button: EN / RST -->
@@ -112,49 +119,83 @@
     <rect x="100" y="395" width="30" height="15" fill="#0f172a" rx="2" />
   </g>
 
-  <!-- LEFT CALLOUTS -->
-  <!-- Callout 1: Tombol EN (Reset) -->
-  <line x1="180" y1="460" x2="350" y2="460" class="callout-line" />
-  <circle cx="350" cy="460" r="3.5" class="callout-dot" />
-  <rect x="25" y="430" width="220" height="58" class="card-tag" />
-  <text x="35" y="450" class="tag-title">TOMBOL EN (RESET)</text>
-  <text x="35" y="468" class="tag-desc">Tekan untuk me-restart mikrokontroler</text>
-  <text x="35" y="482" class="tag-desc">menjalankan kode dari baris awal.</text>
 
-  <!-- Callout 2: Chip USB-to-UART -->
-  <line x1="180" y1="355" x2="400" y2="355" class="callout-line" />
-  <circle cx="400" cy="355" r="3.5" class="callout-dot" />
-  <rect x="25" y="325" width="220" height="58" class="card-tag" />
-  <text x="35" y="345" class="tag-title">CHIP USB-TO-UART</text>
-  <text x="35" y="363" class="tag-desc">Jembatan serial komputer (CP2102/CH340).</text>
-  <text x="35" y="377" class="tag-desc">Wajib diinstal driver-nya di laptop!</text>
+  <!-- ==================================================================== -->
+  <!-- HIGH-CONTRAST LEADER LINES & CALLOUT TAGS                            -->
+  <!-- ==================================================================== -->
 
-  <!-- Callout 3: Antena PCB -->
-  <line x1="180" y1="120" x2="355" y2="120" class="callout-line" />
-  <circle cx="355" cy="120" r="3.5" class="callout-dot" />
-  <rect x="25" y="95" width="220" height="50" class="card-tag" />
-  <text x="35" y="115" class="tag-title">ANTENA TRACE 2.4 GHz</text>
-  <text x="35" y="133" class="tag-desc">Area bebas logam untuk sinyal Wi-Fi &amp; BLE.</text>
+  <!-- CALLOUT 1 (Top-Left): ANTENA TRACE -->
+  <!-- Box -->
+  <rect x="25" y="90" width="235" height="52" class="card-tag" />
+  <text x="35" y="110" class="tag-title">ANTENA TRACE 2.4 GHz</text>
+  <text x="35" y="128" class="tag-desc">Area bebas logam untuk sinyal Wi-Fi &amp; BLE.</text>
+  <!-- Line: from box to antenna -->
+  <line x1="260" y1="116" x2="315" y2="116" class="pointer-line-outer" />
+  <line x1="315" y1="116" x2="390" y2="116" class="pointer-line-inner" />
+  <circle cx="390" cy="116" r="5" class="target-bullseye" />
+  <circle cx="390" cy="116" r="2" class="target-center" />
 
 
-  <!-- RIGHT CALLOUTS -->
-  <!-- Callout 4: SoC ESP32 Metal Shield -->
-  <line x1="495" y1="230" x2="595" y2="230" class="callout-line" />
-  <circle cx="495" cy="230" r="3.5" class="callout-dot" />
-  <rect x="595" y="200" width="220" height="60" class="card-tag" />
-  <text x="605" y="220" class="tag-title">MODUL ESP-WROOM-32</text>
-  <text x="605" y="238" class="tag-desc">CPU Xtensa 32-bit Dual Core,</text>
-  <text x="605" y="252" class="tag-desc">520 KB SRAM, Flash internal 4 MB.</text>
+  <!-- CALLOUT 2 (Mid-Left): CHIP USB-TO-UART -->
+  <!-- Box -->
+  <rect x="25" y="305" width="235" height="62" class="card-tag" />
+  <text x="35" y="325" class="tag-title">CHIP USB-TO-UART</text>
+  <text x="35" y="343" class="tag-desc">Jembatan serial komputer (CP2102/CH340).</text>
+  <text x="35" y="357" class="tag-desc">Wajib diinstal driver-nya di laptop!</text>
+  <!-- Line: from box straight onto CP2102 IC -->
+  <line x1="260" y1="336" x2="315" y2="336" class="pointer-line-outer" />
+  <line x1="315" y1="336" x2="425" y2="345" class="pointer-line-inner" />
+  <circle cx="425" cy="345" r="5" class="target-bullseye" />
+  <circle cx="425" cy="345" r="2" class="target-center" />
 
-  <!-- Callout 5: Tombol BOOT (GPIO 0) -->
-  <line x1="480" y1="460" x2="595" y2="460" class="callout-line" />
-  <circle cx="480" cy="460" r="3.5" class="callout-dot" />
-  <rect x="595" y="425" width="220" height="72" class="card-tag" />
-  <text x="605" y="445" class="tag-title">TOMBOL BOOT (GPIO 0)</text>
-  <text x="605" y="463" class="tag-desc">PENTING: Tahan tombol ini 2 detik</text>
-  <text x="605" y="477" class="tag-desc">jika upload macet di tulisan</text>
-  <text x="605" y="491" class="tag-desc">"Connecting........_____....."</text>
 
-  <!-- Callout 6: Port USB -->
-  <line x1="420" y1="510" x2="420" y2="520" />
+  <!-- CALLOUT 3 (Bottom-Left): TOMBOL EN (RESET) -->
+  <!-- Box -->
+  <rect x="25" y="420" width="235" height="62" class="card-tag" />
+  <text x="35" y="440" class="tag-title">TOMBOL EN (RESET)</text>
+  <text x="35" y="458" class="tag-desc">Tekan untuk me-restart mikrokontroler</text>
+  <text x="35" y="472" class="tag-desc">menjalankan kode dari baris awal.</text>
+  <!-- Line: from box to EN button -->
+  <line x1="260" y1="447" x2="315" y2="447" class="pointer-line-outer" />
+  <line x1="315" y1="447" x2="371" y2="447" class="pointer-line-inner" />
+  <circle cx="371" cy="447" r="5" class="target-bullseye" />
+  <circle cx="371" cy="447" r="2" class="target-center" />
+
+
+  <!-- CALLOUT 4 (Mid-Right): MODUL ESP-WROOM-32 -->
+  <!-- Box -->
+  <rect x="600" y="190" width="235" height="62" class="card-tag" />
+  <text x="610" y="210" class="tag-title">MODUL ESP-WROOM-32</text>
+  <text x="610" y="228" class="tag-desc">CPU Xtensa 32-bit Dual Core,</text>
+  <text x="610" y="242" class="tag-desc">520 KB SRAM, Flash internal 4 MB.</text>
+  <!-- Line: from box to metal shield -->
+  <line x1="600" y1="221" x2="545" y2="221" class="pointer-line-outer" />
+  <line x1="545" y1="221" x2="480" y2="221" class="pointer-line-inner" />
+  <circle cx="480" cy="221" r="5" class="target-bullseye" />
+  <circle cx="480" cy="221" r="2" class="target-center" />
+
+
+  <!-- CALLOUT 5 (Bottom-Right): TOMBOL BOOT (GPIO 0) -->
+  <!-- Box -->
+  <rect x="600" y="415" width="235" height="74" class="card-tag" />
+  <text x="610" y="435" class="tag-title">TOMBOL BOOT (GPIO 0)</text>
+  <text x="610" y="453" class="tag-desc">PENTING: Tahan tombol ini 2 detik</text>
+  <text x="610" y="467" class="tag-desc">jika upload macet di tulisan</text>
+  <text x="610" y="481" class="tag-desc">"Connecting........_____....."</text>
+  <!-- Line: from box to BOOT button -->
+  <line x1="600" y1="447" x2="545" y2="447" class="pointer-line-outer" />
+  <line x1="545" y1="447" x2="489" y2="447" class="pointer-line-inner" />
+  <circle cx="489" cy="447" r="5" class="target-bullseye" />
+  <circle cx="489" cy="447" r="2" class="target-center" />
+
+
+  <!-- CALLOUT 6 (Bottom-Center): PORT USB (MICRO-USB / TYPE-C) -->
+  <!-- Box -->
+  <rect x="270" y="525" width="320" height="52" class="card-tag" />
+  <text x="285" y="545" class="tag-title">PORT USB (MICRO-USB / TYPE-C)</text>
+  <text x="285" y="563" class="tag-desc">Jalur transmisi data serial &amp; pasokan daya utama 5V.</text>
+  <!-- Vertical Line: from box up to USB connector -->
+  <line x1="430" y1="525" x2="430" y2="500" class="pointer-line-outer" />
+  <circle cx="430" cy="500" r="5" class="target-bullseye" />
+  <circle cx="430" cy="500" r="2" class="target-center" />
 </svg>
