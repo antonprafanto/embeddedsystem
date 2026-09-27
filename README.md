@@ -10,6 +10,7 @@ Selamat datang di repositori resmi perkuliahan **Sistem Tertanam (Embedded Syste
 * 📌 **[Lembar Saku Pinout & Hardware Gotchas ESP32](docs/esp32_pin_gotchas.md)**
 * 🛠️ **[Minggu 0: Panduan Onboarding & Driver Clinic](labs/week-00-onboarding/README.md)**
 * 📝 **[Minggu 1: Fondasi Bahasa C & Manipulasi Bitwise](labs/week-01-bitwise-c/README.md)**
+* 📝 **[Minggu 2: Elektrikal Pin, Interrupt & Crash Debugging](labs/week-02-gpio-interrupts/README.md)**
 * 💻 **Platform:** ESP32-WROOM-32D / ESP32-S3
 * ⚙️ **Toolchain:** Visual Studio Code + PlatformIO (Hybrid: Arduino Core → Native FreeRTOS/ESP-IDF)
 
@@ -63,6 +64,10 @@ flowchart TD
 │   │   ├── platformio.ini                  # Konfigurasi project PlatformIO
 │   │   ├── README.md                       # Jobsheet modul lab
 │   │   └── src/main.cpp                    # Template kode berjenjang (Level 1-3)
+│   ├── week-02-gpio-interrupts/            # Jobsheet & Starter code praktikum W02
+│   │   ├── platformio.ini                  # Konfigurasi exception decoder
+│   │   ├── README.md                       # Jobsheet modul lab
+│   │   └── src/main.cpp                    # Template kode interrupt & crash debugging
 │   └── ...
 ├── projects/                               # Template & spesifikasi Capstone Project
 ├── SILABUS_EMBEDDED_SYSTEM_ESP32.md        # Dokumen resmi RPS kurikulum (OBE)
