@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 460" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #ffffff; stroke: #e2e8f0; stroke-width: 1.5; rx: 8px; }
+      .title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 16px; font-weight: 700; fill: #0f172a; }
+      .subtitle { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 12px; fill: #64748b; }
+      
+      .card { fill: #f8fafc; stroke-width: 1.5; rx: 6px; }
+      .card-green { stroke: #0f172a; }
+      .card-yellow { stroke: #0f172a; }
+      .card-orange { stroke: #0f172a; }
+      .card-red { stroke: #0f172a; }
+
+      .badge { rx: 4px; }
+      .badge-green { fill: #0f172a; }
+      .badge-yellow { fill: #334155; }
+      .badge-orange { fill: #475569; }
+      .badge-red { fill: #020617; }
+      .badge-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 11px; font-weight: 700; fill: #ffffff; }
+
+      .pin-pill { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1; rx: 3px; }
+      .pin-pill-danger { fill: #0f172a; stroke: #020617; stroke-width: 1; rx: 3px; }
+      .pin-name { font-family: "SFMono-Regular", Consolas, monospace; font-size: 11px; font-weight: 700; fill: #0f172a; }
+      .pin-name-white { font-family: "SFMono-Regular", Consolas, monospace; font-size: 11px; font-weight: 700; fill: #ffffff; }
+      .pin-desc { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 11px; fill: #334155; }
+      .rule-title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 11.5px; font-weight: 700; fill: #0f172a; }
+    </style>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="838" height="458" x="1" y="1" class="bg" />
+
+  <!-- Header -->
+  <text x="30" y="38" class="title">KLASIFIKASI PIN ESP32 (38-PIN DEVKIT)</text>
+  <text x="30" y="58" class="subtitle">Kelompokkan pin berdasarkan keamanan, fungsi khusus, dan pantangan hardware.</text>
+  <line x1="30" y1="72" x2="810" y2="72" stroke="#e2e8f0" stroke-width="1" />
+
+  <!-- ==================================================================== -->
+  <!-- 1. KELOMPOK PIN AMAN (TOP-LEFT)                                      -->
+  <!-- ==================================================================== -->
+  <rect x="30" y="85" width="375" height="165" class="card card-green" />
+  <rect x="42" y="97" width="180" height="22" class="badge badge-green" />
+  <text x="52" y="112" class="badge-text">🟢 PIN PALING AMAN (UTAMA)</text>
+
+  <text x="42" y="138" class="rule-title">Daftar Pin:</text>
+  <text x="42" y="156" class="pin-desc">GPIO 16, 17, 18, 19, 21, 22, 23, 25, 26, 32, 33</text>
+
+  <rect x="42" y="170" width="350" height="65" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" rx="4" />
+  <text x="52" y="188" class="pin-desc">• <tspan font-weight="700">Digital I/O &amp; PWM:</text> Semua pin di atas aman untuk LED/Relay.</tspan>
+  <text x="52" y="206" class="pin-desc">• <tspan font-weight="700">I2C Default:</text> SDA (GPIO 21), SCL (GPIO 22).</tspan>
+  <text x="52" y="224" class="pin-desc">• <tspan font-weight="700">Sensor Analog Terbaik:</tspan> GPIO 32 &amp; 33 (ADC1, kebal Wi-Fi).</text>
+
+
+  <!-- ==================================================================== -->
+  <!-- 2. KELOMPOK INPUT ONLY (TOP-RIGHT)                                   -->
+  <!-- ==================================================================== -->
+  <rect x="435" y="85" width="375" height="165" class="card card-yellow" />
+  <rect x="447" y="97" width="195" height="22" class="badge badge-yellow" />
+  <text x="457" y="112" class="badge-text">🟡 PIN KHUSUS INPUT (GPI ONLY)</text>
+
+  <text x="447" y="138" class="rule-title">Daftar Pin:</text>
+  <text x="447" y="156" class="pin-desc">GPIO 34, 35, 36 (VP), 39 (VN)</text>
+
+  <rect x="447" y="170" width="350" height="65" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" rx="4" />
+  <text x="457" y="188" class="pin-desc">• <tspan font-weight="700">TIDAK BISA OUTPUT:</text> Jangan hubungkan ke LED/Aktuator.</tspan>
+  <text x="457" y="206" class="pin-desc">• <tspan font-weight="700">TANPA PULL-UP INTERNAL:</text> Wajib resistor eksternal.</tspan>
+  <text x="457" y="224" class="pin-desc">• Sangat ideal untuk sensor analog ADC1 (kebal Wi-Fi).</text>
+
+
+  <!-- ==================================================================== -->
+  <!-- 3. KELOMPOK ADC2 vs WI-FI (BOTTOM-LEFT)                              -->
+  <!-- ==================================================================== -->
+  <rect x="30" y="265" width="375" height="175" class="card card-orange" />
+  <rect x="42" y="277" width="220" height="22" class="badge badge-orange" />
+  <text x="52" y="292" class="badge-text">⚠️ KONFLIK ADC2 DENGAN WI-FI</text>
+
+  <text x="42" y="318" class="rule-title">Daftar Pin Terpengaruh:</text>
+  <text x="42" y="334" class="pin-desc">GPIO 0, 2, 4, 12, 13, 14, 15, 25, 26, 27</text>
+
+  <rect x="42" y="348" width="350" height="78" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" rx="4" />
+  <text x="52" y="366" class="pin-desc">• Begitu fungsi <tspan font-family="monospace" font-size="10px">WiFi.begin()</tspan> aktif, ADC2 <tspan font-weight="700">MATI TOTAL</tspan>.</text>
+  <text x="52" y="384" class="pin-desc">• <tspan font-weight="700">Solusi:</tspan> Sensor analog (LDR, Potensio, LM35, CT Sensor)</text>
+  <text x="52" y="400" class="pin-desc">   <tspan font-weight="700" fill="#0f172a">WAJIB</tspan> dipasang di <tspan font-weight="700">ADC1 (GPIO 32, 33, 34, 35, 36, 39)</tspan>.</text>
+  <text x="52" y="416" class="pin-desc">• Pin ADC2 tetap aman dipakai sebagai pin Digital I/O biasa.</text>
+
+
+  <!-- ==================================================================== -->
+  <!-- 4. KELOMPOK TABU / DILARANG (BOTTOM-RIGHT)                           -->
+  <!-- ==================================================================== -->
+  <rect x="435" y="265" width="375" height="175" class="card card-red" />
+  <rect x="447" y="277" width="220" height="22" class="badge badge-red" />
+  <text x="457" y="292" class="badge-text">⛔ TABU: INTEGRATED FLASH SPI</text>
+
+  <text x="447" y="318" class="rule-title">Daftar Pin Terlarang:</text>
+  <text x="447" y="334" font-family="monospace" font-size="11px" font-weight="700" fill="#0f172a">GPIO 6, GPIO 7, GPIO 8, GPIO 9, GPIO 10, GPIO 11</text>
+
+  <rect x="447" y="348" width="350" height="78" fill="#0f172a" stroke="#020617" stroke-width="1" rx="4" />
+  <text x="457" y="368" font-family="-apple-system, sans-serif" font-size="11px" font-weight="700" fill="#ffffff">JANGAN PERNAH MENCOLOK KABEL APAPUN KE SINI!</text>
+  <text x="457" y="386" font-family="-apple-system, sans-serif" font-size="10.5px" fill="#cbd5e1">Pin-pin ini terhubung langsung ke chip memori Flash internal.</text>
+  <text x="457" y="402" font-family="-apple-system, sans-serif" font-size="10.5px" fill="#cbd5e1">Jika disentuh atau diberi sinyal luar, ESP32 akan langsung</text>
+  <text x="457" y="416" font-family="-apple-system, sans-serif" font-size="10.5px" font-weight="700" fill="#f87171">mengalami Guru Meditation Error / Bootloop!</text>
+</svg>

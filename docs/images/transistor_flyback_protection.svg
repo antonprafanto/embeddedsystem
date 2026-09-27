@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 460" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #ffffff; stroke: #e2e8f0; stroke-width: 1.5; rx: 8px; }
+      .title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 16px; font-weight: 700; fill: #0f172a; }
+      .subtitle { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 12px; fill: #64748b; }
+      
+      .schematic-wire { stroke: #0f172a; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+      .wire-node { fill: #0f172a; }
+      
+      .component-body { fill: #ffffff; stroke: #0f172a; stroke-width: 2; }
+      .component-fill { fill: #0f172a; }
+      
+      .label-main { font-family: "SFMono-Regular", Consolas, monospace; font-size: 12px; font-weight: 700; fill: #0f172a; }
+      .label-sub { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 11px; fill: #475569; }
+      .callout-box { fill: #f8fafc; stroke: #0f172a; stroke-width: 1.5; rx: 6px; }
+      .callout-title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 11px; font-weight: 700; fill: #0f172a; }
+      .callout-desc { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 10px; fill: #334155; }
+    </style>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="838" height="458" x="1" y="1" class="bg" />
+
+  <!-- Header -->
+  <text x="30" y="38" class="title">SKEMATIK RANGKAIAN PENGGERAK BEBAN DAYA (STANDAR ENJINIRING ELEKTRO)</text>
+  <text x="30" y="58" class="subtitle">Sirkuit saklar Transistor NPN dengan Dioda Proteksi Flyback untuk mencegah kerusakan akibat Back-EMF.</text>
+  <line x1="30" y1="72" x2="810" y2="72" stroke="#e2e8f0" stroke-width="1" />
+
+  <!-- ==================================================================== -->
+  <!-- SCHEMATIC CIRCUIT DIAGRAM (Left - Center)                            -->
+  <!-- ==================================================================== -->
+  
+  <!-- 1. Input Node: ESP32 GPIO -->
+  <circle cx="80" cy="250" r="5" fill="#ffffff" stroke="#0f172a" stroke-width="2" />
+  <text x="50" y="225" class="label-main">GPIO ESP32</text>
+  <text x="50" y="240" class="label-sub">(Logika 3.3V)</text>
+
+  <!-- Wire: GPIO to Resistor -->
+  <line x1="85" y1="250" x2="140" y2="250" class="schematic-wire" />
+
+  <!-- Resistor RB (1k Ohm) -->
+  <rect x="140" y="240" width="50" height="20" class="component-body" />
+  <text x="148" y="232" class="label-main">RB: 1kΩ</text>
+
+  <!-- Wire: Resistor to Transistor Base -->
+  <line x1="190" y1="250" x2="250" y2="250" class="schematic-wire" />
+
+  <!-- 2. NPN Transistor (2N2222 / BC547) -->
+  <!-- Base vertical bar -->
+  <line x1="250" y1="230" x2="250" y2="270" stroke="#0f172a" stroke-width="3" stroke-linecap="round" />
+  <text x="235" y="245" class="label-main">B</text>
+
+  <!-- Collector lead & angled path -->
+  <line x1="250" y1="240" x2="275" y2="215" class="schematic-wire" />
+  <line x1="275" y1="215" x2="275" y2="190" class="schematic-wire" />
+  <text x="282" y="210" class="label-main">C</text>
+
+  <!-- Emitter lead & angled path with Arrow -->
+  <line x1="250" y1="260" x2="275" y2="285" class="schematic-wire" />
+  <!-- Emitter Arrow pointing outwards -->
+  <polygon points="266,276 276,286 264,285" fill="#0f172a" />
+  <line x1="275" y1="285" x2="275" y2="350" class="schematic-wire" />
+  <text x="282" y="295" class="label-main">E</text>
+
+  <!-- Transistor Type Label -->
+  <text x="215" y="290" class="label-main">Q1</text>
+  <text x="195" y="305" class="label-sub">NPN (2N2222)</text>
+
+  <!-- Ground Symbol below Emitter -->
+  <line x1="260" y1="350" x2="290" y2="350" class="schematic-wire" />
+  <line x1="266" y1="356" x2="284" y2="356" class="schematic-wire" />
+  <line x1="271" y1="362" x2="279" y2="362" class="schematic-wire" />
+  <text x="255" y="380" class="label-main">GND</text>
+  <text x="230" y="395" class="label-sub">(Common GND)</text>
+
+  <!-- 3. Collector Branch Upwards -->
+  <circle cx="275" cy="190" r="3.5" class="wire-node" />
+
+  <!-- Left Path: Inductive Load (Relay Coil / Motor) -->
+  <line x1="275" y1="190" x2="330" y2="190" class="schematic-wire" />
+  <line x1="330" y1="190" x2="330" y2="175" class="schematic-wire" />
+
+  <!-- Inductive Load Symbol (Box / Coil) -->
+  <rect x="315" y="125" width="30" height="50" class="component-body" />
+  <!-- Internal coil loops representation -->
+  <path d="M 320 135 Q 330 130 330 140 Q 330 150 320 150 Q 330 150 330 160" fill="none" stroke="#0f172a" stroke-width="1.5" />
+  <text x="355" y="145" class="label-main">KOIL RELAY /</text>
+  <text x="355" y="160" class="label-main">MOTOR DC (5V)</text>
+  <text x="355" y="175" class="label-sub">[Beban Induktif]</text>
+
+  <line x1="330" y1="125" x2="330" y2="110" class="schematic-wire" />
+  <line x1="330" y1="110" x2="275" y2="110" class="schematic-wire" />
+
+  <!-- Right Path: Flyback Diode (1N4007) in Anti-Parallel -->
+  <line x1="275" y1="190" x2="220" y2="190" class="schematic-wire" />
+  <line x1="220" y1="190" x2="220" y2="165" class="schematic-wire" />
+
+  <!-- Diode Symbol (Cathode UP towards +5V, Anode DOWN towards Collector) -->
+  <!-- Triangle (Anode) pointing UP -->
+  <polygon points="210,165 230,165 220,145" fill="#0f172a" />
+  <!-- Cathode Bar at top -->
+  <line x1="210" y1="145" x2="230" y2="145" stroke="#0f172a" stroke-width="2.5" />
+  <line x1="220" y1="145" x2="220" y2="110" class="schematic-wire" />
+  <line x1="220" y1="110" x2="275" y2="110" class="schematic-wire" />
+
+  <text x="145" y="152" class="label-main">DIODA D1</text>
+  <text x="145" y="167" class="label-sub">1N4007 (Flyback)</text>
+
+  <!-- Top +5V Node -->
+  <circle cx="275" cy="110" r="3.5" class="wire-node" />
+  <line x1="275" y1="110" x2="275" y2="90" class="schematic-wire" />
+  <circle cx="275" cy="85" r="5" fill="#ffffff" stroke="#0f172a" stroke-width="2" />
+  <text x="290" y="90" class="label-main">+5V DC (Catu Daya Eksternal)</text>
+
+
+  <!-- ==================================================================== -->
+  <!-- EXPLANATORY CALLOUT BOXES (Right Side)                               -->
+  <!-- ==================================================================== -->
+  
+  <!-- Box 1: Mengapa Butuh Dioda Flyback? -->
+  <rect x="510" y="85" width="300" height="95" class="callout-box" />
+  <text x="525" y="107" class="callout-title">1. FUNGSI DIODA FLYBACK (1N4007):</text>
+  <text x="525" y="125" class="callout-desc">Saat transistor OFF seketika, medan magnet koil</text>
+  <text x="525" y="139" class="callout-desc">runtuh dan menciptakan lonjakan tegangan balik</text>
+  <text x="525" y="153" class="callout-desc">ekstrem (Back-EMF hingga &gt;100V). Dioda ini meredam</text>
+  <text x="525" y="167" class="callout-desc">tegangan balik tersebut agar transistor tidak jebol.</text>
+
+  <!-- Box 2: Mengapa Butuh Resistor Basis 1k? -->
+  <rect x="510" y="195" width="300" height="95" class="callout-box" />
+  <text x="525" y="217" class="callout-title">2. FUNGSI RESISTOR BASIS (RB = 1kΩ):</text>
+  <text x="525" y="235" class="callout-desc">Pin ESP32 hanya mampu mengalirkan arus aman</text>
+  <text x="525" y="249" class="callout-desc">maksimal 12 mA. Resistor 1kΩ membatasi arus basis</text>
+  <text x="525" y="263" class="callout-desc">ke kisaran aman ~2.6 mA: (3.3V - 0.7V) / 1000Ω,</text>
+  <text x="525" y="277" class="callout-desc">namun cukup untuk membuat transistor jenuh (SAT).</text>
+
+  <!-- Box 3: Common Ground Wajib! -->
+  <rect x="510" y="305" width="300" height="95" class="callout-box" />
+  <text x="525" y="327" class="callout-title">3. ATURAN COMMON GROUND (GND WAJIB SATU):</text>
+  <text x="525" y="345" class="callout-desc">Meskipun menggunakan catu daya 5V terpisah</text>
+  <text x="525" y="359" class="callout-desc">untuk relay/motor, pin GND ESP32 dan GND catu</text>
+  <text x="525" y="373" class="callout-desc">daya 5V WAJIB dihubungkan bersama sebagai titik</text>
+  <text x="525" y="387" class="callout-desc">referensi tegangan 0V bersama!</text>
+</svg>
