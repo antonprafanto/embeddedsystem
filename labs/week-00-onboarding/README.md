@@ -142,7 +142,7 @@ Hapus seluruh isi file tersebut, lalu ganti dengan kode pengujian resmi di bawah
 
 ```cpp
 /**
- * EE-304: Program Uji Asap (Smoke Test) ESP32
+ * Program Uji Asap (Smoke Test) ESP32
  * Tujuan: Menguji jalur komunikasi USB Serial & LED Onboard
  */
 
@@ -163,7 +163,7 @@ void setup() {
 
   Serial.println("\n==================================================");
   Serial.println("🎉 SELAMAT! SISTEM ESP32 ANDA SUDAH SIAP TEMPUR! ");
-  Serial.println("   Mata Kuliah: Sistem Tertanam (EE-304)           ");
+  Serial.println("   Mata Kuliah: Sistem Tertanam                   ");
   Serial.println("==================================================");
 }
 

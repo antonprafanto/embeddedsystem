@@ -9,9 +9,9 @@
 | Parameter | Keterangan |
 | :--- | :--- |
 | **Nama Mata Kuliah** | Sistem Tertanam (*Embedded Systems*) |
-| **Kode Mata Kuliah** | EE-304 |
-| **Bobot SKS** | 3 SKS (2 SKS Kuliah Teori, 1 SKS Praktikum Terpandu) |
-| **Beban Jam Perkuliahan** | 2 x 50 menit teori kelas, 1 x 170 menit praktikum lab per minggu |
+| **Kode Mata Kuliah** | - |
+| **Bobot SKS** | - |
+| **Beban Jam Perkuliahan** | - |
 | **Semester** | V (Tingkat 3 - Ganjil) |
 | **Prasyarat Formal** | Rangkaian Digital & Mikroprosesor, Dasar Pemrograman Komputer |
 | **Platform Target** | ESP32 (Xtensa Dual-Core 32-bit LX6 / ESP32-S3) |

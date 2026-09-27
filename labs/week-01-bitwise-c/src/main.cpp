@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- * MODUL PRAKTIKUM SISTEM TERTANAM (EE-304) - MINGGU 1
+ * MODUL PRAKTIKUM SISTEM TERTANAM - MINGGU 1
  * Topik: Fondasi Bahasa C untuk Sistem Tertanam & Manipulasi Bitwise
  * ============================================================================
  * Mahasiswa: [Nama Lengkap Anda]
@@ -123,7 +123,7 @@ void setup() {
     digitalWrite(ONBOARD_LED_PIN, LOW);
 
     Serial.println("==================================================");
-    Serial.println("  EE-304: PRAKTIKUM SISTEM TERTANAM - MINGGU 01   ");
+    Serial.println("  PRAKTIKUM SISTEM TERTANAM - MINGGU 01           ");
     Serial.println("  Uji Operasi Bitwise & Non-Blocking State Machine");
     Serial.println("==================================================");
 

@@ -1,4 +1,4 @@
-# ⚡ EE-304: Sistem Tertanam (Embedded Systems)
+# ⚡ Sistem Tertanam (Embedded Systems)
 ### Program Studi Sarjana (S1) Teknik Elektro
 
 Selamat datang di repositori resmi perkuliahan **Sistem Tertanam (Embedded Systems)** berbasis **SoC ESP32 (Xtensa Dual-Core 32-bit)**. Repositori ini berfungsi sebagai portal distribusi materi, panduan praktikum (jobsheet), starter code, serta dokumentasi teknis perkuliahan.

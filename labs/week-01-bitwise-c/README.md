@@ -1,7 +1,7 @@
 # 📝 JOBSHEET PRAKTIKUM MINGGU 1: FONDASI BAHASA C & MANIPULASI BITWISE
 ### Pemrograman Tingkat Register dan Eksekusi *Non-Blocking* pada ESP32
 
-> **Mata Kuliah:** Sistem Tertanam (*Embedded Systems*) - EE-304  
+> **Mata Kuliah:** Sistem Tertanam (*Embedded Systems*)  
 > **Target Pengguna:** Mahasiswa S1 Teknik Elektro (Tingkat Pemula / Awam)  
 > **Prasyarat:** Telah menyelesaikan [Modul Minggu 0: Onboarding & Driver Clinic](../week-00-onboarding/README.md)  
 > **Alokasi Waktu:** 170 Menit (Sesi Lab Terpandu / Mandiri)  
@@ -67,7 +67,7 @@ Perhatikan diagram teknis berikut untuk melihat bagaimana setiap operator matema
 
 ![Visualisasi Operasi Bitwise dan Bit-Masking](images/bitwise_operations_visual.png)
 
-*Sumber ilustrasi: Diagram orisinal laboratorium Sistem Tertanam EE-304.*
+*Sumber ilustrasi: Diagram orisinal laboratorium Sistem Tertanam.*
 
 Berikut penjelasan logikanya secara mendalam:
 
@@ -140,7 +140,7 @@ Perhatikan perbandingan garis waktu eksekusi CPU di bawah ini:
 
 ![Perbandingan Garis Waktu Eksekusi: Blocking delay() vs Non-Blocking millis()](images/blocking_vs_nonblocking_timeline.png)
 
-*Sumber ilustrasi: Diagram orisinal laboratorium Sistem Tertanam EE-304.*
+*Sumber ilustrasi: Diagram orisinal laboratorium Sistem Tertanam.*
 
 ### 🔍 Analogi Dapur Koki:
 * **Pendekatan `delay()` (*Blocking*):**  
@@ -223,7 +223,7 @@ Perhatikan bilah status (*Status Bar*) berwarna biru di pojok kiri bawah VS Code
 
 ```text
 ==================================================
-  EE-304: PRAKTIKUM SISTEM TERTANAM - MINGGU 01   
+  PRAKTIKUM SISTEM TERTANAM - MINGGU 01   
   Uji Operasi Bitwise & Non-Blocking State Machine
 ==================================================
 Status Register Awal          : 0b0000 0000
@@ -338,4 +338,4 @@ Setelah seluruh tugas praktikum selesai dan teruji:
 4. Lampirkan link repository GitHub dan tangkapan layar (*screenshot*) Serial Monitor pada form pengumpulan tugas di Google Classroom / LMS kampus.
 
 ---
-*Modul Praktikum EE-304 Sistem Tertanam | Program Studi S1 Teknik Elektro*
+*Modul Praktikum Sistem Tertanam | Program Studi S1 Teknik Elektro*
