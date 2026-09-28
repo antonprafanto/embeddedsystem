@@ -162,6 +162,18 @@ ADC pada ESP32 terkenal memiliki ketidaklinearan (*non-linearity*) pada kedua uj
    Nilai_ADC = (1 / N) × Σ analogRead(pin)
    ```
 
+### Kalibrasi Pabrikan eFuse Vref: Rahasia Pembacaan MiliVolt Akurat
+Pernahkah Anda mengukur pin 3.3V dengan voltmeter digital dan mendapatkan angka 3.28V, tetapi rumus matematis kasar ESP32 menghasilkan nilai yang meleset?  
+Hal ini terjadi karena setiap chip silikon ESP32 memiliki variasi tegangan referensi internal bawaan pabrik (berkisar antara 1000 mV hingga 1200 mV). Untuk menjamin akurasi instrumentasi industri, pabrik Espressif mengukur karakteristik setiap chip sebelum dikemas dan membakar kurva kalibrasi presisi ke dalam memori permanen satu kali tulis bernama **eFuse** (*eFuse Two Point Calibration / Vref Calibration*).
+
+Di lingkungan Arduino-ESP32, Anda dapat langsung memanfaatkan kalibrasi eFuse ini menggunakan fungsi bawaan:
+```cpp
+// Membaca tegangan fisik dalam satuan miliVolt langsung terkalibrasi pabrikan eFuse:
+uint32_t voltage_mv = analogReadMilliVolts(POT_ADC_PIN);
+float voltage_volt = voltage_mv / 1000.0;
+```
+Fungsi `analogReadMilliVolts()` secara otomatis mengompensasi kurva non-linearitas SAR ADC berdasarkan data kalibrasi chip masing-masing, sehingga hasil pengukuran jauh lebih presisi dibandingkan rumus bagi-kali biasa!
+
 ---
 
 ## ⚡ 3. HARDWARE PWM DENGAN TIMER LEDC
@@ -191,7 +203,25 @@ Mikrokontroler ESP32 tidak memiliki periferal PWM berbasis software primitif sep
 
 ## 🔌 4. PANDUAN PERAKITAN BREADBOARD (WIRING DIAGRAM)
 
-Sebelum mencolokkan kabel USB ke komputer, susunlah komponen-komponen di atas breadboard mengikuti panduan komprehensif berikut:
+Sebelum mencolokkan kabel USB ke komputer, mari kita pelajari bentuk fisik komponen agar tidak terjadi kesalahan fatal saat merakit:
+
+### A. Kenali Kaki Fisik Komponen Anda (Pinout Reference)
+Kesalahan paling umum yang dialami mahasiswa di meja lab adalah salah menancapkan kaki komponen karena bingung membedakan Emitor, Basis, Kolektor pada transistor atau terbalik memasang polaritas dioda.
+
+Gunakan panduan visual di bawah ini sebelum menancapkan komponen apa pun ke breadboard:
+
+![Panduan Fisik Komponen: Identifikasi Kaki Pinout dan Polaritas](images/component_pinout_reference.png)
+*Sumber gambar: Diagram referensi pinout fisik laboratorium Sistem Tertanam.*
+
+> [!TIP]
+> **Aturan 3 Detik Cek Fisik:**
+> 1. **Transistor 2N2222:** Posisikan sisi datar bertuliskan kode "2N2222" menghadap langsung ke wajah Anda dengan kaki menjuntai ke bawah. Urutan kakinya dari kiri ke kanan adalah **1: Emitor (E), 2: Basis (B), 3: Kolektor (C)**.
+> 2. **Dioda 1N4007:** Cari gelang berwarna perak/abu-abu di bodi silinder hitam. Sisi bergelang perak adalah **Katoda (-)** yang wajib disambung ke rel +5V positif! Sisi bodi hitam polos adalah **Anoda (+)** yang disambung ke kaki Kolektor transistor.
+> 3. **Potensiometer 10 kΩ:** Kaki kiri ke 3.3V, kaki tengah (wiper) ke GPIO 34, dan kaki kanan ke GND.
+
+---
+
+### B. Diagram Rangkaian Lengkap di Atas Breadboard
 
 ![Panduan Wiring Rangkaian Breadboard Minggu 3](images/breadboard_wiring_week03.png)
 *Sumber gambar: Diagram tata letak pengkabelan laboratorium Sistem Tertanam.*
@@ -223,12 +253,18 @@ Sebelum mencolokkan kabel USB ke komputer, susunlah komponen-komponen di atas br
 
 Bagi Anda yang baru pertama kali menggunakan Visual Studio Code dan PlatformIO, ikuti langkah-langkah presisi berikut:
 
+### Langkah 0: Memastikan Driver USB & Port COM Terdeteksi
+Sebelum membuka kode, pastikan komputer Anda mengenali board ESP32:
+1. Hubungkan kabel USB dari board ESP32 ke laptop/PC Anda.
+2. Di Windows, buka **Device Manager** (tekan `Win + X` lalu pilih **Device Manager**).
+3. Buka dropdown **Ports (COM & LPT)**. Pastikan muncul perangkat seperti **Silicon Labs CP210x USB to UART Bridge (COMx)** atau **USB-SERIAL CH340 (COMx)**.
+4. Jika muncul tanda seru kuning atau perangkat tidak terdeteksi, silakan pasang driver USB sesuai panduan di [Modul Minggu 0: Onboarding](../week-00-onboarding/README.md).
+
 ### Langkah 1: Membuka Proyek di Visual Studio Code
-1. Jalankan aplikasi **Visual Studio Code** di komputer Anda.
-2. Klik menu **File** → **Open Folder...** (atau tekan kombinasi tombol `Ctrl + K, Ctrl + O`).
-3. Arahkan dan pilih folder repositori perkuliahan:  
-   `labs/week-03-transistor-adc-pwm`
-4. Tunggu beberapa detik hingga bilah status (*Status Bar*) berwarna biru di bagian bawah VS Code menampilkan ikon PlatformIO.
+1. Jalankan aplikasi **Visual Studio Code**.
+2. Klik menu **File** → **Open Folder...** (atau tekan `Ctrl + K, Ctrl + O`).
+3. Pilih folder: `labs/week-03-transistor-adc-pwm`.
+4. Tunggu beberapa saat hingga bilah status (*Status Bar*) berwarna biru di bagian bawah VS Code memuat ekstensi PlatformIO.
 
 ### Langkah 2: Memeriksa File Konfigurasi `platformio.ini`
 Pastikan file [platformio.ini](platformio.ini) telah dikonfigurasi dengan baud rate `115200` dan filter decoder:
@@ -246,40 +282,34 @@ build_type = debug
 
 ### Langkah 3: Menjalankan Kompilasi & Unggah Kode
 Perhatikan deretan ikon kecil di **Bilah Status Bagian Bawah VS Code**:
-1. **Kompilasi Program (Build):** Klik ikon centang **`✓`** (atau tekan tombol pintas `Ctrl + Alt + B`). Pastikan terminal menampilkan pesan `[SUCCESS]`.
-2. **Hubungkan Board ESP32:** Tancapkan kabel USB dari board ESP32 ke port USB laptop/PC Anda.
-3. **Unggah Program (Upload):** Klik ikon panah kanan **`→`** (atau tekan tombol pintas `Ctrl + Alt + U`). Tunggu hingga persentase penulisan flash mencapai 100% dan muncul tulisan `Leaving... Hard resetting via RTS pin...`.
-4. **Buka Serial Monitor:** Klik ikon steker listrik colokan **`🔌`** di bilah bawah (atau gunakan shortcut `Ctrl + Alt + S`).
+1. **Kompilasi Program (Build):** Klik ikon centang **`✓`** (atau tekan `Ctrl + Alt + B`). Pastikan terminal menampilkan tulisan hijau `[SUCCESS]`.
+2. **Unggah Program (Upload):** Klik ikon panah kanan **`→`** (atau tekan `Ctrl + Alt + U`). Tunggu hingga persentase penulisan flash mencapai 100% dan muncul tulisan `Leaving... Hard resetting via RTS pin...`.
+3. **Buka Serial Monitor:** Klik ikon steker listrik colokan **`🔌`** di bilah status bawah (atau gunakan shortcut `Ctrl + Alt + S`).
+
+> [!WARNING]
+> **TIPS ANTI-ERROR PORT SIBUK:**  
+> Jika saat proses Upload muncul error `could not open port 'COMx': PermissionError(13, 'Access is denied')`, itu artinya terminal Serial Monitor sedang terbuka mengunci port. Cukup klik ikon tong sampah / tempat sampah (*Kill Terminal*) pada jendela terminal Serial Monitor, lalu klik Upload **`→`** kembali!
 
 ---
 
-### Langkah 4: Bedah Kode Sumber `src/main.cpp`
-Mari kita telaah arsitektur kode sumber modular yang berada di file [src/main.cpp](src/main.cpp):
+### Langkah 4: Bedah Kode Sumber & Cara Interaksi Serial
+Buka file [src/main.cpp](src/main.cpp). Program telah dilengkapi logika kendali terstruktur:
+* **Filter Multisampling:** Membaca pin ADC1 (GPIO 34) sebanyak 16 sampel rata-rata untuk kestabilan sinyal.
+* **Hardware PWM LEDC:** Menghasilkan sinyal frekuensi 5 kHz pada resolusi 8-bit (0-255) di GPIO 19.
+* **Telemetri Non-Blocking:** Mengirimkan data telemetri berkala setiap 250 ms menggunakan fungsi `millis()`.
 
-```cpp
-// 1. Membaca Potensiometer dengan Filter 16x Multisampling
-uint16_t current_adc_raw = read_adc_multisampling(POT_ADC_PIN, 16);
+#### Cara Mengirim Perintah di Serial Monitor VS Code:
+Di jendela terminal Serial Monitor PlatformIO, arahkan kursor Anda ke area terminal atau kotak input teks di bagian atas:
+1. Ketik huruf **`m`** lalu tekan `Enter` → Beralih antara **Mode Otomatis (Potensiometer)** dan **Mode Manual (Serial)**.
+2. Di Mode Manual, ketik angka **`0`** s.d. **`9`** lalu tekan `Enter` → Mengatur duty cycle PWM dari 0% hingga 90%.
+3. Ketik huruf **`f`** lalu tekan `Enter` → Mengaktifkan kekuatan penuh 100% (*Full Power*).
+4. Ketik huruf **`s`** lalu tekan `Enter` → Mencetak status telemetri terkini.
+5. Ketik huruf **`h`** lalu tekan `Enter` → Menampilkan kembali menu bantuan perintah.
 
-// 2. Mengonversi ke Estimasi Tegangan Fisik (0 - 3.3V)
-float current_voltage = (current_adc_raw / 4095.0) * 3.3;
-
-// 3. Memetakan Nilai ADC 12-bit (0-4095) ke Nilai Duty Cycle PWM 8-bit (0-255)
-uint8_t target_duty = map(current_adc_raw, 0, 4095, 0, 255);
-
-// 4. Menyalurkan Sinyal PWM ke Basis Transistor
-write_pwm_duty(target_duty);
-```
-
-#### Cara Interaksi Lewat Serial Monitor:
-Kode di `src/main.cpp` telah dilengkapi fitur komunikasi serial dua arah yang sangat interaktif:
-* **Ganti Mode:** Ketik huruf **`m`** lalu tekan `Enter` di Serial Monitor. Sistem akan berpindah dari mode **OTOMATIS (Potensiometer)** ke mode **MANUAL (Serial Control)**.
-* **Uji Kecepatan Motor di Mode Manual:**
-  * Ketik angka **`0`** → Motor berhenti total (Duty 0%).
-  * Ketik angka **`5`** → Motor berputar 50% kekuatan (Duty 127/255).
-  * Ketik angka **`9`** → Motor berputar 90% kekuatan.
-  * Ketik huruf **`f`** → Motor berputar 100% kekuatan penuh (*Full Power*).
-* **Cek Status:** Ketik huruf **`s`** untuk mencetak telemetri tegangan, nilai ADC, dan duty cycle saat ini.
-* **Bantuan Perintah:** Ketik huruf **`h`** untuk mencetak ulang menu bantuan perintah.
+### Langkah 5: Membuka Visualisasi Grafik (Serial Plotter)
+Untuk melihat bentuk grafik linieritas respon potensiometer secara langsung:
+* Jika menggunakan **Arduino IDE**: Klik menu **Tools** → **Serial Plotter** (pastikan baud rate disetel ke `115200`).
+* Jika menggunakan **VS Code**: Anda dapat memasang ekstensi gratis **Teleplot** atau menggunakan extension bawaan PlatformIO Device Monitor plotter. Putar potensiometer dan amati bagaimana grafik tegangan analog naik dan turun dengan mulus tanpa patahan tajam!
 
 ---
 
@@ -288,21 +318,48 @@ Kode di `src/main.cpp` telah dilengkapi fitur komunikasi serial dua arah yang sa
 Selesaikan 3 level tantangan berikut untuk membuktikan penguasaan materi Anda:
 
 ### 🟢 Level 1: Karakterisasi Respon ADC & Plotting Visual (Wajib Selesai di Kelas)
-1. Buka fitur **Serial Plotter** di PlatformIO/VS Code atau Arduino IDE.
-2. Putar knob potensiometer perlahan dari posisi paling kiri (0V), ke tengah (1.65V), hingga mentok ke kanan (3.3V).
-3. Catat di lembar kerja Anda:
-   * Pada nilai putaran knob berapa motor DC mulai mampu berputar mengatasi gesekan poros mekaniknya?
+1. Buka Serial Plotter dan putar knob potensiometer perlahan dari posisi paling kiri (0V), ke tengah (1.65V), hingga mentok ke kanan (3.3V).
+2. Catat di lembar kerja laporan Anda:
+   * Pada nilai putaran knob berapa motor DC mulai mampu berputar mengatasi gesekan poros mekaniknya (*starting torque*)?
    * Apakah grafik kenaikan nilai ADC terhadap posisi putaran potensiometer terlihat mulus dan linier?
 
 ### 🟡 Level 2: Implementasi Histeresis & Deadband Filter (Nilai B)
 * **Masalah Industri:** Saat potensiometer berada di dekat posisi nol, sedikit saja hembusan udara atau getaran meja dapat membuat nilai ADC melompat-lompat kecil (misal: 0, 15, 2, 8). Hal ini menyebabkan motor mendengung (*whining noise*) tanpa berputar karena arus tidak cukup kuat menggerakkan rotor, yang menyebabkan transistor cepat panas.
 * **Tugas Anda:** Modifikasi fungsi pembacaan di `src/main.cpp` dengan menambahkan algoritma **Deadband (Ambang Batas Bawah)**:
   * Jika nilai ADC mentah `< 150` (sekitar ≈ 0.12 V), paksa nilai duty cycle menjadi **0** murni.
-  * Terapkan ambang histeresis agar motor tidak tersentak-sentak saat berada di perbatasan nilai mati.
+  * Terapkan ambang batas bawah sehingga motor baru mulai menyala jika nilai ADC melampaui 180, dan baru mati jika turun di bawah 150 (histeresis).
+* **Contoh Panduan Logika Kode:**
+  ```cpp
+  const uint16_t DEADBAND_THRESHOLD = 150;
+  uint8_t target_duty = 0;
+
+  if (current_adc_raw > DEADBAND_THRESHOLD) {
+      // Petakan dari batas ambang hingga nilai maksimum
+      target_duty = map(current_adc_raw, DEADBAND_THRESHOLD, 4095, 0, 255);
+  } else {
+      target_duty = 0; // Matikan total untuk melindungi transistor & motor
+  }
+  write_pwm_duty(target_duty);
+  ```
 
 ### 🔴 Level 3: Algoritma Soft-Start & Inrush Current Limiter (Nilai A)
 * **Masalah Industri:** Ketika Anda tiba-tiba menyetel duty cycle dari 0% langsung ke 100% (misalnya dengan menekan tombol `f`), motor DC akan menarik arus lonjakan awal (*inrush current*) hingga 5 kali lipat dari arus normalnya! Hal ini sering kali memicu drop tegangan yang membuat ESP32 mengalami restart sendiri (*Brownout*).
 * **Tugas Anda:** Buatlah fungsi **`soft_start_pwm(uint8_t target_duty, uint16_t ramp_duration_ms)`** yang menaikkan nilai duty cycle secara bertahap (interpolasi linear atau S-Curve) selama durasi waktu tertentu (misalnya dinaikkan setiap 10 milidetik), sehingga motor berakselerasi dengan halus tanpa lonjakan arus yang membebani rel catu daya.
+* **Contoh Panduan Logika Kode:**
+  ```cpp
+  void soft_start_pwm(uint8_t target_duty, uint16_t step_delay_ms) {
+      if (target_duty > current_duty) {
+          // Akselerasi bertahap (Ramp-Up)
+          for (int d = current_duty; d <= target_duty; d++) {
+              write_pwm_duty(d);
+              delay(step_delay_ms); // Interval kenaikan tiap tingkat PWM
+          }
+      } else {
+          // Jika menurunkan kecepatan, dapat langsung diaplikasikan
+          write_pwm_duty(target_duty);
+      }
+  }
+  ```
 
 ---
 
@@ -311,6 +368,7 @@ Selesaikan 3 level tantangan berikut untuk membuktikan penguasaan materi Anda:
 | Masalah yang Sering Muncul | Penyebab Utama | Solusi Perbaikan Cepat |
 |:---|:---|:---|
 | **ESP32 tiba-tiba restart sendiri saat motor mulai berputar kencang.** | Terjadi penurunan tegangan sesaat (*voltage sag / brownout*) pada rel daya 5V/3.3V akibat motor menarik arus awal yang terlalu besar. | 1. Gunakan catu daya terpisah untuk motor.<br>2. Pasang kapasitor elektrolit (100 µF hingga 470 µF) melintasi rel daya motor sebagai penyimpan cadangan energi lokal.<br>3. Pastikan kabel USB Anda berkualitas baik. |
+| **Error `PermissionError: Access is denied` saat upload program.** | Port Serial COM sedang terkunci karena Serial Monitor di VS Code masih aktif membuka koneksi. | Klik ikon **tempat sampah** (*Kill Terminal*) pada jendela terminal Serial Monitor VS Code, lalu klik tombol Upload **`→`** kembali. |
 | **Relay berderik sangat cepat seperti suara tembakan senapan mesin.** | Anda menghubungkan modul relay ke pin sinyal PWM berfrekuensi tinggi (5 kHz). | Relay adalah saklar mekanik yang lambat (maksimal beralih beberapa kali per detik). **JANGAN beri sinyal PWM berkecepatan tinggi ke relay!** Berikan sinyal logika digital murni `HIGH` (menutup penuh) atau `LOW` (membuka penuh). |
 | **Nilai ADC di Serial Monitor melompat-lompat acak padahal potensiometer diam.** | 1. Kaki wiper potensiometer longgar di breadboard.<br>2. Anda lupa menghubungkan kaki ketiga potensiometer ke GND.<br>3. Terjadi *floating input*. | Periksa kembali koneksi ketiga kaki potensiometer di breadboard. Pastikan kaki kiri terpasang kuat ke 3.3V, kaki kanan ke GND, dan kaki tengah ke GPIO 34. |
 | **Dioda 1N4007 terasa sangat panas saat disentuh.** | Dioda dipasang terbalik! Katoda (garis perak) dipasang ke ground, bukan ke kutub positif. | **SEGERA CABUT KABEL USB!** Dioda terbalik akan menciptakan korsleting langsung antara +5V dan Ground saat transistor ON. Balikkan arah dioda sehingga garis perak menghadap ke +5V. |
