@@ -12,6 +12,7 @@ Selamat datang di repositori resmi perkuliahan **Sistem Tertanam (Embedded Syste
 * 📝 **[Minggu 1: Fondasi Bahasa C & Manipulasi Bitwise](labs/week-01-bitwise-c/README.md)**
 * 📝 **[Minggu 2: Elektrikal Pin, Interrupt & Crash Debugging](labs/week-02-gpio-interrupts/README.md)**
 * 📝 **[Minggu 3: Interfacing Beban Daya (Transistor Driver) & Periferal Analog (ADC1 & PWM)](labs/week-03-transistor-adc-pwm/README.md)**
+* 📝 **[Minggu 4: Penyimpanan Persisten (NVS & LittleFS) & Literasi Datasheet Komponen](labs/week-04-nvs-littlefs-datasheet/README.md)**
 * 💻 **Platform:** ESP32-WROOM-32D / ESP32-S3
 * ⚙️ **Toolchain:** Visual Studio Code + PlatformIO (Hybrid: Arduino Core → Native FreeRTOS/ESP-IDF)
 
@@ -74,6 +75,13 @@ flowchart TD
 │   │   ├── README.md                       # Jobsheet modul lab
 │   │   ├── images/                         # Diagram rangkaian & visualisasi gelombang
 │   │   └── src/main.cpp                    # Driver transistor, ADC1 multisampling & LEDC PWM
+│   ├── week-04-nvs-littlefs-datasheet/     # Jobsheet & Starter code praktikum W04
+│   │   ├── platformio.ini                  # Konfigurasi custom partitions & LittleFS
+│   │   ├── partitions.csv                  # Skema tabel partisi flash 4MB
+│   │   ├── README.md                       # Jobsheet modul lab
+│   │   ├── data/config.json                # Aset statis berkas LittleFS
+│   │   ├── images/                         # Peta partisi flash, hierarki memori & bedah datasheet
+│   │   └── src/main.cpp                    # NVS Preferences, LittleFS file I/O & Interactive CLI
 │   └── ...
 ├── projects/                               # Template & spesifikasi Capstone Project
 ├── SILABUS_EMBEDDED_SYSTEM_ESP32.md        # Dokumen resmi RPS kurikulum (OBE)

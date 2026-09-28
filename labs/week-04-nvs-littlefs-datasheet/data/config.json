@@ -1,0 +1,16 @@
+{
+  "device_id": "ESP32-NODE-LAB-04",
+  "project_name": "Praktikum Sistem Tertanam W04",
+  "author": "Lab Sistem Tertanam S1 Teknik Elektro",
+  "firmware_version": "1.4.0-rev",
+  "default_settings": {
+    "sampling_rate_ms": 1000,
+    "baud_rate": 115200,
+    "sensor_model": "Bosch-BME280-Industrial",
+    "calibration_offset": 0.25
+  },
+  "safety_limits": {
+    "max_temperature_celsius": 85.0,
+    "min_voltage_volts": 3.0
+  }
+}
