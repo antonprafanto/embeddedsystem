@@ -11,6 +11,7 @@ Selamat datang di repositori resmi perkuliahan **Sistem Tertanam (Embedded Syste
 * 🛠️ **[Minggu 0: Panduan Onboarding & Driver Clinic](labs/week-00-onboarding/README.md)**
 * 📝 **[Minggu 1: Fondasi Bahasa C & Manipulasi Bitwise](labs/week-01-bitwise-c/README.md)**
 * 📝 **[Minggu 2: Elektrikal Pin, Interrupt & Crash Debugging](labs/week-02-gpio-interrupts/README.md)**
+* 📝 **[Minggu 3: Interfacing Beban Daya (Transistor Driver) & Periferal Analog (ADC1 & PWM)](labs/week-03-transistor-adc-pwm/README.md)**
 * 💻 **Platform:** ESP32-WROOM-32D / ESP32-S3
 * ⚙️ **Toolchain:** Visual Studio Code + PlatformIO (Hybrid: Arduino Core → Native FreeRTOS/ESP-IDF)
 
@@ -68,6 +69,11 @@ flowchart TD
 │   │   ├── platformio.ini                  # Konfigurasi exception decoder
 │   │   ├── README.md                       # Jobsheet modul lab
 │   │   └── src/main.cpp                    # Template kode interrupt & crash debugging
+│   ├── week-03-transistor-adc-pwm/         # Jobsheet & Starter code praktikum W03
+│   │   ├── platformio.ini                  # Konfigurasi project PlatformIO
+│   │   ├── README.md                       # Jobsheet modul lab
+│   │   ├── images/                         # Diagram rangkaian & visualisasi gelombang
+│   │   └── src/main.cpp                    # Driver transistor, ADC1 multisampling & LEDC PWM
 │   └── ...
 ├── projects/                               # Template & spesifikasi Capstone Project
 ├── SILABUS_EMBEDDED_SYSTEM_ESP32.md        # Dokumen resmi RPS kurikulum (OBE)
