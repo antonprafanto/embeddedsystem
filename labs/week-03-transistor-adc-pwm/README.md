@@ -211,7 +211,7 @@ Kesalahan paling umum yang dialami mahasiswa di meja lab adalah salah menancapka
 Gunakan panduan visual di bawah ini sebelum menancapkan komponen apa pun ke breadboard:
 
 ![Panduan Fisik Komponen: Identifikasi Kaki Pinout dan Polaritas](images/component_pinout_reference.png)
-*Sumber gambar: Diagram referensi pinout fisik laboratorium Sistem Tertanam.*
+*Sumber gambar: Diagram referensi pinout fisik laboratorium Sistem Tertanam dengan foto makro komponen asli (Transistor 2N2222, Dioda 1N4007, Potensiometer 10 kΩ bersitasi Wikimedia Commons: CC BY-SA 4.0 / Public Domain).*
 
 > [!TIP]
 > **Aturan 3 Detik Cek Fisik:**
