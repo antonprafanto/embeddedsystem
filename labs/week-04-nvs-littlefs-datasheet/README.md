@@ -72,12 +72,26 @@ Di dalam SoC ESP32, terdapat dua kelompok memori utama dengan karakteristik keli
 
 ## 🗺️ 3. PETA FLASH MEMORY & TABEL PARTISI KUSTOM (`partitions.csv`)
 
-Secara fisik, ESP32 DevKit pada umumnya dilengkapi dengan chip eksternal SPI Flash berkapasitas **4 Megabyte (4.096 Kilobyte / 0x400000 bytes)**. Ruang 4 MB ini tidak digunakan secara acak, melainkan dibagi rapi layaknya partisi *Local Disk (C:)* dan *Local Disk (D:)* di komputer Anda:
+### A. Anatomi Fisik: Di Mana Letak Memori Flash ESP32 Sebenarnya?
+Banyak orang mengira seluruh memori ESP32 berada di dalam satu keping silikon hitam mikrokontroler. Namun, jika Anda membuka pelindung logam (*RF shield*) modul ESP-WROOM-32, Anda akan menemukan bahwa memori Flash **berupa chip fisik terpisah** yang terhubung langsung ke SoC utama melalui jalur berkecepatan tinggi:
+
+![Anatomi Fisik ESP32 & Lokasi Chip SPI Flash 4MB](images/esp32_hardware_anatomy_flash.png)
+*Foto makro modul ESP-WROOM-32 tanpa penutup logam pelindung memperlihatkan silikon SoC ESP32 berdampingan dengan chip memori SPI Flash 4 MB (Winbond / GigaDevice) serta kristal osilator 40 MHz (Sumber foto dasar: Wikimedia Commons karya Brian Krent, lisensi Creative Commons Attribution-ShareAlike 4.0 International).*
+
+> [!CAUTION]
+> **MENGAPA GPIO 6 SAMPAI GPIO 11 TIDAK BOLEH DIPAKAI?**  
+> Perhatikan jalur sirkuit tembaga pada papan PCB di atas yang menghubungkan SoC ESP32 ke pin-pin chip SPI Flash. Jalur komunikasi kecepatan tinggi ini menggunakan pin internal **GPIO 6, 7, 8, 9, 10, dan 11** (sebagai sinyal Clock, CS, Data MOSI/MISO, WP, dan HD).  
+> Jika Anda secara tidak sengaja mencoba menghubungkan tombol, sensor, atau mengeksekusi `pinMode(6, OUTPUT)` pada kode program Anda, jalur komunikasi ke memori Flash akan macet seketika, dan mikrokontroler akan mengalami **Guru Meditation Error / Crash Bootloop permanen**!
+
+---
+
+### B. Pembagian Ruang Logika Flash Memory 4MB
+Secara fisik, chip SPI Flash berkapasitas **4 Megabyte (4.096 Kilobyte / 0x400000 bytes)** ini tidak digunakan secara acak, melainkan dibagi rapi layaknya partisi *Local Disk (C:)* dan *Local Disk (D:)* di komputer Anda:
 
 ![Peta Partisi dan Struktur Flash Memory 4MB ESP32](images/flash_partition_map.png)
 *Sumber gambar: Peta alokasi ruang flash memory laboratorium Sistem Tertanam.*
 
-### Tabel Partisi yang Kita Gunakan (`partitions.csv`):
+#### Tabel Partisi yang Kita Gunakan (`partitions.csv`):
 Pada folder lab minggu ini, kita telah menyertakan berkas tabel partisi kustom [`partitions.csv`](file:///c:/Users/anton/vibecoding/EmbeddedSystem/labs/week-04-nvs-littlefs-datasheet/partitions.csv):
 
 ```csv
@@ -88,7 +102,7 @@ app0,       app,  factory, 0x10000,  0x1E0000,
 littlefs,   data, spiffs,  0x1F0000, 0x200000,
 ```
 
-### Penjelasan Baris demi Baris:
+#### Penjelasan Baris demi Baris:
 1. **`nvs` (0x9000 s.d. 0xE000, Ukuran 20 KB):**  
    Partisi khusus yang dikelola oleh driver Non-Volatile Storage bawaan ESP-IDF. Driver ini mengimplementasikan algoritma **Dynamic Wear-Leveling**. Setiap kali Anda memperbarui suatu nilai (misalnya menaikkan *boot counter*), data tidak ditimpa di tempat yang sama, melainkan ditulis ke slot berikutnya yang masih bersih (*empty*). Begitu satu halaman 4 KB penuh, data yang masih valid disalin ke halaman baru dan halaman lama dihapus secara serentak (*sector erase*).
 2. **`otadata` (0xE000 s.d. 0x10000, Ukuran 8 KB):**  
