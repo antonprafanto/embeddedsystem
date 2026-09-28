@@ -254,22 +254,25 @@ ESP32-CLI>
 
 Sebagai insinyur elektro profesional, Anda tidak boleh hanya mengandalkan pustaka instan (*black-box library*) dari internet. Anda wajib memiliki kemampuan membaca lembar data teknis (*datasheet*) resmi dari pabrikan semikonduktor.
 
-Mari kita pelajari cara membedah lembar data sensor lingkungan industri populer: **Bosch Sensortec BME280** (Sensor Suhu, Kelembaban, dan Tekanan Barometrik):
+Mari kita pelajari cara membedah lembar data sensor lingkungan industri populer: **Bosch Sensortec BME280** (Sensor Suhu, Kelembaban, dan Tekanan Barometrik).
 
-![Foto Fisik Breakout Board Sensor Bosch BME280](images/bme280_breakout_board.jpg)
-*Foto fisik asli modul breakout sensor Bosch Sensortec BME280 dengan resistor pull-up 4.7 kΩ terintegrasi (Sumber foto: SparkFun Electronics, lisensi Creative Commons Attribution 2.0 Generic).*
+### A. Anatomi Fisik: Modul Breakout vs Chip Sensor Asli
+Sebelum membedah deretan angka dan grafik rumit di datasheet, kita wajib memahami wujud fisik komponen yang sedang kita pelajari:
 
-![Foto Makro Mikroskopis Sensor BME280](images/bme280_sensor_macro.jpg)
-*Foto makro mikroskopis chip kemasan metal lid LGA 8-pin BME280 memperlihatkan lubang ventilasi tekanan udara dan nomor seri laser (Sumber foto: Wikimedia Commons karya Laserlicht, lisensi Creative Commons Attribution-ShareAlike 4.0 International).*
+![Anatomi Fisik Sensor Bosch BME280: Dari Modul ke Chip LGA 8-Pin](images/bme280_hardware_overview.png)
+*Visualisasi perbandingan modul breakout praktikum dan chip fisik mikroskopis Bosch BME280 beserta pinout dan SOP penanganan laboratorium (Sumber foto: SparkFun Electronics CC BY 2.0 & Laserlicht Wikimedia Commons CC BY-SA 4.0).*
 
-Berikut adalah panduan 4 pilar analisis lembar data komponen industri:
+---
+
+### B. 4 Pilar Utama dalam Menganalisis Datasheet Komponen Industri
+Berikut adalah panduan 4 pilar analisis lembar data komponen industri yang harus Anda cari pertama kali saat membuka berkas PDF datasheet:
 
 ![Panduan Literasi Enjiniring: Bedah Datasheet Sensor Industri](images/datasheet_reading_guide.png)
 *Sumber gambar: Panduan bedah datasheet laboratorium Sistem Tertanam.*
 
 ---
 
-### Pilar 1: *Absolute Maximum Ratings* (Batas Kematian Perangkat)
+#### Pilar 1: *Absolute Maximum Ratings* (Batas Kematian Perangkat)
 Bagian ini selalu berada di halaman-halaman awal datasheet. **Nilai ini adalah batas mutlak kerusakan fisik komponen:**
 * **Tegangan Catu Daya (VDD):** Rentang batas mutlak BME280 adalah `-0.3 V s.d. 4.25 V`.
   * *Peringatan Lab:* Jika Anda menyambungkan pin VDD sensor ini langsung ke rel catu daya 5V Arduino Uno tanpa regulator, chip sensor akan **rusak seketika** akibat tegangan tembus (*breakdown*)!
@@ -278,7 +281,7 @@ Bagian ini selalu berada di halaman-halaman awal datasheet. **Nilai ini adalah b
 
 ---
 
-### Pilar 2: *Operating Conditions & Arus Quiescent* (Desain Catu Daya Baterai)
+#### Pilar 2: *Operating Conditions & Arus Quiescent* (Desain Catu Daya Baterai)
 Bagian ini menjelaskan bagaimana komponen harus dioperasikan agar menghasilkan performa terbaik dan hemat energi:
 * **Rentang Tegangan Operasi Rekomendasi:** `1.71 V s.d. 3.6 V`. Tegangan 3.3V dari regulator ESP32 berada tepat di titik ideal pengoperasian.
 * **Konsumsi Arus Operasi Aktif:** Hanya sekitar `1.8 µA s.d. 3.6 µA` saat membaca suhu dan tekanan pada frekuensi 1 Hz.
@@ -287,7 +290,7 @@ Bagian ini menjelaskan bagaimana komponen harus dioperasikan agar menghasilkan p
 
 ---
 
-### Pilar 3: *Interface Timing & Karakteristik Bus I2C*
+#### Pilar 3: *Interface Timing & Karakteristik Bus I2C*
 Bagian ini menentukan bagaimana kabel dan sinyal digital harus dihubungkan:
 * **Kecepatan Komunikasi Bus I2C:** Mendukung *Standard Mode* (100 kHz), *Fast Mode* (400 kHz), dan *High-Speed Mode* (hingga 3.4 MHz).
 * **Alamat Bus I2C (*Slave Address*):**
@@ -297,13 +300,13 @@ Bagian ini menentukan bagaimana kabel dan sinyal digital harus dihubungkan:
 
 ---
 
-### Pilar 4: *Register Memory Map & Rekonstruksi Biner* (Teori ke Kode C)
+#### Pilar 4: *Register Memory Map & Rekonstruksi Biner* (Teori ke Kode C)
 Di sinilah ilmu **Manipulasi Bitwise C** yang kita pelajari pada Minggu 1 menjadi sangat berharga! Sensor BME280 menyimpan data suhu mentah beresolusi 20-bit yang disebar ke dalam 3 register biner 8-bit yang berbeda:
 1. Register `0xFA` (`temp_msb`): Berisi bit data `[19:12]` (8-bit tertinggi).
 2. Register `0xFB` (`temp_lsb`): Berisi bit data `[11:4]` (8-bit tengah).
 3. Register `0xFC` (`temp_xlsb`): Berisi bit data `[7:4]` pada 4 bit teratasnya (4-bit terendah kosong).
 
-#### Bagaimana Cara Menggabungkannya Menjadi Satu Nilai Utuh di Bahasa C?
+##### Bagaimana Cara Menggabungkannya Menjadi Satu Nilai Utuh di Bahasa C?
 Perhatikan baris kode pada fungsi `demonstrateRegisterDecoding()` di dalam [`src/main.cpp`](file:///c:/Users/anton/vibecoding/EmbeddedSystem/labs/week-04-nvs-littlefs-datasheet/src/main.cpp#L190-L215):
 
 ```c
