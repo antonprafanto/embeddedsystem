@@ -224,7 +224,7 @@ Gunakan panduan visual di bawah ini sebelum menancapkan komponen apa pun ke brea
 ### B. Diagram Rangkaian Lengkap di Atas Breadboard
 
 ![Panduan Wiring Rangkaian Breadboard Minggu 3](images/breadboard_wiring_week03.png)
-*Sumber gambar: Diagram tata letak pengkabelan laboratorium Sistem Tertanam.*
+*Sumber gambar: Diagram tata letak pengkabelan laboratorium Sistem Tertanam dengan visualisasi foto makro fisik komponen asli bersitasi Wikimedia Commons (ESP32-WROOM-32 DevKit: CC BY-SA 4.0; Potensiometer 10 kΩ: Public Domain karya Chetvorno; Transistor 2N2222: CC BY-SA 3.0 karya F.A.; Dioda 1N4007: CC BY-SA 3.0 karya T.R.W.; Modul Relay 5V: CC BY-SA 4.0).*
 
 ### Tabel Pengkabelan Lengkap (Pin-by-Pin Wiring Matrix):
 
