@@ -58,9 +58,20 @@ flowchart TD
 ### B. Perangkat Lunak (Software Tools) yang Harus Dibuka:
 
 1. **Visual Studio Code dengan Ekstensi PlatformIO IDE:**
-   * Digunakan untuk membuka proyek praktikum, memodifikasi kode sumber di [src/main.cpp](file:///c:/Users/anton/vibecoding/EmbeddedSystem/labs/week-07-freertos-task-watchdog/src/main.cpp), melakukan proses kompilasi (*Build*), dan mengunggah (*Upload*) firmware ke board ESP32.
+   * Digunakan untuk membuka folder proyek praktikum `labs/week-07-freertos-task-watchdog`, melihat kode sumber di [src/main.cpp](file:///c:/Users/anton/vibecoding/EmbeddedSystem/labs/week-07-freertos-task-watchdog/src/main.cpp), dan melakukan upload firmware.
+   * **Tombol-Tombol Penting di Status Bar Bawah VS Code:**
+     * `✓` **(PlatformIO: Build):** Memeriksa apakah kode program Anda bebas dari kesalahan sintaks.
+     * `→` **(PlatformIO: Upload):** Mengompilasi dan mengunggah kode biner ke dalam chip ESP32.
+     * `🔌` **(PlatformIO: Serial Monitor):** Membuka jendela terminal komunikasi dua arah dengan ESP32.
+     * *(Atau klik ikon kepala semut PlatformIO di bilah kiri, lalu pilih menu **Upload and Monitor**)*.
+
 2. **Serial Monitor PlatformIO (Baud Rate 115200 bps):**
-   * Antarmuka teks interaktif dua arah. Anda cukup mengetikkan angka `1`, `2`, `3`, `4`, atau `5` di kolom input terminal lalu menekan tombol `Enter` untuk menguji mode praktikum yang diinginkan.
+   * Berfungsi sebagai antarmuka pengujian teks interaktif.
+   * **Cara Mengetikkan Pilihan Menu [1-5]:**
+     * Perhatikan panel **Terminal / Serial Monitor** yang muncul di bagian bawah layar VS Code.
+     * Di bagian paling atas jendela terminal tersebut terdapat sebuah **kotak isian teks kosong** (*input line*).
+     * Klik kotak teks tersebut menggunakan mouse Anda, ketik angka menu yang ingin diuji (misalnya ketik **`1`**, **`2`**, **`3`**, **`4`**, atau **`5`**), lalu tekan tombol **`Enter`** pada keyboard.
+     * ESP32 akan seketika merespons dan menampilkan laporan analisis teknis di layar Anda!
 
 ---
 
@@ -189,9 +200,9 @@ Fungsi `uxTaskGetStackHighWaterMark(TaskHandle_t xTask)` mengembalikan **jumlah 
 
 ---
 
-## 🔌 3. PINOUT & SKEMATIK PENGKABELAN (HARDWARE SETUP)
+## 🔌 3. PINOUT & ARSITEKTUR HARDWARE DUAL-CORE (SETUP PRAKTIKUM)
 
-Untuk menjalankan seluruh eksperimen pada modul ini, Anda hanya perlu menghubungkan ESP32 ke komputer via kabel data USB:
+Untuk menjalankan seluruh eksperimen pada modul ini, Anda hanya perlu menghubungkan board ESP32 ke komputer via kabel data USB:
 
 ```text
 +-------------------------------------------------------+
@@ -211,6 +222,45 @@ Untuk menjalankan seluruh eksperimen pada modul ini, Anda hanya perlu menghubung
 |                      TaskLoop (CLI Interaktif)        |
 +-------------------------------------------------------+
 ```
+
+---
+
+### Memahami Arsitektur Dual-Core ESP32 (Core 0 vs Core 1)
+
+Mikrokontroler ESP32 memiliki keunggulan luar biasa dibanding Arduino Uno atau STM32 standar: ESP32 ditenagai oleh **dua inti prosesor fisik mandiri (*Dual-Core Xtensa LX6*)** yang bekerja pada kecepatan hingga 240 MHz!
+
+![Arsitektur Dual-Core ESP32 dan Penugasan Task FreeRTOS](images/esp32_freertos_dual_core_architecture.png)
+*Sumber gambar: Laboratorium Sistem Tertanam — Distribusi beban eksekusi antara Core 0 (PRO_CPU), Core 1 (APP_CPU), pemetaan memori SRAM bersama, dan korelasi periferal TWDT.*
+
+Perhatikan pembagian tugas cerdas di dalam silikon chip ESP32:
+1. **Core 0 (PRO_CPU - Protocol CPU):**
+   * Didedikasikan secara default oleh sistem operasi ESP-IDF untuk menangani beban berat komunikasi nirkabel: *Wi-Fi Controller, stack TCP/IP lwIP, DHCP, DNS,* dan *Bluetooth Low Energy (BLE)*.
+   * Memiliki **Task IDLE 0 (Prioritas 0)** tersendiri yang bertugas merawat Core 0 dan memberi makan Watchdog Core 0.
+2. **Core 1 (APP_CPU - Application CPU):**
+   * Disediakan khusus untuk menjalankan kode aplikasi pengguna.
+   * Di sinilah fungsi `setup()`, `loop()`, dan seluruh task praktikum kita (`TaskSensor`, `TaskHeartbeat`, `TaskReporter`, serta menu interaktif CLI) berjalan!
+   * Diatur menggunakan fungsi kernel:
+     ```cpp
+     xTaskCreatePinnedToCore(
+         TaskSensor,       // Nama fungsi task
+         "TaskSensor",     // Nama teks untuk debugging
+         3072,             // Alokasi memori stack (Byte)
+         NULL,             // Parameter masukan
+         2,                // Angka prioritas (2 = Tinggi)
+         &hTaskSensor,     // Pointer handle task
+         1                 // PINNED KE CORE 1 (APP_CPU)
+     );
+     ```
+3. **Mengapa Pesan Error Watchdog Menyebut CPU 1?**
+   * Ketika Anda menjalankan eksperimen Menu `[3]` (*Simulasi Memicu Crash Watchdog*), task nakal `TaskHungryHog` memonopoli Core 1 hingga 100%.
+   * Oleh karena itu, Task IDLE di **Core 1** tidak kebagian CPU dan gagal memberi makan TWDT Core 1.
+   * Inilah sebabnya mengapa pesan crash ESP32 dengan sangat akurat melaporkan:
+     ```text
+     task_wdt: Task watchdog got triggered. The following tasks did not reset the watchdog in time:
+     task_wdt:  - IDLE (CPU 1)
+     Guru Meditation Error: Core 1 panic'd (Interrupt wdt timeout on CPU 1)
+     ```
+   * Hal ini membuktikan bahwa Core 0 tetap sehat dan tidak terganggu, sementara Core 1 berhasil diselamatkan dari kelumpuhan permanen melalui *Auto-Reboot*!
 
 ---
 

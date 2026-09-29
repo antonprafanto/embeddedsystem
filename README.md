@@ -98,7 +98,7 @@ flowchart TD
 │   ├── week-07-freertos-task-watchdog/         # Jobsheet & Starter code praktikum W07
 │   │   ├── platformio.ini                  # Konfigurasi exception decoder & monitor
 │   │   ├── README.md                       # Jobsheet modul lab & panduan FreeRTOS
-│   │   ├── images/                         # Diagram Superloop vs RTOS, Lifecycle, TWDT & Stack
+│   │   ├── images/                         # Diagram Superloop vs RTOS, Lifecycle, TWDT, Stack & Dual-Core
 │   │   └── src/main.cpp                    # Multi-tasking scheduler, High Water Mark & Watchdog CLI
 │   └── ...
 ├── projects/                               # Template & spesifikasi Capstone Project
