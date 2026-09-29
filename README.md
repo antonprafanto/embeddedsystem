@@ -13,6 +13,7 @@ Selamat datang di repositori resmi perkuliahan **Sistem Tertanam (Embedded Syste
 * 📝 **[Minggu 2: Elektrikal Pin, Interrupt & Crash Debugging](labs/week-02-gpio-interrupts/README.md)**
 * 📝 **[Minggu 3: Interfacing Beban Daya (Transistor Driver) & Periferal Analog (ADC1 & PWM)](labs/week-03-transistor-adc-pwm/README.md)**
 * 📝 **[Minggu 4: Penyimpanan Persisten (NVS & LittleFS) & Literasi Datasheet Komponen](labs/week-04-nvs-littlefs-datasheet/README.md)**
+* 📝 **[Minggu 5: Protokol Komunikasi Serial (UART, I2C, SPI) & 8-Channel USB Logic Analyzer](labs/week-05-serial-protocols-logic-analyzer/README.md)**
 * 💻 **Platform:** ESP32-WROOM-32D / ESP32-S3
 * ⚙️ **Toolchain:** Visual Studio Code + PlatformIO (Hybrid: Arduino Core → Native FreeRTOS/ESP-IDF)
 
@@ -82,6 +83,11 @@ flowchart TD
 │   │   ├── data/config.json                # Aset statis berkas LittleFS
 │   │   ├── images/                         # Peta partisi flash, hierarki memori & bedah datasheet
 │   │   └── src/main.cpp                    # NVS Preferences, LittleFS file I/O & Interactive CLI
+│   ├── week-05-serial-protocols-logic-analyzer/ # Jobsheet & Starter code praktikum W05
+│   │   ├── platformio.ini                  # Konfigurasi project PlatformIO
+│   │   ├── README.md                       # Jobsheet modul lab & panduan PulseView
+│   │   ├── images/                         # Diagram perbandingan protokol, open-drain, SPI & wiring
+│   │   └── src/main.cpp                    # I2C scanner, UART framed packets, SPI transaction & burst generator
 │   └── ...
 ├── projects/                               # Template & spesifikasi Capstone Project
 ├── SILABUS_EMBEDDED_SYSTEM_ESP32.md        # Dokumen resmi RPS kurikulum (OBE)
