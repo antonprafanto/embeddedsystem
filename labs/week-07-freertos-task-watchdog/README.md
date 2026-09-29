@@ -204,23 +204,26 @@ Fungsi `uxTaskGetStackHighWaterMark(TaskHandle_t xTask)` mengembalikan **jumlah 
 
 Untuk menjalankan seluruh eksperimen pada modul ini, Anda hanya perlu menghubungkan board ESP32 ke komputer via kabel data USB:
 
-```text
-+-------------------------------------------------------+
-|                 KOMPUTER / LAPTOP                     |
-|  - VS Code & PlatformIO IDE                           |
-|  - Serial Monitor (Baud Rate 115200 bps)              |
-+---------------------------+---------------------------+
-                            | Kabel USB Data (5V / D+ / D-)
-                            v
-+-------------------------------------------------------+
-|               ESP32 DEVKIT BOARD                      |
-|                                                       |
-|  [GPIO 2] ---------> LED Biru Onboard (Heartbeat)     |
-|                                                       |
-|  [Core 0] ---------> IDLE Task 0 & Background Kernel  |
-|  [Core 1] ---------> TaskSensor, Heartbeat, Reporter, |
-|                      TaskLoop (CLI Interaktif)        |
-+-------------------------------------------------------+
+```mermaid
+flowchart TD
+    subgraph PC ["💻 KOMPUTER / HOST"]
+        direction TB
+        IDE["VS Code & PlatformIO IDE"]
+        MON["Serial Monitor (115200 bps)"]
+    end
+
+    PC <-->|"🔌 Kabel USB Data (5V, D+, D-)"| ESP
+
+    subgraph ESP ["⚡ ESP32 DEVKIT BOARD"]
+        direction TB
+        subgraph HW ["Periferal Onboard"]
+            GPIO2["Pin GPIO 2"] --> LED["🔵 LED Biru (Heartbeat Task)"]
+        end
+        subgraph CORES ["Pemetaan Core FreeRTOS"]
+            C0["Core 0 (PRO_CPU)"] --> T0["IDLE Task 0 & Background Kernel"]
+            C1["Core 1 (APP_CPU)"] --> T1["TaskSensor, Heartbeat, Reporter & CLI"]
+        end
+    end
 ```
 
 ---
