@@ -154,8 +154,8 @@ Total pengadaan kit praktikum per kelompok (2 mahasiswa) dirancang sangat ekonom
     * **RS-485 & Modbus RTU:** Transmisi half-duplex jarak jauh (hingga 1 km), format frame Master-Slave, CRC-16.
     * **CAN Bus 2.0B / TWAI:** Standar otomotif dan otomatisasi pabrik, arbitrasi bit pesan prioritas, terminasi impedansi 120-Ohm.
 * **Praktikum / Hands-on:**
-  * Jaringan dua board ESP32: Node 1 bertindak sebagai transmitter data sensor melalui modul transceiver CAN (SN65HVD230) atau RS-485 (MAX3485); Node 2 menerima dan memverifikasi data.
-* **Asesmen:** Uji pengiriman data dengan kabel twisted-pair melewati sumber interferensi motor listrik.
+  * Jaringan dua board ESP32 atau Mode Self-Test Loopback internal: Pengiriman & penerimaan telemetri CAN Bus via modul transceiver SN65HVD230 (TWAI 250 kbps) serta transmisi paket query RS-485 Modbus RTU (MAX3485) dengan validasi checksum CRC-16.
+* **Asesmen:** Uji pengiriman data dengan kabel twisted-pair melewati sumber interferensi atau pembuktian frame lewat penyadapan USB Logic Analyzer (PulseView).
 
 ---
 
