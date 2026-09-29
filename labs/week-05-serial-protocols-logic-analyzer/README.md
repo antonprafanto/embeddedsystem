@@ -26,22 +26,34 @@ flowchart TD
     E --> F["🚀 6. Klik 'Run' di PulseView<br>& Kirim Perintah dari Serial Monitor"]
 ```
 
+### Checklist Kesiapan Praktikan (Cek Sebelum Mulai):
+* [ ] Board ESP32 sudah terhubung ke port USB komputer via kabel data.
+* [ ] Modul USB Logic Analyzer sudah terhubung ke port USB komputer yang lain.
+* [ ] Driver USB `WinUSB` sudah dipasang lewat software **Zadig** (khusus pengguna Windows).
+* [ ] Kabel jumper **GND Logic Analyzer** sudah terpasang rapat ke **GND ESP32** (*Common Ground*).
+* [ ] Aplikasi **PulseView** dan **VS Code PlatformIO** sudah terbuka di layar komputer Anda.
+
 ### A. Perangkat Keras (Hardware) yang Dibutuhkan:
 * **1x Board ESP32 Development Board** (ESP32-WROOM-32 / ESP32-S3, 30 atau 38 pin).
 * **1x 8-Channel 24MHz USB Logic Analyzer** (Modul hitam populer berbasis chip Cypress FX2 CY7C68013A).
 * **1x Set Kabel Probe / Jumper DuPont Female-to-Male** (Untuk menjepit pin ESP32 ke pin analyzer).
-* **1x Kabel Micro-USB / Type-C Data** (Untuk memprogram dan memonitor ESP32).
+* **1x Kabel Micro-USB / Type-C Data** (Pastikan kabel data yang bisa transfer serial, bukan hanya kabel charger daya).
 * *(Opsional)* **1x Modul Sensor Lingkungan I2C** (Bosch BME280 / BMP280 / AHT10 / MPU6050 / Layar OLED 0.96").  
-  *(Catatan: Jika Anda belum memiliki sensor fisik, firmware praktikum ini sudah dilengkapi **Signal Generator Mode** sehingga ESP32 dapat memproduksi paket data buatan sendiri untuk Anda rekam di PulseView!).*
+  *(Catatan: Jika Anda belum memiliki sensor fisik di meja praktikum, jangan berkecil hati! Firmware praktikum ini sudah dilengkapi **Signal Generator Mode** sehingga ESP32 dapat memproduksi paket data buatan sendiri secara mandiri untuk Anda rekam di PulseView!).*
 
 ### B. Perangkat Lunak (Software Tools) yang Harus Dibuka:
 1. **Visual Studio Code & Ekstensi PlatformIO IDE:**  
-   Digunakan untuk meng-compile kode C++ dan membuka Serial Monitor.
+   Digunakan untuk meng-compile kode C++, melakukan *flashing* firmware ke ESP32, dan membuka Serial Monitor terintegrasi.
 2. **PulseView (Sigrok):**  
-   Perangkat lunak open-source resmi untuk menampilkan gelombang logika digital dan mendekode protokol komunikasi secara otomatis.
+   Perangkat lunak resmi untuk menampilkan gelombang logika digital dan mendekode protokol komunikasi secara visual.
    * **Tautan Unduh Resmi:** [sigrok.org/wiki/Downloads](https://sigrok.org/wiki/Downloads) (Pilih *PulseView Windows Installer*).
-3. **Zadig (Khusus Pengguna Windows):**  
-   Alat bantu instalasi driver USB universal. Jika PulseView tidak mendeteksi perangkat Logic Analyzer Anda, jalankan Zadig, pilih perangkat `Saleae Logic` atau `Device with VID:04b4 PID:8613`, lalu pasang driver **WinUSB**.
+3. **Zadig (Khusus Pengguna Windows untuk Mengaktifkan Driver USB):**  
+   Agar PulseView dapat berkomunikasi dengan modul Logic Analyzer murah ini di Windows, driver USB-nya harus diatur ke **WinUSB**:
+   * Unduh Zadig di [zadig.akeo.ie](https://zadig.akeo.ie).
+   * Buka Zadig, klik menu **Options** → centang **List All Devices**.
+   * Pada dropdown utama, pilih perangkat **`Saleae Logic`** atau **`Device with VID:04b4 PID:8613`**.
+   * Di sebelah kanan panah hijau, pastikan terpilih driver **`WinUSB (v6.x.x.x)`**, lalu klik tombol besar **`Replace Driver`** atau **`Install Driver`**. Tunggu hingga muncul pesan *The driver was installed successfully*.
+   * Selesai! Kini PulseView akan langsung mengenali Logic Analyzer Anda setiap kali dicolokkan.
 
 ---
 
@@ -71,7 +83,7 @@ Berikut adalah lembar komparasi enjiniring mendalam antara ketiganya:
 | **Topologi Jaringan** | Point-to-Point (1 Master, 1 Slave) | Multi-Drop Bus (s.d. 127 Slave) | Multi-Slave (1 Jalur CS per Slave) |
 | **Kecepatan Khas** | 9.600 s.d. 115.200 bps | 100 kHz (Std) s.d. 400 kHz (Fast) | 10 MHz s.d. 80 MHz (Sangat Tinggi) |
 | **Mode Transmisi** | **Full-Duplex** (Kirim & terima simultan) | **Half-Duplex** (Bergantian di jalur SDA) | **Full-Duplex** (Simultan di MOSI & MISO) |
-| **Sifat Sirkuit Fisik** | Push-Pull / Direct Voltage (3.3V) | **Open-Drain (Wajib Pull-Up $R_p$)** | Push-Pull Driver Kecepatan Tinggi |
+| **Sifat Sirkuit Fisik** | Push-Pull / Direct Voltage (3.3V) | **Open-Drain (Wajib Pull-Up Rp)** | Push-Pull Driver Kecepatan Tinggi |
 | **Overhead Protokol** | Start bit (0), Stop bit (1), Parity | Alamat 7-bit, Bit R/W, Sinyal ACK/NACK | **0% Overhead** (Aliran byte mentah) |
 | **Jarak Transmisi Aman** | Sedang (~1 s.d. 5 meter) | Sangat Pendek (< 1 meter di PCB) | Sangat Pendek (< 30 cm di jalur PCB) |
 | **Aplikasi Ideal** | Debug terminal PC, GPS, Bluetooth | Sensor Lingkungan (BME280, MPU6050) | Display OLED/TFT, MicroSD, Ethernet |
@@ -91,23 +103,23 @@ Pada pin GPIO digital biasa (tipe *Push-Pull*), terdapat dua transistor: satu tr
 Namun, pada pin I2C (**SDA** dan **SCL**), transistor internal yang terhubung ke 3.3V **ditiadakan sama sekali**! Hanya ada satu buah transistor N-MOSFET yang terhubung ke GROUND:
 * **Saat mikrokontroler ingin mengirim logika 0 (LOW):** Transistor N-MOSFET diaktifkan (ON), sehingga jalur kabel ditarik paksa ke tanah (0 Volt).
 * **Saat mikrokontroler ingin mengirim logika 1 (HIGH):** Transistor dimatikan (OFF). Pin berada pada kondisi mengambang (*High-Impedance / High-Z*).  
-* **Siapa yang menaikkan tegangan ke 3.3V?** Resistor eksternal yang dinamakan **Resistor Pull-Up ($R_p$)** yang terhubung ke rel catu daya 3.3V!
+* **Siapa yang menaikkan tegangan ke 3.3V?** Resistor eksternal yang dinamakan **Resistor Pull-Up (Rp)** yang terhubung ke rel catu daya 3.3V!
 
 ### B. Mengapa Arsitektur Ini Brilian? (Logika Anti-Korsleting *Wired-AND*)
 Bayangkan jika menggunakan pin *Push-Pull* biasa: jika Master mencoba mengirim tegangan 3.3V sementara Slave secara tidak sengaja mencoba mengirim 0V (GND), maka rel daya 3.3V akan terhubung langsung ke GND tanpa hambatan! Ini dinamakan **hubungan singkat (short circuit / bus contention)** yang akan membakar pin mikrokontroler seketika.  
 Dengan arsitektur **Open-Drain**:
 * Jika Master melepas pin (menginginkan HIGH) dan Slave menarik ke GND (menginginkan LOW), tegangan kabel dengan aman tetap berada di 0V. **Tidak ada komponen yang rusak!**
 
-### C. Analisis Bentuk Gelombang & Kapasitansi Parasitik Bus ($C_b$)
-Setiap kabel jumper, jalur tembaga PCB, dan pin IC memiliki kapasitansi liar ke ground yang disebut **Bus Capacitance ($C_b$)** (biasanya 50 pF hingga 400 pF).  
-Saat transistor melepaskan jalur, arus dari resistor pull-up $R_p$ harus mengisi kapasitor $C_b$ tersebut. Proses pengisian ini membutuhkan waktu yang mengikuti kurva eksponensial $RC$, yang dikenal sebagai **Waktu Naik (Rise Time, $t_r$)**:
+### C. Analisis Bentuk Gelombang & Kapasitansi Parasitik Bus (Cb)
+Setiap kabel jumper, jalur tembaga PCB, dan pin IC memiliki kapasitansi liar ke ground yang disebut **Bus Capacitance (Cb)** (biasanya 50 pF hingga 400 pF).  
+Saat transistor melepaskan jalur, arus dari resistor pull-up Rp harus mengisi kapasitor Cb tersebut. Proses pengisian ini membutuhkan waktu yang mengikuti kurva eksponensial RC, yang dikenal sebagai **Waktu Naik (Rise Time, tr)**:
 
-1. **Jika $R_p$ Terlalu Besar (misalnya $100\text{ k}\Omega$):**  
-   Arus pengisian terlalu kecil. Waktu naik $t_r$ menjadi sangat lambat dan melengkung seperti sirip hiu. Sebelum tegangan sempat menyentuh ambang logika 1 ($V_{IH} = 0.7 \times V_{DD} \approx 2.31\text{ V}$), pulsa clock berikutnya sudah datang. Akibatnya: **Data korup, I2C menghasilkan NACK, sensor gagal terdeteksi!**
-2. **Jika $R_p$ Terlalu Kecil (misalnya $330\ \Omega$):**  
+1. **Jika Rp Terlalu Besar (misalnya 100 kΩ):**  
+   Arus pengisian terlalu kecil. Waktu naik tr menjadi sangat lambat dan melengkung seperti sirip hiu. Sebelum tegangan sempat menyentuh ambang logika 1 ($V_{IH} = 0.7 \times V_{DD} \approx 2.31\text{ V}$), pulsa clock berikutnya sudah datang. Akibatnya: **Data korup, I2C menghasilkan NACK, sensor gagal terdeteksi!**
+2. **Jika Rp Terlalu Kecil (misalnya 330 Ω):**  
    Arus yang mengalir saat transistor menarik ke LOW menjadi terlalu besar ($I > 3\text{ mA}$). Tegangan LOW ($V_{OL}$) naik melampaui 0.4V dan transistor silikon internal mikrokontroler menjadi panas.
-3. **Nilai $R_p$ Ideal (Rekomendasi Standar NXP):**  
-   Gunakan nilai antara **$2.2\text{ k}\Omega$ hingga $4.7\text{ k}\Omega$** untuk komunikasi stabil pada kecepatan 100 kHz dan 400 kHz.
+3. **Nilai Rp Ideal (Rekomendasi Standar NXP):**  
+   Gunakan nilai antara **2.2 kΩ hingga 4.7 kΩ** untuk komunikasi stabil pada kecepatan 100 kHz dan 400 kHz.
 
 ---
 
@@ -216,6 +228,15 @@ Inilah fitur ajaib dari software PulseView: Anda tidak perlu lagi menerjemahkan 
 ![Tampilan Hasil Dekode Protokol I2C pada PulseView](images/pulseview_i2c_decoded_wikimedia.png)
 *Tangkapan layar software PulseView memperlihatkan pulsa gelombang fisik pada channel SDA/SCL yang berhasil didekode secara otomatis menjadi paket data [Start], [Alamat I2C], [Bit R/W], [ACK], dan byte muatan heksadesimal (Sumber: Wikimedia Commons, karya Xofc, lisensi Creative Commons Attribution-ShareAlike 3.0 Unported).*
 
+#### D. Trik Cepat Mengendalikan Layar PulseView (Supaya Tidak Bingung!):
+Bagi pemula yang baru pertama kali membuka PulseView, tampilan awal setelah tombol **Run** diklik mungkin terlihat seperti garis datar atau deretan pulsa tipis yang sangat rapat. Jangan panik! Gunakan kontrol navigasi berikut:
+1. **Memperbesar Gelombang (Zoom In / Out):**  
+   Arahkan kursor mouse ke area grafik sinyal, lalu **putar roda *scroll* pada mouse** Anda (ke atas untuk Zoom In memperbesar pulsa mikrodetik, ke bawah untuk Zoom Out).
+2. **Menggeser Layar (Panning Kiri & Kanan):**  
+   Klik kiri dan tahan tombol mouse di area tengah layar sinyal, lalu **seret ke kiri atau ke kanan** untuk menyusuri paket data yang terlewat.
+3. **Mengukur Durasi Sinyal (Fitur Cursors):**  
+   Klik ikon dua garis vertikal (*Toggle Cursors*) di bilah toolbar atas. Dua garis penanda waktu ($C_1$ dan $C_2$) akan muncul. Seret garis tersebut ke pulsa clock untuk membaca durasi mikrodetik ($\mu\text{s}$) dan frekuensi secara instan!
+
 ---
 
 ## 💻 7. EKSEKUSI PROGRAM & PENGUJIAN INTERAKTIF
@@ -270,9 +291,14 @@ Starter code praktikum telah siap pada berkas [`src/main.cpp`](file:///c:/Users/
 
 #### Skenario B: Menguji Menu `[3]` (Paket UART Terstruktur)
 * Tekan tombol **`3`** pada Serial Monitor.
-* ESP32 mengirim 6 byte data biner melalui GPIO 17 (TX2):
-  $$\text{Paket} = [\text{0xAA}]\ [\text{Sequence}]\ [\text{Data Tinggi}]\ [\text{Data Rendah}]\ [\text{Checksum XOR}]\ [\text{0x55}]$$
-* Buka PulseView, aktifkan decoder **UART** pada Channel 5 (Baud rate: 115200). Anda akan melihat paket heksadesimal tersebut tertera di layar komputer!
+* ESP32 mengirim 6 byte data biner melalui GPIO 17 (TX2) dengan format frame terstruktur:
+  ```text
+  ┌────────────┬──────────┬──────────────┬─────────────┬──────────────┬───────────┐
+  │ START BYTE │ SEQUENCE │ PAYLOAD HIGH │ PAYLOAD LOW │ CHECKSUM XOR │ STOP BYTE │
+  │    0xAA    │  0x00..  │     0x08     │    0x00     │     0xAA     │   0x55    │
+  └────────────┴──────────┴──────────────┴─────────────┴──────────────┴───────────┘
+  ```
+* Buka PulseView, aktifkan decoder **UART** pada Channel 5 (Baud rate: 115200). Anda akan melihat paket heksadesimal tersebut terurai rapi di layar komputer!
 
 #### Skenario C: Menguji Menu `[4]` (Perbandingan SPI Mode 0 vs Mode 3)
 * Tekan tombol **`4`** pada Serial Monitor.
