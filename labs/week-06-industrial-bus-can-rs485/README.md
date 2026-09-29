@@ -253,138 +253,207 @@ Berikut adalah panduan penyambungan kawat antara ESP32, modul transceiver CAN (S
 
 ## 💻 6. PANDUAN PRAKTIKUM INTERAKTIF STEP-BY-STEP
 
-Firmware praktikum ini telah diprogram dengan antarmuka **Menu CLI Interaktif** melalui Serial Monitor. Anda dapat menguji seluruh kemampuan protokol tanpa perlu melakukan kompilasi ulang berulang kali.
+Firmware praktikum ini telah dilengkapi dengan antarmuka **Menu CLI Interaktif** melalui Serial Monitor. Anda dapat menguji seluruh kemampuan protokol tanpa perlu memodifikasi atau mengompilasi ulang kode program berulang kali.
 
-### Langkah 1: Buka Proyek & Lakukan Flashing Firmware
-1. Buka folder `labs/week-06-industrial-bus-can-rs485` di VS Code.
+### Langkah 1: Buka Proyek, Flashing Firmware, & Buka Serial Monitor
+1. Buka folder kerja `labs/week-06-industrial-bus-can-rs485` di VS Code.
 2. Pastikan file konfigurasi [platformio.ini](file:///c:/Users/anton/vibecoding/EmbeddedSystem/labs/week-06-industrial-bus-can-rs485/platformio.ini) memiliki pengaturan `monitor_speed = 115200`.
-3. Klik tombol **Build (Tanda Centang)** di bilah status bawah VS Code untuk memastikan program terbebas dari kesalahan sintaks.
-4. Klik tombol **Upload (Tanda Panah Kanan)** untuk mengunggah program ke ESP32.
-5. Klik ikon **Serial Monitor (Tanda Steker/Layar)** untuk membuka antarmuka teks. Anda akan disambut oleh banner menu utama seperti berikut:
+3. Klik tombol **Build (Ikon Tanda Centang `✓`)** di bilah status bawah VS Code untuk memverifikasi kode.
+4. Klik tombol **Upload (Ikon Panah Kanan `→`)** untuk mengunggah firmware ke board ESP32.
+5. Klik ikon **Serial Monitor (Ikon Steker/Layar terminal)** di bilah status bawah VS Code (atau gunakan pintasan tombol `Ctrl + Alt + S`).
+6. **Cara Mengirim Perintah:**  
+   Di bagian atas jendela Serial Monitor terdapat kolom input teks. **Ketik angka pilihan menu (misalnya: `1`), lalu tekan tombol `Enter` pada keyboard Anda.**
+
+Saat ESP32 menyala, layar Serial Monitor akan menampilkan sambutan pembuka berikut:
 
 ```text
-======================================================================
-   PRAKTIKUM SISTEM TERTANAM: CAN BUS (TWAI) & RS-485 MODBUS RTU
-   Program Studi Teknik Elektro - Minggu 06 (Industrial Fieldbus)
-======================================================================
-Pilih Menu Praktikum (Ketik angka 1-5 di kolom atas lalu Enter):
- [1] Mode Self-Test Loopback TWAI (Uji Kirim-Terima pada 1 Board)
- [2] Mode Transmit Normal Telemetri (Standard ID & Extended J1939)
- [3] Mode Sniffer / Listen-Only (Menyadap Lalu Lintas Bus CAN)
- [4] Kirim Query RS-485 Modbus RTU (Baca Sensor Holding Register)
- [5] Diagnostik Bus TWAI (Cek TEC, REC, dan Status Kesehatan Bus)
-======================================================================
+========================================================
+SELAMAT DATANG DI PRAKTIKUM MINGGU 06 - SISTEM TERTANAM
+Eksplorasi Komunikasi Industri: CAN Bus / TWAI & RS-485
+Laboratorium Sistem Tertanam - Teknik Elektro
+========================================================
+[INFO PINOUT ESP32]:
+  • CAN Bus TX (TWAI TX) : GPIO 5  --> Sambungkan ke Pin CTX/TXD Transceiver
+  • CAN Bus RX (TWAI RX) : GPIO 4  --> Sambungkan ke Pin CRX/RXD Transceiver
+  • RS-485 UART2 TX      : GPIO 17 --> Sambungkan ke Pin DI Transceiver
+  • RS-485 UART2 RX      : GPIO 16 --> Sambungkan ke Pin RO Transceiver
+  • RS-485 Direction DE  : GPIO 18 --> Sambungkan ke Pin DE & /RE
+  • Onboard Status LED   : GPIO 2  --> Berkedip saat paket terkirim/diterima
+========================================================
+
++-------------------------------------------------------------+
+|   MENU INTERAKTIF LAB WEEK 06: INDUSTRIAL CAN & RS-485      |
++-------------------------------------------------------------+
+| [1] Self-Test TWAI Loopback (Uji Mandiri Tanpa Transceiver) |
+| [2] Transmit Frame CAN Bus Normal (Kirim Paket Telemetri)   |
+| [3] Sniffer / Monitor Frame CAN Bus (Listen Only Mode)      |
+| [4] RS-485 Modbus RTU Query Generator (Kalkulasi CRC-16)    |
+| [5] Status & Diagnostik Bus CAN (TEC, REC, & Bus-Off State) |
+| [m] Cetak Ulang Menu Bantuan                                |
++-------------------------------------------------------------+
+Ketik angka pilihan Anda [1-5]: 
 ```
 
 ---
 
-### Langkah 2: Eksperimen Menu [1] — Self-Test Loopback TWAI Internal
+### Langkah 2: Eksperimen Menu [1] — Self-Test Loopback TWAI Internal (Tanpa Modul Tambahan!)
 * **Tujuan:** Membuktikan transmisi dan penerimaan frame CAN tanpa membutuhkan modul transceiver tambahan atau board kedua!
 * **Cara Menguji:** Ketik angka `1` di kolom Serial Monitor lalu tekan `Enter`.
-* **Mekanisme di Balik Layar:** Driver TWAI ESP32 diatur ke mode `TWAI_MODE_NO_ACK`. Sinyal transmit pada pin internal dialirkan langsung kembali ke logika penerima internal.
-* **Hasil Terminal yang Diharapkan:**
+* **Mekanisme di Balik Layar:** Driver TWAI ESP32 diatur ke mode `TWAI_MODE_NO_ACK` pada kecepatan 250 kbps. Sinyal transmit pada pin internal dialirkan langsung kembali ke logika penerima internal.
+* **Hasil Terminal yang Muncul:**
 
 ```text
-[MODE 1] Memulai Pengujian Self-Test Loopback TWAI (250 kbps)...
->> Mengirim Frame CAN Uji Coba: ID=0x123 (Standard), DLC=4, Payload=[DE AD BE EF]
-[BERHASIL DITERIMA KEMBALI!]
-   - ID Pesan   : 0x123 (Standard 11-bit)
-   - Panjang DLC: 4 byte
-   - Data Hex   : 0xDE 0xAD 0xBE 0xEF
-   - Kesimpulan : Silikon Kontroler TWAI ESP32 Berfungsi 100% Sempurna!
+========================================================
+  DEMO 1: SELF-TEST TWAI LOOPBACK (NO-ACK MODE)         
+========================================================
+[INFO] Mengaktifkan mode No-ACK internal pada 250 kbps...
+[OK] Driver TWAI berhasil diinstal dan dijalankan!
+--> Mengirim frame telemetri mandiri (Standard ID 0x123)...
+[TRANSMIT OK] Frame berhasil dimasukkan ke buffer transmisi hardware.
+
+[RECEIVE OK] Frame berhasil diterima kembali secara loopback!
+             ID Diterima   : 0x123 (Standard 11-bit)
+             Panjang (DLC) : 4 byte
+             Muatan Data   : 0x1C 0x00 0x48 0x01 
+             [DEKODE FISIK] Suhu: 28 C, Kelembaban: 72 %, Status: 0x01 (Normal)
+[SUKSES] Pengujian Self-Test loopback internal tuntas tanpa error!
 ```
+
+> [!TIP]
+> **Bedah Nilai Biner ke Besaran Fisik:**
+> * Byte 0 (`0x1C`) dan Byte 1 (`0x00`): Format *Little-Endian*, digabung menjadi integer 16-bit `0x001C` (desimal 28) $\rightarrow$ merepresentasikan **Suhu $28\ ^\circ\text{C}$**.
+> * Byte 2 (`0x48`): Desimal 72 $\rightarrow$ merepresentasikan **Kelembaban Relatif $72\%$**.
+> * Byte 3 (`0x01`): Flag status sistem $\rightarrow$ **0x01 = Operasi Normal**.
 
 ---
 
-### Langkah 3: Eksperimen Menu [2] — Normal Transmit Telemetry (Standar & Extended)
-* **Tujuan:** Menghasilkan frame CAN dinamis yang menyerupai data telemetri otomotif sungguhan (ID Standard 11-bit dan ID Extended 29-bit protokol truk komersial **SAE J1939**).
+### Langkah 3: Eksperimen Menu [2] — Transmit Frame CAN Telemetri Otomotif Normal
+* **Tujuan:** Menghasilkan frame CAN dinamis yang menyerupai lalu lintas bus kendaraan nyata (ID Standar 11-bit dan ID Extended 29-bit standar truk komersial **SAE J1939**).
 * **Cara Menguji:** Ketik angka `2` lalu tekan `Enter`.
-* **Hasil Terminal yang Diharapkan:**
+* **Hasil Terminal yang Muncul:**
 
 ```text
-[MODE 2] Transmit Frame CAN Telemetri Otomotif...
-  [TX-1] Mengirim Telemetri Suhu Mesin & Tegangan Baterai:
-         ID=0x0A0 (Std), DLC=4, Data=[2E 0B D8 09] (Suhu=46°C, Vbatt=12.4V)
-  [TX-2] Mengirim Telemetri Putaran Mesin (RPM) & Kecepatan:
-         ID=0x205 (Std), DLC=4, Data=[D0 07 3C 00] (RPM=2000, Speed=60 km/h)
-  [TX-3] Mengirim Frame SAE J1939 Extended (Engine Controller):
-         ID=0x18FEE600 (Ext 29-bit), DLC=8, Data=[FF 7D 50 00 00 00 F0 01]
+========================================================
+  DEMO 2: TRANSMIT FRAME CAN BUS (MODE NORMAL 250 KBPS) 
+========================================================
+[WIRING] Pastikan pin GPIO 5 (TX) dan GPIO 4 (RX) terhubung ke
+         modul transceiver CAN 3.3V (SN65HVD230 / VP230) dan
+         terdapat resistor terminasi 120-Ohm di bus CAN!
+[OK] Driver TWAI berhasil diinstal dan dijalankan!
+
+--> Mengirim Frame #1: [Emergency Stop Alarm (ID Prioritas Tinggi)]
+    ID: 0xA0 (STD), DLC: 2
+    [STATUS] Sukses terkirim ke bus fisik!
+
+--> Mengirim Frame #2: [Speed & RPM Engine (ID Prioritas Menengah)]
+    ID: 0x205 (STD), DLC: 4
+    [STATUS] Sukses terkirim ke bus fisik!
+
+--> Mengirim Frame #3: [SAE J1939 Diagnostic Fleet (Extended 29-bit)]
+    ID: 0x18FEE600 (EXT), DLC: 8
+    [STATUS] Sukses terkirim ke bus fisik!
 ```
+
+*Catatan: Jika board Anda belum terhubung ke node penerima di bus fisik, firmware akan menampilkan pesan diagnosa bahwa frame menunggu sinyal ACK dari perangkat lain.*
 
 ---
 
 ### Langkah 4: Eksperimen Menu [3] — Mode Sniffer / Listen-Only
-* **Tujuan:** Menjadikan ESP32 sebagai alat penyadap bus yang pasif.
-* **Karakteristik Mode:** Pada mode ini (`TWAI_MODE_LISTEN_ONLY`), ESP32 **dilarang mengirimkan bit ACK atau bit error** ke kabel bus. Dengan demikian, kehadiran alat sadap kita tidak akan pernah mengganggu kestabilan jaringan kendaraan nyata yang sedang beroperasi!
-* **Cara Menguji:** Ketik angka `3` lalu tekan `Enter`. Firmware akan menunggu paket data yang lewat di pin RX (GPIO 4) dan mencetaknya secara instan.
+* **Tujuan:** Menjadikan ESP32 sebagai instrumen penyadap bus (*bus logger / sniffer*).
+* **Karakteristik Mode:** Pada mode ini (`TWAI_MODE_LISTEN_ONLY`), ESP32 **dilarang mengirimkan bit ACK atau bit error** ke kabel bus. Dengan demikian, alat sadap kita tidak akan pernah mengganggu kestabilan jaringan otomotif nyata yang sedang beroperasi!
+* **Cara Menguji:** Ketik angka `3` lalu tekan `Enter`. Firmware akan mendengarkan seluruh frame yang lewat di pin RX (GPIO 4) dan mencetaknya ke layar. Tekan sembarang tombol di keyboard untuk menghentikan sniffer.
 
 ---
 
 ### Langkah 5: Eksperimen Menu [4] — Generator Query RS-485 Modbus RTU & CRC-16
-* **Tujuan:** Membuktikan mekanisme kendali arah pin DE/RE dan proses enkapsulasi paket heksadesimal Modbus RTU.
+* **Tujuan:** Membuktikan kendali arah pin DE/RE dan proses enkapsulasi paket permintaan Modbus RTU.
 * **Cara Menguji:** Ketik angka `4` lalu tekan `Enter`.
-* **Hasil Terminal yang Diharapkan:**
+* **Hasil Terminal yang Muncul:**
 
 ```text
-[MODE 4] Membuat Paket Permintaan Modbus RTU (Function 03: Read Holding Registers)...
-  Parameter Permintaan:
-   - Alamat Slave Sensor : 0x01 (ID: 1)
-   - Fungsi Modbus       : 0x03 (Read Holding Registers)
-   - Alamat Register Awal: 0x006B (Desimal: 107)
-   - Jumlah Register     : 0x0002 (2 Register = 4 Byte Data)
-  Menghitung Checksum CRC-16 (Polinomial 0xA001)...
-   -> CRC Dihitung: 0x1774 (Kirim Low Byte Dulu: [74] lalu High Byte: [17])
-  Struktur Paket Lengkap yang Dikirim (8 Byte):
-   [01] [03] [00] [6B] [00] [02] [74] [17]
-  Tarik Pin DIR (GPIO 18) = HIGH (Mode Kirim Aktif)...
-  Menyemburkan Data via Serial2 (9600 bps, 8N1)...
-  Memanggil Serial2.flush() -> Menunggu Byte Terakhir Tuntas Keluar...
-  Tarik Pin DIR (GPIO 18) = LOW (Kembali ke Mode Dengar / Siaga Respon).
+========================================================
+  DEMO 4: RS-485 HALF-DUPLEX & MODBUS RTU FRAME BUILDER 
+========================================================
+[KONSEP] RS-485 menggunakan 2 kawat diferensial (A dan B).
+         Pin DE/RE wajib ditarik HIGH sebelum transmisi serial,
+         dan wajib ditarik LOW seketika transmisi selesai!
+
+[BEDAH PAKET MODBUS RTU (HEX)]:
+  • Slave Address    : 0x01 (Perangkat #1)
+  • Function Code    : 0x03 (Read Holding Registers)
+  • Start Register   : 0x006B (Alamat 107 desimal)
+  • Jumlah Register  : 0x0002 (2 Register = 4 Byte data)
+  • Kalkulasi CRC-16 : 0x1774 -> Low: 0x74, High: 0x17
+  • Paket Lengkap    : 01 03 00 6B 00 02 74 17 
+
+[EKSEKUSI FISIK RS-485]:
+  1. Menarik Pin DE/RE ke HIGH (Driver Aktif Menguasai Kabel Bus)...
+  2. Mengirimkan 8 byte paket Modbus lewat Serial2 Hardware UART...
+  3. Menarik Pin DE/RE ke LOW (Kembali ke Mode Receiver Siaga)...
+[OK] Transmisi frame Modbus RTU tuntas!
 ```
 
 ---
 
 ### Langkah 6: Eksperimen Menu [5] — TWAI Bus Diagnostics & Health Monitor
-* **Tujuan:** Memantau kesehatan fisik jaringan kabel CAN Bus secara kuantitatif.
+* **Tujuan:** Menginspeksi kesehatan fisik jaringan kabel CAN Bus secara kuantitatif.
 * **Cara Menguji:** Ketik angka `5` lalu tekan `Enter`.
-* **Parameter yang Diinspeksi:**
-  1. **TEC (*Transmit Error Counter*):** Bertambah jika frame yang dikirim gagal diverifikasi atau tidak mendapat bit ACK.
-  2. **REC (*Receive Error Counter*):** Bertambah jika frame yang diterima mengalami pelanggaran bit stuffing atau kesalahan CRC.
-  3. **Status Bus:**
-     * `RUNNING / ACTIVE`: Normal, bus dalam kondisi prima (TEC/REC $< 96$).
-     * `ERROR_PASSIVE`: Kualitas kabel buruk, mulai terjadi gangguan transmisi (TEC/REC $\ge 128$).
-     * `BUS_OFF`: Kabel korslet atau putus total! Node mengisolasi diri agar tidak membanjiri bus (TEC $\ge 256$).
+* **Hasil Terminal yang Muncul:**
+
+```text
+========================================================
+  DEMO 5: DIAGNOSTIK KESEHATAN CONTROLLER CAN BUS TWAI  
+========================================================
+  • Status Operasional Controller: RUNNING (Beroperasi Normal)
+  • Transmit Error Counter (TEC) : 0 (Maks aman: 127, >255 = Bus-Off)
+  • Receive Error Counter (REC)  : 0
+  • Pesan Mengantri di RX Queue  : 0
+  • Pesan Mengantri di TX Queue  : 0
+  • Kegagalan Transmisi (Failed) : 0
+  • Kehilangan Arbitrasi (Lost)  : 0
+  • Deteksi Bus Error            : 0
+--------------------------------------------------------
+[INSIGHT TEKNIK ELEKTRO]:
+CAN Bus memiliki mekanisme 'Fault Confinement'. Jika ada kabel
+putus atau korslet, TEC akan naik. Bila TEC > 255, chip otomatis
+memutus diri (Bus-Off) agar tidak merusak komunikasi node lain!
+```
 
 ---
 
 ## 🔬 7. PENYADAPAN SINYAL DENGAN USB LOGIC ANALYZER (PULSEVIEW)
 
-Untuk melihat langsung bit-bit biner yang merambat di udara, hubungkan probe USB Logic Analyzer Anda:
+Untuk membuktikan bahwa sinyal digital yang merambat di kabel tembaga sesuai dengan teori, hubungkan probe USB Logic Analyzer Anda:
 
 ```text
   Probe CH0 (Channel 0) ───> Jepit ke Pin GPIO 5 (CAN TX)
   Probe CH1 (Channel 1) ───> Jepit ke Pin GPIO 4 (CAN RX)
   Probe CH2 (Channel 2) ───> Jepit ke Pin GPIO 17 (RS-485 TX2)
   Probe CH3 (Channel 3) ───> Jepit ke Pin GPIO 18 (RS-485 DIR / DE)
-  Probe GND (Ground)    ───> Jepit ke Pin GND ESP32 (Wajib!)
+  Probe GND (Ground)    ───> Jepit ke Pin GND ESP32 (Mutlak Wajib!)
 ```
 
-### Langkah Konfigurasi Software PulseView:
-1. Buka aplikasi **PulseView**.
-2. Pastikan perangkat terdeteksi sebagai **`Saleae Logic (fx2lafw)`**.
-3. Atur **Sample Rate** ke **`2 MHz`** atau **`4 MHz`** (sudah lebih dari cukup untuk membaca sinyal 250 kbps). Atur jumlah sampel ke **`1 M samples`**.
-4. **Menambahkan Decoder CAN Bus:**
-   * Klik ikon hijau **Add protocol decoder** (atau tekan tombol `Ctrl + D`).
-   * Cari dan pilih decoder **`CAN`**.
-   * Klik nama decoder di daftar channel, lalu atur:
-     * **CAN RX**: Sambungkan ke channel probe Anda (`CH1` atau `CH0`).
-     * **Bitrate**: Ketik **`250000`** (250 kbps).
-     * **Sample Point**: Biarkan default (biasanya `75%` atau `80%`).
-5. **Menambahkan Decoder Modbus RTU:**
-   * Klik **Add protocol decoder**, pilih **`Modbus RTU`** (atau pasang decoder dasar **`UART`** pada baud rate 9600 bps, 8 data bits, no parity, 1 stop bit).
-   * Pada pengaturan UART, sambungkan jalur RX ke `CH2` (pin TX2 ESP32).
-6. Klik tombol **Run** di pojok kiri atas PulseView, lalu segera kirimkan perintah `2` atau `4` dari Serial Monitor ESP32.
-7. Gelombang kotak pulsa digital akan terekam, dan PulseView akan langsung memunculkan gelembung decoder berwarna-warni yang memperlihatkan **ID Pesan, DLC, Nilai CRC, dan Byte Data** secara otomatis!
+Berikut adalah visualisasi bentuk gelombang dan panduan langkah demi langkah pengoperasian software PulseView:
+
+![Panduan Penyadapan & Dekode Sinyal PulseView](images/pulseview_can_modbus_decoding.png)
+*Sumber gambar: Laboratorium Sistem Tertanam — Visualisasi bentuk gelombang fisik, gelembung dekode protokol CAN Bus 250 kbps, jendela timing kendali DIR RS-485, dan checklist troubleshooting instrumen.*
+
+---
+
+### Panduan Operasional PulseView untuk Pemula:
+1. **Buka Software PulseView:** Pastikan perangkat terdeteksi sebagai **`Saleae Logic (fx2lafw)`**.
+2. **Atur Sample Rate:** Pilih **`2 MHz`** atau **`4 MHz`** dengan panjang sampel **`1 M samples`**.
+3. **Memasang Decoder Protokol CAN Bus:**
+   * Tekan tombol pintas `Ctrl + D` (atau klik tombol hijau *Add protocol decoder*).
+   * Cari decoder **`CAN`**.
+   * Klik label decoder di daftar channel, lalu hubungkan jalur **CAN RX** ke `CH1` (atau `CH0`), dan atur **Bitrate** ke **`250000`** (250 kbps).
+4. **Memasang Decoder Protokol RS-485 Modbus RTU:**
+   * Tekan `Ctrl + D`, cari decoder **`UART`** atau **`Modbus RTU`**.
+   * Hubungkan jalur RX ke `CH2` (pin TX2 ESP32) dengan parameter: Baudrate **`9600`**, Data bits **`8`**, Stop bits **`1`**, Parity **`None`**.
+5. **Mulai Penangkapan Data:**
+   * Klik tombol **Run** di pojok kiri atas PulseView.
+   * Segera beralih ke Serial Monitor VS Code dan kirimkan angka `2` (untuk CAN) atau `4` (untuk Modbus).
+   * Gunakan roda *scroll* pada mouse Anda untuk melakukan **Zoom In** pada pulsa digital yang muncul. Gelembung teks heksadesimal akan langsung terlihat di layar!
 
 ---
 
