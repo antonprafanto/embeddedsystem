@@ -174,8 +174,11 @@ Inilah bagian inti praktikum minggu ini: kita akan melihat langsung bentuk pulsa
 ### A. Mengenal Alat: 8-Channel 24MHz USB Logic Analyzer
 Alat praktikum kita berbentuk kotak kecil dengan konektor USB dan 10 pin header:
 
-![Anatomi Hardware USB Logic Analyzer 8CH](images/usb_logic_analyzer_hardware.jpg)
-*Foto makro papan sirkuit USB Logic Analyzer 8-Channel memperlihatkan mikrokontroler Cypress FX2 CY7C68013A yang bertugas mengalirkan sampel logika digital kecepatan tinggi ke PC via USB (Sumber: Wikimedia Commons, karya Myself248, lisensi Creative Commons Attribution-ShareAlike 2.0 Generic).*
+<p align="center">
+  <img src="images/usb_logic_analyzer_hardware.jpg" alt="Anatomi Hardware USB Logic Analyzer 8CH" width="460" />
+  <br>
+  <em>Foto makro papan sirkuit USB Logic Analyzer 8-Channel memperlihatkan mikrokontroler Cypress FX2 CY7C68013A yang bertugas mengalirkan sampel logika digital kecepatan tinggi ke PC via USB (Sumber: Wikimedia Commons, karya Myself248, lisensi Creative Commons Attribution-ShareAlike 2.0 Generic).</em>
+</p>
 
 Alat ini mampu mengambil sampel logika digital (0 atau 1) secara simultan pada 8 channel dengan kecepatan hingga **24 juta sampel per detik (24 MHz)**!
 
@@ -225,8 +228,11 @@ Inilah fitur ajaib dari software PulseView: Anda tidak perlu lagi menerjemahkan 
    * **SCL:** Pilih **`D1`** (Channel 1).
 4. Ulangi langkah di atas jika ingin menambahkan decoder **`UART`** (petakan RX ke `D5`, Baud rate `115200`) atau decoder **`SPI`** (petakan CS ke `D2`, CLK ke `D3`, MOSI ke `D4`).
 
-![Tampilan Hasil Dekode Protokol I2C pada PulseView](images/pulseview_i2c_decoded_wikimedia.png)
-*Tangkapan layar software PulseView memperlihatkan pulsa gelombang fisik pada channel SDA/SCL yang berhasil didekode secara otomatis menjadi paket data [Start], [Alamat I2C], [Bit R/W], [ACK], dan byte muatan heksadesimal (Sumber: Wikimedia Commons, karya Xofc, lisensi Creative Commons Attribution-ShareAlike 3.0 Unported).*
+<p align="center">
+  <img src="images/pulseview_i2c_decoded_wikimedia.png" alt="Tampilan Hasil Dekode Protokol I2C pada PulseView" width="720" />
+  <br>
+  <em>Tangkapan layar software PulseView memperlihatkan pulsa gelombang fisik pada channel SDA/SCL yang berhasil didekode secara otomatis menjadi paket data [Start], [Alamat I2C], [Bit R/W], [ACK], dan byte muatan heksadesimal (Sumber: Wikimedia Commons, karya Xofc, lisensi Creative Commons Attribution-ShareAlike 3.0 Unported).</em>
+</p>
 
 #### D. Trik Cepat Mengendalikan Layar PulseView (Supaya Tidak Bingung!):
 Bagi pemula yang baru pertama kali membuka PulseView, tampilan awal setelah tombol **Run** diklik mungkin terlihat seperti garis datar atau deretan pulsa tipis yang sangat rapat. Jangan panik! Gunakan kontrol navigasi berikut:
