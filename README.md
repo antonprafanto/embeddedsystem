@@ -16,6 +16,7 @@ Selamat datang di repositori resmi perkuliahan **Sistem Tertanam (Embedded Syste
 * 📝 **[Minggu 5: Protokol Komunikasi Serial (UART, I2C, SPI) & 8-Channel USB Logic Analyzer](labs/week-05-serial-protocols-logic-analyzer/README.md)**
 * 📝 **[Minggu 6: Komunikasi Industri Jarak Jauh (CAN Bus / TWAI & RS-485 Modbus RTU)](labs/week-06-industrial-bus-can-rs485/README.md)**
 * 📝 **[Minggu 7: Real-Time Operating Systems (FreeRTOS) Task Scheduling & Watchdog Timer (TWDT)](labs/week-07-freertos-task-watchdog/README.md)**
+* 📝 **[Minggu 9: Komunikasi Antar-Task (IPC) & Sinkronisasi Aman (Queue, Mutex & Semaphore)](labs/week-09-freertos-ipc-queue-mutex/README.md)**
 * 💻 **Platform:** ESP32-WROOM-32D / ESP32-S3
 * ⚙️ **Toolchain:** Visual Studio Code + PlatformIO (Hybrid: Arduino Core → Native FreeRTOS/ESP-IDF)
 
@@ -100,6 +101,10 @@ flowchart TD
 │   │   ├── README.md                       # Jobsheet modul lab & panduan FreeRTOS
 │   │   ├── images/                         # Diagram Superloop vs RTOS, Lifecycle, TWDT, Stack & Dual-Core
 │   │   └── src/main.cpp                    # Multi-tasking scheduler, High Water Mark & Watchdog CLI
+│   ├── week-09-freertos-ipc-queue-mutex/       # Jobsheet & Starter code praktikum W09
+│   │   ├── platformio.ini                  # Konfigurasi exception decoder & monitor
+│   │   ├── README.md                       # Jobsheet modul lab & panduan FreeRTOS IPC
+│   │   └── src/main.cpp                    # Producer-Consumer Queue, Mutex & Binary Semaphore CLI
 │   └── ...
 ├── projects/                               # Template & spesifikasi Capstone Project
 ├── SILABUS_EMBEDDED_SYSTEM_ESP32.md        # Dokumen resmi RPS kurikulum (OBE)
