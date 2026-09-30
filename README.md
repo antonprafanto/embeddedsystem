@@ -104,6 +104,7 @@ flowchart TD
 │   ├── week-09-freertos-ipc-queue-mutex/       # Jobsheet & Starter code praktikum W09
 │   │   ├── platformio.ini                  # Konfigurasi exception decoder & monitor
 │   │   ├── README.md                       # Jobsheet modul lab & panduan FreeRTOS IPC
+│   │   ├── images/                         # Diagram Race Condition, Queue FIFO, Mutex, Priority Inversion & Deadlock
 │   │   └── src/main.cpp                    # Producer-Consumer Queue, Mutex & Binary Semaphore CLI
 │   └── ...
 ├── projects/                               # Template & spesifikasi Capstone Project
