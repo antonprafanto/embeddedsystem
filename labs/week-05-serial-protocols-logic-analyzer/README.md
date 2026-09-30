@@ -188,6 +188,35 @@ Hubungkan pin-pin ESP32 ke probe Logic Analyzer sesuai dengan diagram skematik b
 ![Diagram Pengkabelan ESP32 ke USB Logic Analyzer](images/hardware_wiring_logic_analyzer.png)
 *Sumber gambar: Laboratorium Sistem Tertanam — Pemetaan channel jumper ESP32 ke USB Logic Analyzer.*
 
+```mermaid
+flowchart LR
+    subgraph ESP ["⚡ ESP32 DEVKIT BOARD"]
+        direction TB
+        GND_E["Pin GND"]
+        I2C_P["GPIO 21 (I2C SDA)<br>GPIO 22 (I2C SCL)"]
+        SPI_P["GPIO 5 (SPI CS)<br>GPIO 18 (SPI SCK)<br>GPIO 23 (SPI MOSI)"]
+        UART_P["GPIO 17 (UART2 TX)"]
+    end
+
+    subgraph LA ["📊 USB LOGIC ANALYZER (8-CH)"]
+        direction TB
+        GND_L["Pin GND"]
+        CH_I2C["Channel 0 (CH0)<br>Channel 1 (CH1)"]
+        CH_SPI["Channel 2 (CH2)<br>Channel 3 (CH3)<br>Channel 4 (CH4)"]
+        CH_UART["Channel 5 (CH5)"]
+    end
+
+    subgraph PC ["💻 KOMPUTER / LAPTOP"]
+        PV["PulseView (Sigrok)<br>Decoder: I2C, SPI, UART (115200)"]
+    end
+
+    GND_E <== "Common Ground (Wajib!)" ==> GND_L
+    I2C_P --> CH_I2C
+    SPI_P --> CH_SPI
+    UART_P --> CH_UART
+    LA <== "Kabel USB Data" ==> PC
+```
+
 #### Tabel Koneksi Pin:
 | Probe Logic Analyzer | Pin Fisik ESP32 | Fungsi Protokol | Warna Jumper Rekomendasi |
 |:---|:---|:---|:---|
@@ -298,12 +327,10 @@ Starter code praktikum telah siap pada berkas [`src/main.cpp`](file:///c:/Users/
 #### Skenario B: Menguji Menu `[3]` (Paket UART Terstruktur)
 * Tekan tombol **`3`** pada Serial Monitor.
 * ESP32 mengirim 6 byte data biner melalui GPIO 17 (TX2) dengan format frame terstruktur:
-  ```text
-  ┌────────────┬──────────┬──────────────┬─────────────┬──────────────┬───────────┐
-  │ START BYTE │ SEQUENCE │ PAYLOAD HIGH │ PAYLOAD LOW │ CHECKSUM XOR │ STOP BYTE │
-  │    0xAA    │  0x00..  │     0x08     │    0x00     │     0xAA     │   0x55    │
-  └────────────┴──────────┴──────────────┴─────────────┴──────────────┴───────────┘
-  ```
+  | Byte 0 | Byte 1 | Byte 2 | Byte 3 | Byte 4 | Byte 5 |
+  | :---: | :---: | :---: | :---: | :---: | :---: |
+  | **START BYTE** | **SEQUENCE** | **PAYLOAD HIGH** | **PAYLOAD LOW** | **CHECKSUM XOR** | **STOP BYTE** |
+  | `0xAA` | `0x00..` | `0x08` | `0x00` | `0xAA` | `0x55` |
 * Buka PulseView, aktifkan decoder **UART** pada Channel 5 (Baud rate: 115200). Anda akan melihat paket heksadesimal tersebut terurai rapi di layar komputer!
 
 #### Skenario C: Menguji Menu `[4]` (Perbandingan SPI Mode 0 vs Mode 3)

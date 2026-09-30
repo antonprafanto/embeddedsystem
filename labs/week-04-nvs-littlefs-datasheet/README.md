@@ -91,6 +91,20 @@ Secara fisik, chip SPI Flash berkapasitas **4 Megabyte (4.096 Kilobyte / 0x40000
 ![Peta Partisi dan Struktur Flash Memory 4MB ESP32](images/flash_partition_map.png)
 *Sumber gambar: Peta alokasi ruang flash memory laboratorium Sistem Tertanam.*
 
+```mermaid
+flowchart TD
+    subgraph FLASH ["💾 MEMORI SPI FLASH 4MB (0x000000 s.d. 0x400000)"]
+        direction TB
+        BL["0x001000: 2nd Stage Bootloader (32 KB)"]
+        PT["0x008000: Partition Table (3 KB)"]
+        NVS_P["0x009000: nvs (20 KB) — Preferences.h Key-Value & Wear-Leveling"]
+        OTA_P["0x00E000: otadata (8 KB) — Penanda Partisi Boot OTA"]
+        APP_P["0x010000: app0 Factory Firmware (1.875 MB / 1920 KB) — Biner Program C++"]
+        FS_P["0x1F0000: littlefs File System (2.000 MB / 2048 KB) — config.json & log"]
+        END_P["0x3F0000: Sisa Ruang Bebas Flash (64 KB)"]
+    end
+```
+
 #### Tabel Partisi yang Kita Gunakan (`partitions.csv`):
 Pada folder lab minggu ini, kita telah menyertakan berkas tabel partisi kustom [`partitions.csv`](file:///c:/Users/anton/vibecoding/EmbeddedSystem/labs/week-04-nvs-littlefs-datasheet/partitions.csv):
 
@@ -269,6 +283,15 @@ Berikut adalah panduan 4 pilar analisis lembar data komponen industri yang harus
 
 ![Panduan Literasi Enjiniring: Bedah Datasheet Sensor Industri](images/datasheet_reading_guide.png)
 *Sumber gambar: Panduan bedah datasheet laboratorium Sistem Tertanam.*
+
+```mermaid
+flowchart TD
+    P1["🛡️ 1. Absolute Maximum Ratings<br>Batas Tegangan Mati (VDD: -0.3V s.d. 4.25V, Solder: 260°C)"]
+    P2["🔋 2. Operating & Quiescent Currents<br>Desain Baterai IoT (Aktif: 3.6 µA, Sleep: 0.1 µA)"]
+    P3["📡 3. Interface & Bus Timing<br>Kecepatan I2C (100k/400k), Alamat 0x76/0x77, Pull-Up 4.7kΩ"]
+    P4["🧩 4. Register Map & Bitwise Decoders<br>Rekonstruksi Data Sensor 20-bit (MSB, LSB, XLSB)"]
+    P1 --> P2 --> P3 --> P4
+```
 
 ---
 

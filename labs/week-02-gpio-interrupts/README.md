@@ -137,6 +137,15 @@ Istilah unik ini berasal dari sejarah komputer Commodore Amiga di era 1980-an, y
 
 *Sumber ilustrasi: Diagram orisinal laboratorium Sistem Tertanam.*
 
+```mermaid
+flowchart TD
+    CRASH["💥 Crash / Panic Terjadi<br>(misal: Null Pointer Dereference)"] --> PANIC["🚨 ESP32 Panic Handler Aktif<br>Cetak Guru Meditation Error"]
+    PANIC --> BACKTRACE["📝 Alamat Backtrace Hex Dicetak<br>Contoh: 0x400d1640:0x3ffb1f10"]
+    BACKTRACE --> FILTER["⚙️ PlatformIO Exception Decoder<br>(monitor_filters = esp32_exception_decoder)"]
+    FILTER --> RESOLVE["🎯 addr2line Menerjemahkan Alamat Hex<br>src/main.cpp:71 (trigger_controlled_crash)"]
+    RESOLVE --> FIX["🛠️ Mahasiswa Memperbaiki Baris Kode Asli"]
+```
+
 ### Jenis Panic Exception yang Paling Sering Terjadi:
 1. **`LoadProhibited` / `StoreProhibited`:** Program mencoba membaca atau menulis data ke alamat memori yang tidak valid (paling sering akibat *Null Pointer Dereference*, misalnya variabel pointer bernilai `NULL` / `0x00000000`).
 2. **`IntegerDivideByZero`:** Operasi matematika melakukan pembagian dengan angka 0.
@@ -173,6 +182,25 @@ Ambil board ESP32, breadboard, 1 buah push button 4 kaki, dan kabel jumper (male
 ![Panduan Rangkaian Hardware Push Button](images/button_breadboard_wiring.png)
 
 *Sumber ilustrasi: Diagram orisinal laboratorium Sistem Tertanam.*
+
+```mermaid
+flowchart LR
+    subgraph ESP ["⚡ ESP32 DevKit Board"]
+        direction TB
+        G18["Pin GPIO 18<br>(Internal Pull-Up 45 kΩ)"]
+        GND_PIN["Pin GND (Ground)"]
+        LED2["GPIO 2 (LED Biru Onboard)"]
+    end
+
+    subgraph BTN ["🔘 Push Button (4 Kaki di Breadboard)"]
+        direction TB
+        PIN1["Kaki 1 (Sinyal Input)"]
+        PIN3["Kaki 3 (Ground)"]
+    end
+
+    G18 <-->|"Kabel Jumper Biru"| PIN1
+    GND_PIN <-->|"Kabel Jumper Hitam"| PIN3
+```
 
 #### 💡 Petunjuk Penting Bagi Pemula (Menghindari Salah Sambung):
 1. **Pasang Tombol Melintasi Parit Tengah Breadboard:**  

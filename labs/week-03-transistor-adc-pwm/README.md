@@ -226,6 +226,46 @@ Gunakan panduan visual di bawah ini sebelum menancapkan komponen apa pun ke brea
 ![Panduan Wiring Rangkaian Breadboard Minggu 3](images/breadboard_wiring_week03.png)
 *Sumber gambar: Diagram tata letak pengkabelan laboratorium Sistem Tertanam dengan visualisasi foto makro fisik komponen asli bersitasi Wikimedia Commons (ESP32-WROOM-32 DevKit: CC BY-SA 4.0; Potensiometer 10 kΩ: Public Domain karya Chetvorno; Transistor 2N2222: CC BY-SA 3.0 karya F.A.; Dioda 1N4007: CC BY-SA 3.0 karya T.R.W.; Modul Relay 5V: CC BY-SA 4.0).*
 
+```mermaid
+flowchart TD
+    subgraph ESP ["⚡ ESP32 DEVKIT BOARD"]
+        direction TB
+        V33["Pin 3.3V (Ref Daya Sensor)"]
+        G34["GPIO 34 (Input ADC1 Potensio)"]
+        G19["GPIO 19 (LEDC PWM Out 5 kHz)"]
+        GND_ESP["Pin GND (Ground Utama)"]
+    end
+
+    subgraph POT ["🎛️ POTENSIOMETER 10 kΩ"]
+        direction TB
+        P1["Kaki 1 (VCC 3.3V)"]
+        P2["Kaki 2 (Wiper Sinyal)"]
+        P3["Kaki 3 (Ground)"]
+    end
+
+    subgraph DRIVER ["🔌 SIRKUIT DRIVER BEBAN"]
+        direction TB
+        RB["Resistor Basis 1 kΩ"]
+        Q1["Transistor NPN 2N2222"]
+        D1["Dioda Flyback 1N4007"]
+        MOTOR["Beban (Motor DC / Relay 5V)"]
+        EXT_PWR["Catu Daya Eksternal +5V"]
+        EXT_GND["Ground Daya Eksternal (GND)"]
+    end
+
+    V33 --> P1
+    P2 --> G34
+    P3 --> GND_ESP
+
+    G19 --> RB --> Q1
+    EXT_PWR --> MOTOR
+    EXT_PWR -->|"Katoda (Gelang Perak)"| D1
+    MOTOR --> Q1
+    D1 -->|"Anoda"| Q1
+    Q1 --> GND_ESP
+    EXT_GND <== "Common Ground" ==> GND_ESP
+```
+
 ### Tabel Pengkabelan Lengkap (Pin-by-Pin Wiring Matrix):
 
 | Bagian | Kaki Komponen | Terhubung Ke Pin Board / Catu Daya | Catatan Pemasangan |

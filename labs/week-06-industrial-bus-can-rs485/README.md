@@ -234,6 +234,38 @@ Berikut adalah panduan penyambungan kawat antara ESP32, modul transceiver CAN (S
 ![Diagram Pengkabelan Lengkap ESP32 dengan Transceiver CAN dan RS-485](images/hardware_wiring_can_rs485.png)
 *Sumber gambar: Laboratorium Sistem Tertanam — Skema alokasi pinout periferal hardware ESP32, modul transceiver SN65HVD230 & MAX3485, dan titik penyadapan probe USB Logic Analyzer.*
 
+```mermaid
+flowchart TD
+    subgraph ESP ["⚡ ESP32 DEVKIT BOARD"]
+        direction TB
+        CAN_PINS["GPIO 5 (TWAI TX)<br>GPIO 4 (TWAI RX)"]
+        RS_PINS["GPIO 17 (UART2 TX)<br>GPIO 16 (UART2 RX)<br>GPIO 18 (DIR DE/RE)"]
+        PWR_ESP["Pin 3V3 & Pin GND"]
+    end
+
+    subgraph CAN_MOD ["🚗 TRANSCEIVER CAN 3.3V (SN65HVD230)"]
+        direction TB
+        CAN_CHIP["Chip SN65HVD230 (CTX, CRX)"]
+        CAN_TERM["Terminal Diferensial CAN_H & CAN_L<br>(Resistor Terminasi 120 Ω)"]
+    end
+
+    subgraph RS_MOD ["🏭 TRANSCEIVER RS-485 3.3V (MAX3485)"]
+        direction TB
+        RS_CHIP["Chip MAX3485 (DI, RO, DE, /RE)"]
+        RS_TERM["Terminal Bus Diferensial A & B<br>(Resistor Terminasi 120 Ω)"]
+    end
+
+    subgraph BUS ["🌐 JALUR BUS FISIK (Kabel Twisted-Pair Jarak Jauh)"]
+        CAN_BUS["CAN Bus 2.0B / SAE J1939 (250 kbps)"]
+        RS_BUS["RS-485 Modbus RTU (Half-Duplex)"]
+    end
+
+    CAN_PINS <--> CAN_CHIP --> CAN_TERM --> CAN_BUS
+    RS_PINS <--> RS_CHIP --> RS_TERM --> RS_BUS
+    PWR_ESP -. "3.3V & Common GND" .-> CAN_MOD
+    PWR_ESP -. "3.3V & Common GND" .-> RS_MOD
+```
+
 ---
 
 ### Tabel Ringkasan Pinout Hardware (Praktikum Minggu 06):
