@@ -17,6 +17,7 @@ Selamat datang di repositori resmi perkuliahan **Sistem Tertanam (Embedded Syste
 * 📝 **[Minggu 6: Komunikasi Industri Jarak Jauh (CAN Bus / TWAI & RS-485 Modbus RTU)](labs/week-06-industrial-bus-can-rs485/README.md)**
 * 📝 **[Minggu 7: Real-Time Operating Systems (FreeRTOS) Task Scheduling & Watchdog Timer (TWDT)](labs/week-07-freertos-task-watchdog/README.md)**
 * 📝 **[Minggu 9: Komunikasi Antar-Task (IPC) & Sinkronisasi Aman (Queue, Mutex & Semaphore)](labs/week-09-freertos-ipc-queue-mutex/README.md)**
+* 📝 **[Minggu 10: Pemrograman Dual-Core ESP32 & Deferred Interrupt Processing](labs/week-10-freertos-dualcore-isr/README.md)**
 * 💻 **Platform:** ESP32-WROOM-32D / ESP32-S3
 * ⚙️ **Toolchain:** Visual Studio Code + PlatformIO (Hybrid: Arduino Core → Native FreeRTOS/ESP-IDF)
 
@@ -105,7 +106,11 @@ flowchart TD
 │   │   ├── platformio.ini                  # Konfigurasi exception decoder & monitor
 │   │   ├── README.md                       # Jobsheet modul lab & panduan FreeRTOS IPC
 │   │   ├── images/                         # Diagram Race Condition, Queue FIFO, Mutex, Priority Inversion & Deadlock
-│   │   └── src/main.cpp                    # Producer-Consumer Queue, Mutex & Binary Semaphore CLI
+│   ├── week-10-freertos-dualcore-isr/          # Jobsheet & Starter code praktikum W10
+│   │   ├── platformio.ini                  # Konfigurasi exception decoder & monitor
+│   │   ├── README.md                       # Jobsheet modul lab & panduan Dual-Core SMP
+│   │   ├── images/                         # Diagram Arsitektur SMP, Task Pinning, Deferred ISR & Wiring
+│   │   └── src/main.cpp                    # Dual-Core Task Pinning, Direct Task Notification & CLI
 │   └── ...
 ├── projects/                               # Template & spesifikasi Capstone Project
 ├── SILABUS_EMBEDDED_SYSTEM_ESP32.md        # Dokumen resmi RPS kurikulum (OBE)
