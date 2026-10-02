@@ -18,6 +18,7 @@ Selamat datang di repositori resmi perkuliahan **Sistem Tertanam (Embedded Syste
 * 📝 **[Minggu 7: Real-Time Operating Systems (FreeRTOS) Task Scheduling & Watchdog Timer (TWDT)](labs/week-07-freertos-task-watchdog/README.md)**
 * 📝 **[Minggu 9: Komunikasi Antar-Task (IPC) & Sinkronisasi Aman (Queue, Mutex & Semaphore)](labs/week-09-freertos-ipc-queue-mutex/README.md)**
 * 📝 **[Minggu 10: Pemrograman Dual-Core ESP32 & Deferred Interrupt Processing](labs/week-10-freertos-dualcore-isr/README.md)**
+* 📝 **[Minggu 11: Desain Sistem Bertenaga Baterai (Low-Power Optimization & Deep Sleep)](labs/week-11-low-power-deep-sleep/README.md)**
 * 💻 **Platform:** ESP32-WROOM-32D / ESP32-S3
 * ⚙️ **Toolchain:** Visual Studio Code + PlatformIO (Hybrid: Arduino Core → Native FreeRTOS/ESP-IDF)
 
@@ -111,6 +112,11 @@ flowchart TD
 │   │   ├── README.md                       # Jobsheet modul lab & panduan Dual-Core SMP
 │   │   ├── images/                         # Diagram Arsitektur SMP, Task Pinning, Deferred ISR & Wiring
 │   │   └── src/main.cpp                    # Dual-Core Task Pinning, Direct Task Notification & CLI
+│   ├── week-11-low-power-deep-sleep/          # Jobsheet & Starter code praktikum W11
+│   │   ├── platformio.ini                  # Konfigurasi exception decoder & monitor
+│   │   ├── README.md                       # Jobsheet modul lab & optimasi daya baterai
+│   │   ├── images/                         # Diagram profil daya, RTC memory, wake-up flow, math & wiring
+│   │   └── src/main.cpp                    # 4 Power modes, RTC_DATA_ATTR, EXT0/Timer wake-up & CLI
 │   └── ...
 ├── projects/                               # Template & spesifikasi Capstone Project
 ├── SILABUS_EMBEDDED_SYSTEM_ESP32.md        # Dokumen resmi RPS kurikulum (OBE)
