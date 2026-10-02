@@ -69,11 +69,28 @@ Sebelum menulis baris kode pertama, mari siapkan meja kerja dan perangkat lunak 
 | **Kabel Jumper (Male-to-Male)** | 5-7 helai | Menghubungkan pin ESP32 ke tombol dan rel negatif breadboard. |
 | **Multimeter Digital (Opsional Lab)** | 1 unit | Mengukur arus riil ESP32 (skala mA dan µA). |
 
+![Panduan Alat dan Langkah Pengujian Pemula](images/w11_beginner_tools_guide.png)
+
+### C. Alur Kerja Pemula: Alat Mana Dulu yang Harus Dibuka?
+Bagi Anda yang baru pertama kali menggunakan PlatformIO di VS Code, ikuti urutan langkah berikut agar tidak bingung:
+1. **Sambungkan Kabel USB:** Colokkan ESP32 DevKit ke port USB laptop Anda. Pastikan lampu LED daya merah di board menyala stabil.
+2. **Buka Software VS Code:** Jalankan aplikasi Visual Studio Code di komputer Anda.
+3. **Buka Folder Modul Praktikum:** Klik menu **File** > **Open Folder...**, lalu pilih direktori:  
+   `labs/week-11-low-power-deep-sleep`
+4. **Tunggu Inisialisasi PlatformIO:** Perhatikan bilah biru/abu-abu di bagian paling bawah VS Code (*Status Bar*). Tunggu 5–10 detik hingga ikon-ikon PlatformIO (centang, panah, steker listrik) muncul di pojok kiri bawah.
+5. **Kompilasi & Upload Firmware:**  
+   * Klik ikon centang **✓ (Build)** untuk memastikan kode bebas error.
+   * Klik ikon panah kanan **→ (Upload)** untuk mengunggah program ke ESP32. Tunggu hingga muncul tulisan `[SUCCESS]`.
+6. **Buka Serial Monitor (Terminal Interaksi):**  
+   * Klik ikon steker listrik **🔌 (Serial Monitor)** pada bilah status bawah. Terminal serial akan otomatis terbuka pada kecepatan **115200 baud** sesuai file `platformio.ini`.
+7. **Cara Mengirim Perintah Sintaks:**  
+   * Klik jendela terminal di bagian bawah layar.
+   * Ketik angka pilihan menu yang diinginkan (misalnya ketik angka `1` atau `3`), lalu tekan tombol **ENTER** pada keyboard laptop Anda!
+   * *Jika tampilan menu serial belum muncul, cukup tekan tombol fisik bertuliskan **EN** atau **RST** pada board ESP32 Anda satu kali.*
+
 > [!NOTE]
 > **Belum Memiliki Tombol Fisik atau Multimeter di Meja?**  
-> Jangan berkecil hati! Firmware pada lab ini dilengkapi fitur uji coba virtual. Anda cukup mengetik angka `[3]` pada Serial Monitor untuk menguji tidur timer 5 detik, angka `[5]` untuk menguji Light-Sleep, angka `[2]` untuk mengamati memori RTC, dan angka `[6]` untuk menjalankan kalkulator daya baterai interaktif!
-
----
+> Jangan berkecil hati! Firmware pada lab ini dirancang mandiri (*self-contained*). Anda tetap dapat menguji **100% konsep dan materi** secara virtual langsung dari laptop menggunakan menu interaktif `[1]` sampai `[6]` dan `[s]` pada Serial Monitor!
 
 ## 3. Profil 4 Mode Konsumsi Daya ESP32
 
@@ -124,6 +141,11 @@ RTC_DATA_ATTR static float    s_lastTemperature = 0.0; // Nilai sensor tersimpan
 // VARIABEL BIASA (DI SRAM UTAMA):
 uint32_t variabelBiasa = 0;                            // HILANG & KEMBALI KE 0 SAAT REBOOT!
 ```
+
+> [!TIP]
+> **💡 Catatan Ramah Pemula: Di Mana Saya Menuliskan Baris Kode Ini?**  
+> Jika Anda melihat potongan deklarasi C++ di atas, jangan bingung atau mengira Anda harus mengetik baris ini di Command Prompt/Terminal laptop!  
+> Seluruh sintaks di atas **sudah tertanam rapi dan siap pakai** di dalam file program utama [`src/main.cpp`](src/main.cpp). Anda dapat langsung mengamati bagaimana memori RTC mempertahankan datanya dengan memilih menu nomor **`[2]`** pada Serial Monitor di VS Code.
 
 ### Tabel Komparasi: RTC Slow SRAM vs Flash NVS
 | Parameter | RTC Slow SRAM (`RTC_DATA_ATTR`) | Flash Memory (NVS / Preferences / LittleFS) |
@@ -184,11 +206,24 @@ switch (wakeup_reason) {
 }
 ```
 
+> [!TIP]
+> **💡 Cara Praktis Menguji Sintaks Pembangkit Bangun di Atas:**  
+> Anda tidak perlu memprogram ulang atau mengetik fungsi C++ di atas secara manual di terminal:  
+> * Untuk menguji **Timer Wake-up (5 detik)**: Cukup ketik angka **`3`** lalu tekan **ENTER** di Serial Monitor. ESP32 akan tidur 5 detik lalu bangun dan reboot otomatis.  
+> * Untuk menguji **Tombol Bangun EXT0 (GPIO 33)**: Ketik angka **`4`** lalu tekan **ENTER** di Serial Monitor. ESP32 akan tertidur lelap sampai Anda menekan tombol push button pada GPIO 33 (atau menyentuhkan kabel jumper dari GPIO 33 ke GND).
+
 ---
 
 ## 6. Kalkulasi Matematis Masa Pakai Baterai & Duty Cycle
 
 Mengapa perangkat hemat daya dapat bertahan bertahun-tahun? Rahasianya terletak pada perhitungan **Arus Rata-Rata Tertimbang (*Weighted Average Current*)** dan konsep **Duty Cycle**.
+
+![Profil Bentuk Gelombang Arus Listrik Terhadap Waktu](images/w11_current_waveform_timeline.png)
+
+### 📈 Membaca Bentuk Gelombang Arus Listrik:
+Seperti tampak pada diagram di atas:
+1. **Fase Bangun Singkat ($T_{active} \approx 50\text{ ms}$):** Terjadi lonjakan arus saat boot ROM (~80 mA), pembacaan sensor analog ADC & penulisan RTC Memory (~45 mA), hingga transmisi radio Wi-Fi/LoRa (~220-240 mA). Meskipun arusnya relatif besar, fase ini hanya berlangsung dalam hitungan puluhan milidetik saja!
+2. **Fase Tidur Panjang ($T_{sleep} = 600\text{ detik / 10 menit}$):** Arus seketika anjlok ke lantai dasar **10 µA** (hampir nol). Karena 99.99% waktu perangkat dihabiskan di lantai tidur ini, rata-rata konsumsi arus keseluruhan menjadi sangat kecil!
 
 ![Kalkulasi Matematis Masa Pakai Baterai](images/w11_battery_duty_cycle_math.png)
 
@@ -272,24 +307,25 @@ Berikut adalah urutan otomasi siklus hidup (*lifecycle execution state machine*)
 
 Firmware pada direktori `labs/week-11-low-power-deep-sleep` telah diprogram dengan antarmuka menu serial yang kaya fitur. Anda dapat menguji berbagai skenario langsung dari laptop Anda!
 
-### Langkah 1: Membuka Proyek & Upload Firmware
-1. Buka folder kerja praktikum di VS Code:
-   ```bash
-   code labs/week-11-low-power-deep-sleep
-   ```
-2. Pastikan file `platformio.ini` telah terkonfigurasi dengan baud rate `115200`.
-3. Sambungkan board ESP32 ke laptop melalui kabel data USB.
-4. Klik tombol **PlatformIO: Upload** (ikon tanda panah kanan `→` di Status Bar bawah) atau jalankan perintah di terminal:
-   ```bash
-   pio run -t upload
-   ```
-5. Buka **Serial Monitor** (ikon steker listrik di Status Bar bawah) atau jalankan:
-   ```bash
-   pio device monitor -b 115200
-   ```
+### Langkah 1: Membuka Proyek & Upload Firmware (Mudah via GUI)
+Bagi pemula, cara termudah adalah menggunakan tombol visual PlatformIO di bilah status bawah (*Status Bar*) VS Code:
+1. **Buka Folder Modul di VS Code:**  
+   Buka folder `labs/week-11-low-power-deep-sleep` melalui menu **File** > **Open Folder...**.
+2. **Kompilasi Firmware (Build):**  
+   Klik ikon centang **✓** (*PlatformIO: Build*) di bilah bawah VS Code untuk memverifikasi program. Tunggu hingga muncul tulisan `[SUCCESS]`.  
+   *(Atau lewat terminal jika terpasang: `pio run`)*
+3. **Unggah ke ESP32 (Upload):**  
+   Sambungkan ESP32 via kabel USB. Klik ikon panah kanan **→** (*PlatformIO: Upload*) di bilah bawah VS Code. Tunggu proses transfer firmware selesai.  
+   *(Atau lewat terminal: `pio run -t upload`)*
+4. **Buka Terminal Serial Monitor:**  
+   Klik ikon steker listrik **🔌** (*PlatformIO: Serial Monitor*) pada bilah status bawah. Terminal otomatis terhubung pada kecepatan **115200 baud**.  
+   *(Atau lewat terminal: `pio device monitor -b 115200`)*
 
-### Langkah 2: Eksplorasi Menu Serial Monitor
-Begitu Serial Monitor terbuka, tekan tombol **EN / RST** pada board ESP32 Anda. Anda akan disambut oleh banner menu utama berikut:
+### Langkah 2: Eksplorasi Menu Serial Monitor (Cara Kirim Perintah)
+Setelah Serial Monitor terbuka:
+1. **Tekan tombol fisik bertuliskan `EN` atau `RST`** pada board ESP32 Anda satu kali untuk me-restart sistem dan memunculkan banner menu utama.
+2. **Klik mouse Anda pada jendela terminal** Serial Monitor di bagian bawah layar agar fokus input keyboard aktif.
+3. Anda akan disambut oleh banner menu interaktif berikut:
 
 ```
 ================================================================================

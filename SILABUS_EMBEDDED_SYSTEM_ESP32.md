@@ -178,6 +178,7 @@ Total pengadaan kit praktikum per kelompok (2 mahasiswa) dirancang sangat ekonom
 * **Sesi Praktik Lab Terpandu (100 menit):** *Live coding* modifikasi driver periferal dan implementasi multi-tasking FreeRTOS berbasis lembar kerja terstruktur.
 
 #### Minggu 9: Komunikasi Antar-Task (IPC) & Sinkronisasi Aman
+* 🔗 **Modul Praktikum Terpandu:** [labs/week-09-freertos-ipc-queue-mutex/README.md](labs/week-09-freertos-ipc-queue-mutex/README.md)
 * **Materi Teori:**
   * Bahaya variabel global bersama: *Race Condition* dan korupsi data memori.
   * FreeRTOS Queue: Mengirim paket data antar-task secara thread-safe (prinsip FIFO).
@@ -190,6 +191,7 @@ Total pengadaan kit praktikum per kelompok (2 mahasiswa) dirancang sangat ekonom
 * **Asesmen:** Menyelesaikan studi kasus sistem yang terkunci (*deadlock*) dan memulihkannya.
 
 #### Minggu 10: Pemrograman Dual-Core ESP32 & Deferred Interrupt Processing
+* 🔗 **Modul Praktikum Terpandu:** [labs/week-10-freertos-dualcore-isr/README.md](labs/week-10-freertos-dualcore-isr/README.md)
 * **Materi Teori:**
   * Arsitektur Symmetric Multiprocessing (SMP): Core 0 (PRO_CPU) dan Core 1 (APP_CPU).
   * Task pinning: Menugaskan task ke core tertentu menggunakan `xTaskCreatePinnedToCore()`.
@@ -203,6 +205,7 @@ Total pengadaan kit praktikum per kelompok (2 mahasiswa) dirancang sangat ekonom
 ### FASE 4: DAYA RENDAH, IOT TELEMETRI, & KEAMANAN (MINGGU 11 - 13)
 
 #### Minggu 11: Desain Sistem Bertenaga Baterai (*Low-Power Optimization*)
+* 🔗 **Modul Praktikum Terpandu:** [labs/week-11-low-power-deep-sleep/README.md](labs/week-11-low-power-deep-sleep/README.md)
 * **Materi Teori:**
   * Profil arus ESP32: Mode aktif (80-240 mA), Modem-sleep (~20 mA), Light-sleep (~0.8 mA), dan Deep-sleep (~10 µA).
   * Sumber pembangkit bangun (*Wake-up sources*): Timer RTC, GPIO external trigger (EXT0/EXT1).
