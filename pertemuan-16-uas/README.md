@@ -8,7 +8,8 @@
 | 📋 **Prasyarat** | Proposal (Pertemuan 14) dan laporan kemajuan (Pertemuan 15) sudah dikumpulkan |
 | 🧰 **Alat** | Alat proyek + catu daya, laptop, proyek Wokwi, dan video demo cadangan |
 | 🔗 **Ketentuan proyek** | [Proyek Akhir](../proyek-akhir/README.md): ketentuan teknis, ide, templat proposal dan laporan |
-| 📥 **Slide** | [Unduh PDF](../slide/pdf/P16-UAS-Proyek-Akhir.pdf) · [Unduh PPTX](../slide/pptx/P16-UAS-Proyek-Akhir.pptx) |
+| 📥 **Slide** | [👁️ Lihat di peramban](https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fraw.githubusercontent.com%2Fantonprafanto%2Fembeddedsystem%2Fmain%2Fslide%2Fpptx%2FP16-UAS-Proyek-Akhir.pptx) · [⬇️ Unduh PDF](https://raw.githubusercontent.com/antonprafanto/embeddedsystem/main/slide/pdf/P16-UAS-Proyek-Akhir.pdf) · [⬇️ Unduh PPTX](https://raw.githubusercontent.com/antonprafanto/embeddedsystem/main/slide/pptx/P16-UAS-Proyek-Akhir.pptx) |
+| 📄 **Modul PDF** | [⬇️ Unduh modul ini dalam PDF](https://raw.githubusercontent.com/antonprafanto/embeddedsystem/main/modul-pdf/Modul-P16-UAS-Proyek-Akhir.pdf) — untuk dibaca luring atau dicetak |
 
 ## Daftar Isi
 

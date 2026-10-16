@@ -80,11 +80,13 @@ Setiap praktikum bisa dikerjakan dengan salah satu jalur berikut. Kodenya **sama
 > [!IMPORTANT]
 > **Ujian praktik dan proyek akhir memakai board asli.** Jadikan Wokwi sebagai tempat berlatih, bukan pengganti merangkai.
 
-## 5. Mengunduh Slide
+## 5. Melihat dan Mengunduh Slide serta Modul
 
-- Semua slide ada di *folder* [`slide/pdf`](../slide/pdf) (untuk dibaca) dan [`slide/pptx`](../slide/pptx) (versi PowerPoint).
-- Tautan unduh langsung tersedia di tabel [beranda](../README.md#️-peta-16-pertemuan) dan di bagian atas setiap modul.
-- Di GitHub, buka berkas PDF lalu klik ikon **Download raw file** (panah ke bawah) di kanan atas pratinjau.
+- Di tabel [beranda](../README.md#️-peta-16-pertemuan) dan di bagian atas setiap modul ada tiga jenis tautan:
+  - **👁️ Lihat** membuka slide langsung di peramban (PowerPoint Online), tanpa mengunduh.
+  - **⬇️ PDF** / **⬇️ PPTX** langsung mengunduh slide ke perangkatmu.
+  - **⬇️ PDF** di kolom modul mengunduh versi PDF modul, cocok untuk dibaca luring atau dicetak.
+- Semua berkasnya juga ada di *folder* [`slide/pdf`](../slide/pdf), [`slide/pptx`](../slide/pptx), dan [`modul-pdf`](../modul-pdf).
 
 ## 6. Etika Belajar
 

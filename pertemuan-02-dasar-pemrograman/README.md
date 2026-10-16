@@ -7,7 +7,8 @@
 | ⏱️ **Durasi** | 2 × 50 menit teori + 3 × 50 menit praktikum |
 | 📋 **Prasyarat** | [Pertemuan 01](../pertemuan-01-pengenalan/README.md): sudah bisa menjalankan program di Wokwi atau di *board* ESP32 |
 | 🧰 **Alat** | Laptop + internet; opsional: ESP32 DevKit V1 + kabel USB data. Tidak perlu komponen tambahan |
-| 📥 **Slide** | [Unduh PDF](../slide/pdf/P02-Dasar-Pemrograman-C.pdf) · [Unduh PPTX](../slide/pptx/P02-Dasar-Pemrograman-C.pptx) |
+| 📥 **Slide** | [👁️ Lihat di peramban](https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fraw.githubusercontent.com%2Fantonprafanto%2Fembeddedsystem%2Fmain%2Fslide%2Fpptx%2FP02-Dasar-Pemrograman-C.pptx) · [⬇️ Unduh PDF](https://raw.githubusercontent.com/antonprafanto/embeddedsystem/main/slide/pdf/P02-Dasar-Pemrograman-C.pdf) · [⬇️ Unduh PPTX](https://raw.githubusercontent.com/antonprafanto/embeddedsystem/main/slide/pptx/P02-Dasar-Pemrograman-C.pptx) |
+| 📄 **Modul PDF** | [⬇️ Unduh modul ini dalam PDF](https://raw.githubusercontent.com/antonprafanto/embeddedsystem/main/modul-pdf/Modul-P02-Dasar-Pemrograman-C.pdf) — untuk dibaca luring atau dicetak |
 
 ## Daftar Isi
 

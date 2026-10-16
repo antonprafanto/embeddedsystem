@@ -7,7 +7,8 @@
 | ⏱️ **Durasi** | 2 × 50 menit teori + 3 × 50 menit praktikum |
 | 📋 **Prasyarat** | [Pertemuan 3](../pertemuan-03-gpio-output/README.md): `pinMode()`, `digitalWrite()`, LED + resistor, dan *breadboard* |
 | 🧰 **Alat** | Laptop + internet; opsional: ESP32 DevKit V1, *breadboard*, 2 *push button* 4 kaki, 1 LED merah, 1 resistor 220 Ω, kabel *jumper* |
-| 📥 **Slide** | [Unduh PDF](../slide/pdf/P04-GPIO-Input.pdf) · [Unduh PPTX](../slide/pptx/P04-GPIO-Input.pptx) |
+| 📥 **Slide** | [👁️ Lihat di peramban](https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fraw.githubusercontent.com%2Fantonprafanto%2Fembeddedsystem%2Fmain%2Fslide%2Fpptx%2FP04-GPIO-Input.pptx) · [⬇️ Unduh PDF](https://raw.githubusercontent.com/antonprafanto/embeddedsystem/main/slide/pdf/P04-GPIO-Input.pdf) · [⬇️ Unduh PPTX](https://raw.githubusercontent.com/antonprafanto/embeddedsystem/main/slide/pptx/P04-GPIO-Input.pptx) |
+| 📄 **Modul PDF** | [⬇️ Unduh modul ini dalam PDF](https://raw.githubusercontent.com/antonprafanto/embeddedsystem/main/modul-pdf/Modul-P04-GPIO-Input.pdf) — untuk dibaca luring atau dicetak |
 
 ## Daftar Isi
 

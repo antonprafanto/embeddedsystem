@@ -7,7 +7,8 @@
 | ⏱️ **Durasi** | 2 × 50 menit teori + 3 × 50 menit praktikum |
 | 📋 **Prasyarat** | [Pertemuan 4](../pertemuan-04-gpio-input/README.md) (tombol, `INPUT_PULLUP`), [Pertemuan 5](../pertemuan-05-waktu-interupsi/README.md) (`millis()` tanpa `delay()`), [Pertemuan 9](../pertemuan-09-komunikasi-serial/README.md) (Serial), [Pertemuan 10](../pertemuan-10-sensor-aktuator/README.md) (*library* dan servo) |
 | 🧰 **Alat** | Laptop + internet; opsional: ESP32 DevKit V1, 3 LED + 3 resistor 220 Ω, 1 tombol, *keypad* membran 4×4, servo SG90 |
-| 📥 **Slide** | [Unduh PDF](../slide/pdf/P11-FSM-dan-Debugging.pdf) · [Unduh PPTX](../slide/pptx/P11-FSM-dan-Debugging.pptx) |
+| 📥 **Slide** | [👁️ Lihat di peramban](https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fraw.githubusercontent.com%2Fantonprafanto%2Fembeddedsystem%2Fmain%2Fslide%2Fpptx%2FP11-FSM-dan-Debugging.pptx) · [⬇️ Unduh PDF](https://raw.githubusercontent.com/antonprafanto/embeddedsystem/main/slide/pdf/P11-FSM-dan-Debugging.pdf) · [⬇️ Unduh PPTX](https://raw.githubusercontent.com/antonprafanto/embeddedsystem/main/slide/pptx/P11-FSM-dan-Debugging.pptx) |
+| 📄 **Modul PDF** | [⬇️ Unduh modul ini dalam PDF](https://raw.githubusercontent.com/antonprafanto/embeddedsystem/main/modul-pdf/Modul-P11-FSM-dan-Debugging.pdf) — untuk dibaca luring atau dicetak |
 
 ## Daftar Isi
 
