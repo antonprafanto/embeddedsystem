@@ -1,0 +1,6 @@
+# Konfigurasi Wokwi for VS Code (opsional — butuh lisensi Wokwi).
+# Jalankan Build dulu, lalu tekan F1 → "Wokwi: Start Simulator".
+[wokwi]
+version = 1
+firmware = '.pio/build/esp32dev/firmware.bin'
+elf = '.pio/build/esp32dev/firmware.elf'

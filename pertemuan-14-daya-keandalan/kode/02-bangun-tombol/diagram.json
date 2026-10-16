@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "author": "Anton Prafanto",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-esp32-devkit-v1", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    { "type": "wokwi-pushbutton", "id": "btn1", "top": 92, "left": -150, "attrs": { "color": "green", "label": "BANGUN" } }
+  ],
+  "connections": [
+    [ "esp:TX0", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX0", "$serialMonitor:TX", "", [] ],
+    [ "esp:D33", "btn1:1.r", "green", [ "h-30", "*", "h30" ] ],
+    [ "esp:GND.2", "btn1:2.r", "black", [ "h-20", "*", "h20" ] ]
+  ],
+  "dependencies": {}
+}

@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "author": "Anton Prafanto",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-esp32-devkit-v1", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    { "type": "wokwi-membrane-keypad", "id": "keypad1", "top": -378, "left": -200, "attrs": { "connector": "1" } },
+    { "type": "wokwi-servo", "id": "servo1", "top": 110, "left": 200, "attrs": {} }
+  ],
+  "connections": [
+    [ "esp:TX0", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX0", "$serialMonitor:TX", "", [] ],
+    [ "esp:D13", "keypad1:R1", "green", [ "h-105" ] ],
+    [ "esp:D14", "keypad1:R2", "green", [ "h-95" ] ],
+    [ "esp:D27", "keypad1:R3", "green", [ "h-85.5" ] ],
+    [ "esp:D26", "keypad1:R4", "green", [ "h-76" ] ],
+    [ "esp:D25", "keypad1:C1", "blue", [ "h-66.5" ] ],
+    [ "esp:D33", "keypad1:C2", "blue", [ "h-57" ] ],
+    [ "esp:D32", "keypad1:C3", "blue", [ "h-47.25" ] ],
+    [ "esp:D23", "keypad1:C4", "blue", [ "h15", "v-49", "h-148.8" ] ],
+    [ "esp:D19", "servo1:PWM", "orange", [ "h290", "v177.8", "h-211.3", "v-71" ] ],
+    [ "esp:GND.1", "servo1:GND", "black", [ "h40", "v11" ] ],
+    [ "esp:VIN", "servo1:V+", "red", [ "h-10", "v76.5", "h165", "v-65.5" ] ]
+  ],
+  "dependencies": {}
+}

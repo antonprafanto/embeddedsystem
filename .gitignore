@@ -1,0 +1,21 @@
+# Hasil build PlatformIO (jangan diunggah ke repo)
+.pio/
+.pioenvs/
+.piolibdeps/
+.vscode/.browse.c_cpp.db*
+.vscode/c_cpp_properties.json
+.vscode/launch.json
+.vscode/ipch
+
+# Berkas sementara sistem operasi & editor
+.DS_Store
+Thumbs.db
+desktop.ini
+*~
+*.swp
+
+# Hasil simulasi Wokwi
+*.vcd
+
+# Kredensial Wi-Fi/MQTT pribadi (lihat Pertemuan 13) — jangan pernah di-commit
+rahasia.h

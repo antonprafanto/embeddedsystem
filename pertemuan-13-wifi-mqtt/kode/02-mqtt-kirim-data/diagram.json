@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "author": "Anton Prafanto",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-esp32-devkit-v1", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    { "type": "wokwi-potentiometer", "id": "pot1", "top": -40, "left": -220, "attrs": {} }
+  ],
+  "connections": [
+    [ "esp:TX0", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX0", "$serialMonitor:TX", "", [] ],
+    [ "esp:D34", "pot1:SIG", "green", [ "h-40", "*", "v20" ] ],
+    [ "esp:GND.2", "pot1:GND", "black", [ "h-70", "*", "v40" ] ],
+    [ "esp:3V3", "pot1:VCC", "red", [ "h20", "v40", "h-150", "*", "v60" ] ]
+  ],
+  "dependencies": {}
+}

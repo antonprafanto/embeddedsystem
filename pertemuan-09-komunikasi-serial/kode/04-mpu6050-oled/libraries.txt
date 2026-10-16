@@ -1,0 +1,5 @@
+# Library untuk Wokwi (Library Manager). Satu nama per baris.
+Adafruit MPU6050
+Adafruit Unified Sensor
+Adafruit SSD1306
+Adafruit GFX Library

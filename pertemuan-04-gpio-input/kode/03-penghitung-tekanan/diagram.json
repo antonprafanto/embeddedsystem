@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "author": "Anton Prafanto",
+  "editor": "wokwi",
+  "parts": [
+    {"type": "wokwi-esp32-devkit-v1", "id": "esp", "top": 0, "left": 0, "attrs": {}},
+    {"type": "wokwi-resistor", "id": "r1", "top": 30.2, "left": 130, "attrs": {"value": "220"}},
+    {"type": "wokwi-led", "id": "led1", "top": 40, "left": 295, "attrs": {"color": "red"}},
+    {"type": "wokwi-pushbutton", "id": "btn1", "top": 118.9, "left": 200, "attrs": {"color": "green", "label": "HITUNG"}},
+    {"type": "wokwi-pushbutton", "id": "btn2", "top": 138.1, "left": -170, "attrs": {"color": "red", "label": "RESET"}}
+  ],
+  "connections": [
+    ["esp:TX0", "$serialMonitor:RX", "", []],
+    ["esp:RX0", "$serialMonitor:TX", "", []],
+    ["esp:D23", "r1:1", "green", []],
+    ["r1:2", "led1:A", "green", ["h156", "v66", "h-25"]],
+    ["led1:C", "esp:GND.1", "black", ["v118", "h-185", "v-39.3"]],
+    ["esp:D4", "btn1:1.l", "blue", []],
+    ["btn1:2.l", "esp:GND.1", "black", ["h-14", "v9.8"]],
+    ["esp:D13", "btn2:1.r", "purple", []],
+    ["btn2:2.r", "esp:GND.2", "black", ["h20", "v-9.4"]]
+  ],
+  "dependencies": {}
+}

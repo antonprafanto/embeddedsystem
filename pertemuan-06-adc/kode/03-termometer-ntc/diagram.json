@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "author": "Anton Prafanto",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-esp32-devkit-v1", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    { "type": "wokwi-ntc-temperature-sensor", "id": "ntc1", "top": 72, "left": -290, "attrs": {} }
+  ],
+  "connections": [
+    [ "esp:TX0", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX0", "$serialMonitor:TX", "", [] ],
+    [ "esp:D32", "ntc1:OUT", "green", [ "h-30", "*", "h20" ] ],
+    [ "esp:GND.2", "ntc1:GND", "black", [ "h-45", "*", "h30" ] ],
+    [ "esp:3V3", "ntc1:VCC", "red", [ "h20", "v40", "h-190", "*", "h40" ] ]
+  ],
+  "dependencies": {}
+}

@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "author": "Anton Prafanto",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-esp32-devkit-v1", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    { "type": "wokwi-dht22", "id": "dht1", "top": -10, "left": -100, "attrs": { "temperature": "28.5", "humidity": "65" } },
+    { "type": "board-ssd1306", "id": "oled1", "top": 175, "left": 160, "attrs": { "i2cAddress": "0x3c" } }
+  ],
+  "connections": [
+    [ "esp:TX0", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX0", "$serialMonitor:TX", "", [] ],
+    [ "esp:D14", "dht1:SDA", "green", [ "h-80.5", "v-15.1" ] ],
+    [ "esp:GND.2", "dht1:GND", "black", [ "h-61.2", "v-44.1" ] ],
+    [ "esp:3V3", "dht1:VCC", "red", [ "h10", "v66.5", "h-196.3", "v-120.1" ] ],
+    [ "esp:D22", "oled1:SCL", "purple", [ "h126.7", "v149.5" ] ],
+    [ "esp:D21", "oled1:SDA", "blue", [ "h141.7", "v120.6" ] ],
+    [ "esp:GND.1", "oled1:GND", "black", [ "h96.7", "v34.5" ] ],
+    [ "esp:3V3", "oled1:VCC", "red", [ "h111.7", "v25" ] ]
+  ],
+  "dependencies": {}
+}

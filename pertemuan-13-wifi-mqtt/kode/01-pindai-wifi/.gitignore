@@ -1,0 +1,4 @@
+# Berisi SSID dan sandi Wi-Fi asli: jangan pernah di-commit
+include/rahasia.h
+# Hasil Build PlatformIO
+.pio/

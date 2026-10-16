@@ -1,0 +1,104 @@
+{
+  "version": 1,
+  "author": "Anton Prafanto",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "wokwi-esp32-devkit-v1",
+      "id": "esp",
+      "top": 0,
+      "left": 0,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-potentiometer",
+      "id": "pot1",
+      "top": 240,
+      "left": 10,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-servo",
+      "id": "servo1",
+      "top": 99,
+      "left": 200,
+      "attrs": {}
+    }
+  ],
+  "connections": [
+    [
+      "esp:TX0",
+      "$serialMonitor:RX",
+      "",
+      []
+    ],
+    [
+      "esp:RX0",
+      "$serialMonitor:TX",
+      "",
+      []
+    ],
+    [
+      "pot1:GND",
+      "esp:GND.2",
+      "black",
+      [
+        "v10",
+        "h-61",
+        "v-169.5",
+        "h27"
+      ]
+    ],
+    [
+      "pot1:SIG",
+      "esp:D34",
+      "blue",
+      [
+        "v20",
+        "h-81",
+        "v-275.4",
+        "h37"
+      ]
+    ],
+    [
+      "pot1:VCC",
+      "esp:3V3",
+      "red",
+      [
+        "v10",
+        "h66",
+        "v-160",
+        "h-23.7"
+      ]
+    ],
+    [
+      "esp:GND.1",
+      "servo1:GND",
+      "black",
+      []
+    ],
+    [
+      "esp:VIN",
+      "servo1:V+",
+      "red",
+      [
+        "h-12",
+        "v63.5",
+        "h192",
+        "v-63.5"
+      ]
+    ],
+    [
+      "esp:D19",
+      "servo1:PWM",
+      "orange",
+      [
+        "h288.7",
+        "v177.8",
+        "h-196",
+        "v-82"
+      ]
+    ]
+  ],
+  "dependencies": {}
+}

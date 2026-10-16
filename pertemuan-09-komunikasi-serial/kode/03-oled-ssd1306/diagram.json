@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "author": "Anton Prafanto",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-esp32-devkit-v1", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    { "type": "board-ssd1306", "id": "oled1", "top": -40, "left": 170, "attrs": {} }
+  ],
+  "connections": [
+    [ "esp:TX0", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX0", "$serialMonitor:TX", "", [] ],
+    [ "esp:D22", "oled1:SCL", "purple", ["h28.7", "v-124", "h108", "*", "v-58.5"] ],
+    [ "esp:D21", "oled1:SDA", "blue", ["h38.7", "v-140.9", "h113", "*", "v-46.5"] ],
+    [ "esp:GND.1", "oled1:GND", "black", ["h48.7", "v-215", "h58", "*", "v-34.5"] ],
+    [ "esp:3V3", "oled1:VCC", "red", ["h58.7", "v-212.5", "h63", "*", "v-22.5"] ]
+  ],
+  "dependencies": {}
+}
