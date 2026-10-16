@@ -7,8 +7,8 @@
 | ⏱️ **Durasi** | 2 × 50 menit teori + 3 × 50 menit praktikum |
 | 📋 **Prasyarat** | [Pertemuan 05](../pertemuan-05-waktu-interupsi/README.md) (`millis()`), [Pertemuan 07](../pertemuan-07-pwm-beban/README.md) (PWM dan beban), [Pertemuan 09](../pertemuan-09-komunikasi-serial/README.md) (I2C) |
 | 🧰 **Alat** | Laptop + internet; opsional: ESP32 DevKit V1, DHT22, OLED SSD1306 I2C, HC-SR04, *buzzer* pasif, 3 LED, resistor, *breadboard* |
-| 📥 **Slide** | [👁️ Lihat di peramban](https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fraw.githubusercontent.com%2Fantonprafanto%2Fembeddedsystem%2Fmain%2Fslide%2Fpptx%2FP10-Sensor-Aktuator-Datasheet.pptx) · [⬇️ Unduh PDF](https://raw.githubusercontent.com/antonprafanto/embeddedsystem/main/slide/pdf/P10-Sensor-Aktuator-Datasheet.pdf) · [⬇️ Unduh PPTX](https://raw.githubusercontent.com/antonprafanto/embeddedsystem/main/slide/pptx/P10-Sensor-Aktuator-Datasheet.pptx) |
-| 📄 **Modul PDF** | [⬇️ Unduh modul ini dalam PDF](https://raw.githubusercontent.com/antonprafanto/embeddedsystem/main/modul-pdf/Modul-P10-Sensor-Aktuator-Datasheet.pdf) — untuk dibaca luring atau dicetak |
+| 📥 **Slide** | 👁️ [Lihat di peramban](https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fraw.githubusercontent.com%2Fantonprafanto%2Fembeddedsystem%2Fmain%2Fslide%2Fpptx%2FP10-Sensor-Aktuator-Datasheet.pptx) · ⬇️ [Unduh PDF](https://raw.githubusercontent.com/antonprafanto/embeddedsystem/main/slide/pdf/P10-Sensor-Aktuator-Datasheet.pdf) · ⬇️ [Unduh PPTX](https://raw.githubusercontent.com/antonprafanto/embeddedsystem/main/slide/pptx/P10-Sensor-Aktuator-Datasheet.pptx) |
+| 📄 **Modul PDF** | ⬇️ [Unduh modul ini dalam PDF](https://raw.githubusercontent.com/antonprafanto/embeddedsystem/main/modul-pdf/Modul-P10-Sensor-Aktuator-Datasheet.pdf) — untuk dibaca luring atau dicetak |
 
 ## Daftar Isi
 

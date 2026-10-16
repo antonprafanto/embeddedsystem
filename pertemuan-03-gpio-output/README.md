@@ -7,8 +7,8 @@
 | ⏱️ **Durasi** | 2 × 50 menit teori + 3 × 50 menit praktikum |
 | 📋 **Prasyarat** | [Pertemuan 01](../pertemuan-01-pengenalan/README.md) (alur **Build**–**Upload**, Wokwi) dan [Pertemuan 02](../pertemuan-02-dasar-pemrograman/README.md) (variabel, `if`, `for`, fungsi) |
 | 🧰 **Alat** | ESP32 DevKit V1 + kabel USB data, *breadboard*, 6 LED 5 mm (merah, kuning, hijau), 6 resistor 220 Ω, kabel *jumper*; atau Wokwi |
-| 📥 **Slide** | [👁️ Lihat di peramban](https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fraw.githubusercontent.com%2Fantonprafanto%2Fembeddedsystem%2Fmain%2Fslide%2Fpptx%2FP03-GPIO-Output.pptx) · [⬇️ Unduh PDF](https://raw.githubusercontent.com/antonprafanto/embeddedsystem/main/slide/pdf/P03-GPIO-Output.pdf) · [⬇️ Unduh PPTX](https://raw.githubusercontent.com/antonprafanto/embeddedsystem/main/slide/pptx/P03-GPIO-Output.pptx) |
-| 📄 **Modul PDF** | [⬇️ Unduh modul ini dalam PDF](https://raw.githubusercontent.com/antonprafanto/embeddedsystem/main/modul-pdf/Modul-P03-GPIO-Output.pdf) — untuk dibaca luring atau dicetak |
+| 📥 **Slide** | 👁️ [Lihat di peramban](https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fraw.githubusercontent.com%2Fantonprafanto%2Fembeddedsystem%2Fmain%2Fslide%2Fpptx%2FP03-GPIO-Output.pptx) · ⬇️ [Unduh PDF](https://raw.githubusercontent.com/antonprafanto/embeddedsystem/main/slide/pdf/P03-GPIO-Output.pdf) · ⬇️ [Unduh PPTX](https://raw.githubusercontent.com/antonprafanto/embeddedsystem/main/slide/pptx/P03-GPIO-Output.pptx) |
+| 📄 **Modul PDF** | ⬇️ [Unduh modul ini dalam PDF](https://raw.githubusercontent.com/antonprafanto/embeddedsystem/main/modul-pdf/Modul-P03-GPIO-Output.pdf) — untuk dibaca luring atau dicetak |
 
 ## Daftar Isi
 

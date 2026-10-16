@@ -83,9 +83,9 @@ Setiap praktikum bisa dikerjakan dengan salah satu jalur berikut. Kodenya **sama
 ## 5. Melihat dan Mengunduh Slide serta Modul
 
 - Di tabel [beranda](../README.md#️-peta-16-pertemuan) dan di bagian atas setiap modul ada tiga jenis tautan:
-  - **👁️ Lihat** membuka slide langsung di peramban (PowerPoint Online), tanpa mengunduh.
-  - **⬇️ PDF** / **⬇️ PPTX** langsung mengunduh slide ke perangkatmu.
-  - **⬇️ PDF** di kolom modul mengunduh versi PDF modul, cocok untuk dibaca luring atau dicetak.
+  - **Baca** membuka modul langsung di GitHub.
+  - **Lihat** membuka slide langsung di peramban (PowerPoint Online), tanpa mengunduh.
+  - **Unduh** langsung menyimpan berkas ke perangkatmu: modul versi PDF (cocok untuk dibaca luring atau dicetak), slide PDF, atau slide PPTX.
 - Semua berkasnya juga ada di *folder* [`slide/pdf`](../slide/pdf), [`slide/pptx`](../slide/pptx), dan [`modul-pdf`](../modul-pdf).
 
 ## 6. Etika Belajar

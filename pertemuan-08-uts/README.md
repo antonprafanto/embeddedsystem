@@ -7,8 +7,8 @@
 | ⏱️ **Durasi** | Teori ±90 menit + praktik ±120 menit *(sesuaikan)* |
 | 📋 **Cakupan** | Pertemuan 01–07 (CPMK-1, CPMK-2, CPMK-3) |
 | 🧰 **Alat** | Alat tulis dan kalkulator; laptop + Wokwi; *board* ESP32 + kit bila ujian praktik memakai *board* |
-| 📥 **Slide** | [👁️ Lihat di peramban](https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fraw.githubusercontent.com%2Fantonprafanto%2Fembeddedsystem%2Fmain%2Fslide%2Fpptx%2FP08-UTS.pptx) · [⬇️ Unduh PDF](https://raw.githubusercontent.com/antonprafanto/embeddedsystem/main/slide/pdf/P08-UTS.pdf) · [⬇️ Unduh PPTX](https://raw.githubusercontent.com/antonprafanto/embeddedsystem/main/slide/pptx/P08-UTS.pptx) |
-| 📄 **Modul PDF** | [⬇️ Unduh modul ini dalam PDF](https://raw.githubusercontent.com/antonprafanto/embeddedsystem/main/modul-pdf/Modul-P08-UTS.pdf) — untuk dibaca luring atau dicetak |
+| 📥 **Slide** | 👁️ [Lihat di peramban](https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fraw.githubusercontent.com%2Fantonprafanto%2Fembeddedsystem%2Fmain%2Fslide%2Fpptx%2FP08-UTS.pptx) · ⬇️ [Unduh PDF](https://raw.githubusercontent.com/antonprafanto/embeddedsystem/main/slide/pdf/P08-UTS.pdf) · ⬇️ [Unduh PPTX](https://raw.githubusercontent.com/antonprafanto/embeddedsystem/main/slide/pptx/P08-UTS.pptx) |
+| 📄 **Modul PDF** | ⬇️ [Unduh modul ini dalam PDF](https://raw.githubusercontent.com/antonprafanto/embeddedsystem/main/modul-pdf/Modul-P08-UTS.pdf) — untuk dibaca luring atau dicetak |
 
 > [!NOTE]
 > **Untuk dosen:** semua bagian bertanda *(sesuaikan)*, yaitu waktu, durasi, sifat ujian, komposisi soal, dan bobot, adalah usulan. Silakan ubah sesuai ketentuan program studi sebelum halaman ini dibagikan.
