@@ -394,7 +394,7 @@ Sisa stack tugas jaringan: 4688 byte
 ----------------------------------
 ```
 
-Durasi `loop()` terlama beberapa puluh milidetik itu wajar. Sebagian besar dipakai untuk mengirim 1.024 bita isi layar OLED lewat I2C 400 kHz: 1.024 × 9 bit ÷ 400.000 bit/s ≈ 23 ms [18]. Bila angkanya ratusan atau ribuan milidetik, ada kode yang memblokir.
+Durasi `loop()` terlama beberapa puluh milidetik itu wajar. Sebagian besar dipakai untuk mengirim 1.024 byte isi layar OLED lewat I2C 400 kHz: 1.024 × 9 bit ÷ 400.000 bit/s ≈ 23 ms [18]. Bila angkanya ratusan atau ribuan milidetik, ada kode yang memblokir.
 
 > [!NOTE]
 > **Coba buktikan sendiri.** Tambahkan `delay(3000);` di akhir `loop()`, lalu ketik `status`. Angka `loop() terlama` melonjak menjadi ±3.000 ms, LED detak tidak lagi berkedip teratur, dan tombol sering tidak terbaca. Hapus lagi baris itu setelah selesai.

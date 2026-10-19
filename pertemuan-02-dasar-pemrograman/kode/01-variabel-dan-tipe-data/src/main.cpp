@@ -3,7 +3,7 @@
  *  Pertemuan 02 · Praktikum 1 — Variabel dan Tipe Data
  * =====================================================================
  *  Tujuan   : Mengenal variabel, konstanta (const dan #define), ukuran
- *             (bita/byte) dan rentang nilai tipe data di ESP32, lalu
+ *             (byte) dan rentang nilai tipe data di ESP32, lalu
  *             membuktikan jebakan pemula: nilai meluap (overflow),
  *             pembagian bilangan bulat, konversi tipe, dan membandingkan
  *             pecahan dengan ==.
@@ -12,7 +12,7 @@
  *    - Board asli : Build (✓) → Upload (→) → Serial Monitor (ikon colokan).
  *    - Wokwi web  : salin seluruh isi berkas ini ke sketch.ino, lalu klik ▶.
  *  Hasil yang diharapkan (Serial Monitor, 115200 baud), antara lain:
- *    int       : 4 bita
+ *    int       : 4 byte
  *    uint8_t 255 + 1 = 0
  *    7 / 2        = 3
  *    suhu == 36.6         -> 0
@@ -34,11 +34,11 @@ const float BATAS_PANAS = 35.0;
 // Variabel global: dibuat di luar fungsi, sehingga dikenal di setup()
 // maupun loop(). Format: tipe nama = nilaiAwal;
 // ---------------------------------------------------------------------
-float suhuRuangan = 28.75;    // bilangan pecahan       -> float (4 bita)
-int jumlahPembacaan = 120;    // bilangan bulat         -> int   (4 bita di ESP32)
-bool lampuMenyala = true;     // benar/salah            -> bool  (1 bita)
-char kodeRuang = 'B';         // satu karakter          -> char  (1 bita)
-uint8_t kecerahan = 200;      // bulat 0..255 saja      -> uint8_t (1 bita)
+float suhuRuangan = 28.75;    // bilangan pecahan       -> float (4 byte)
+int jumlahPembacaan = 120;    // bilangan bulat         -> int   (4 byte di ESP32)
+bool lampuMenyala = true;     // benar/salah            -> bool  (1 byte)
+char kodeRuang = 'B';         // satu karakter          -> char  (1 byte)
+uint8_t kecerahan = 200;      // bulat 0..255 saja      -> uint8_t (1 byte)
 
 void setup() {
   Serial.begin(115200);
@@ -63,21 +63,21 @@ void setup() {
   Serial.printf("  JUMLAH_SENSOR   = %d (#define)\n", JUMLAH_SENSOR);
 
   // -------------------------------------------------------------------
-  // [2] Ukuran tipe data. sizeof(tipe) = berapa bita (byte) memori yang dipakai.
+  // [2] Ukuran tipe data. sizeof(tipe) = berapa byte memori yang dipakai.
   //     Hasil sizeof bertipe size_t (bulat tanpa tanda), dicetak dengan %u.
   // -------------------------------------------------------------------
   Serial.println();
   Serial.println("[2] Ukuran tipe data di ESP32 (sizeof):");
-  Serial.printf("  bool      : %u bita\n", sizeof(bool));
-  Serial.printf("  char      : %u bita\n", sizeof(char));
-  Serial.printf("  uint8_t   : %u bita\n", sizeof(uint8_t));
-  Serial.printf("  int16_t   : %u bita\n", sizeof(int16_t));
-  Serial.printf("  int       : %u bita\n", sizeof(int));
-  Serial.printf("  uint32_t  : %u bita\n", sizeof(uint32_t));
-  Serial.printf("  long      : %u bita\n", sizeof(long));
-  Serial.printf("  long long : %u bita\n", sizeof(long long));
-  Serial.printf("  float     : %u bita\n", sizeof(float));
-  Serial.printf("  double    : %u bita\n", sizeof(double));
+  Serial.printf("  bool      : %u byte\n", sizeof(bool));
+  Serial.printf("  char      : %u byte\n", sizeof(char));
+  Serial.printf("  uint8_t   : %u byte\n", sizeof(uint8_t));
+  Serial.printf("  int16_t   : %u byte\n", sizeof(int16_t));
+  Serial.printf("  int       : %u byte\n", sizeof(int));
+  Serial.printf("  uint32_t  : %u byte\n", sizeof(uint32_t));
+  Serial.printf("  long      : %u byte\n", sizeof(long));
+  Serial.printf("  long long : %u byte\n", sizeof(long long));
+  Serial.printf("  float     : %u byte\n", sizeof(float));
+  Serial.printf("  double    : %u byte\n", sizeof(double));
 
   // -------------------------------------------------------------------
   // [3] Rentang nilai tipe berukuran pasti (dari pustaka <stdint.h>).

@@ -6,7 +6,7 @@
  *             ++ dan --, perbandingan, serta logika (&&, ||, !). Lalu
  *             memakai operator bit (&, |, ^, ~, <<, >>) untuk menyalakan,
  *             memadamkan, dan membalik 8 "lampu" yang disimpan sebagai
- *             bit di dalam satu bita, mirip cara kerja register
+ *             bit di dalam satu byte, mirip cara kerja register
  *             mikrokontroler.
  *  Rangkaian: Tidak perlu komponen. Lampu hanya disimulasikan sebagai bit.
  *  Cara menjalankan:
@@ -70,11 +70,11 @@ void setup() {
   Serial.printf("  suhu == 31                -> %d  (== membandingkan, = mengisi)\n", suhu == 31);
 
   // -------------------------------------------------------------------
-  // [3] Operator bit. Satu bita = 8 bit = 8 "sakelar lampu" (bit 7 ... bit 0).
+  // [3] Operator bit. Satu byte = 8 bit = 8 "sakelar lampu" (bit 7 ... bit 0).
   //     (1 << n) membuat pola yang hanya bit ke-n-nya bernilai 1.
   // -------------------------------------------------------------------
   Serial.println();
-  Serial.println("[3] Operator bit: 8 lampu dalam satu bita (bit 7 ... bit 0):");
+  Serial.println("[3] Operator bit: 8 lampu dalam satu byte (bit 7 ... bit 0):");
   uint8_t lampu = 0b00000000;         // awalan 0b = bilangan biner
   tampilkanBit("Awal", lampu);
   lampu |= (1 << 3);                  // OR : nyalakan bit 3, bit lain tetap

@@ -78,10 +78,10 @@ void setup() {
   // [4] Dua cara menyimpan teks
   Serial.println();
   Serial.println("[4] Teks: larik char vs String:");
-  char namaSensor[] = "DHT22";      // larik char: 5 huruf + 1 penutup '\0' = 6 bita
+  char namaSensor[] = "DHT22";      // larik char: 5 huruf + 1 penutup '\0' = 6 byte
   String lokasi = "Lab";            // String: teks yang panjangnya bisa berubah
   lokasi += " Elektro";             // menyambung teks
-  Serial.printf("  namaSensor = %s (%u huruf, %u bita)\n",
+  Serial.printf("  namaSensor = %s (%u huruf, %u byte)\n",
                 namaSensor, strlen(namaSensor), sizeof(namaSensor));
   // c_str() mengubah String menjadi teks C (larik char) yang dipahami %s
   Serial.printf("  lokasi     = %s (%u huruf)\n", lokasi.c_str(), lokasi.length());

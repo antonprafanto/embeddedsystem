@@ -99,5 +99,5 @@ void tampilanGambar(const IsiLayar &isi) {
     case Halaman::JARINGAN:    gambarJaringan(isi); break;
     case Halaman::ATUR_AMBANG: gambarAtur(isi); break;
   }
-  oled.display();          // kirim 1.024 bita buffer lewat I2C 400 kHz (±25 ms)
+  oled.display();          // kirim 1.024 byte buffer lewat I2C 400 kHz (±25 ms)
 }

@@ -180,31 +180,31 @@ Coba ingat toples-toples di dapur. Setiap toples punya **label** (gula, garam), 
 float suhu = 28.75;     // tipe nama = nilaiAwal;
 ```
 
-![Tujuh deklarasi variabel dan kotak memorinya dengan ukuran 1, 2, 4, dan 8 bita](gambar/p02-variabel-kotak-memori.png)
+![Tujuh deklarasi variabel dan kotak memorinya dengan ukuran 1, 2, 4, dan 8 byte](gambar/p02-variabel-kotak-memori.png)
 
 *Gambar 2.3 — Variabel sebagai kotak berlabel di memori. Ukurannya sesuai hasil `sizeof()` di ESP32. Sumber: dibuat untuk materi ini.*
 
-**Tipe data** menentukan jenis nilai yang boleh disimpan dan berapa **bita** (*byte*; 1 bita = 8 bit) memori yang dipakai. Ukuran berikut adalah hasil Praktikum 1 di ESP32:
+**Tipe data** menentukan jenis nilai yang boleh disimpan dan berapa **byte** (1 byte = 8 bit; dalam KBBI ditulis *bita*) memori yang dipakai. Ukuran berikut adalah hasil Praktikum 1 di ESP32:
 
 | Tipe | Ukuran | Rentang atau isi | Contoh pemakaian |
 | --- | --- | --- | --- |
-| `bool` | 1 bita | `true` atau `false` | Status pintu, lampu |
-| `char` | 1 bita | Satu karakter, disimpan sebagai kode ASCII | `'A'`, `'7'` |
-| `int` | 4 bita | −2.147.483.648 sampai 2.147.483.647 | Hitungan, nomor pin |
-| `long` | 4 bita | Sama dengan `int` di ESP32 | Waktu `millis()` (versi `unsigned long`) |
-| `long long` | 8 bita | Sekitar ±9,2 × 10¹⁸ | Waktu mikrodetik dari `esp_timer_get_time()` |
-| `float` | 4 bita | Pecahan, teliti ±6–7 angka penting | Suhu, tegangan |
-| `double` | 8 bita | Pecahan, teliti ±15 angka penting | Hitungan yang butuh ketelitian tinggi |
+| `bool` | 1 byte | `true` atau `false` | Status pintu, lampu |
+| `char` | 1 byte | Satu karakter, disimpan sebagai kode ASCII | `'A'`, `'7'` |
+| `int` | 4 byte | −2.147.483.648 sampai 2.147.483.647 | Hitungan, nomor pin |
+| `long` | 4 byte | Sama dengan `int` di ESP32 | Waktu `millis()` (versi `unsigned long`) |
+| `long long` | 8 byte | Sekitar ±9,2 × 10¹⁸ | Waktu mikrodetik dari `esp_timer_get_time()` |
+| `float` | 4 byte | Pecahan, teliti ±6–7 angka penting | Suhu, tegangan |
+| `double` | 8 byte | Pecahan, teliti ±15 angka penting | Hitungan yang butuh ketelitian tinggi |
 
-Ukuran `int` bisa berbeda di mikrokontroler lain: di Arduino Uno, `int` hanya 2 bita [2]. Supaya ukurannya pasti, gunakan **tipe berukuran pasti** dari pustaka `<stdint.h>` (sudah ikut dengan `Arduino.h`). Huruf `u` berarti *unsigned* (tanpa tanda, tidak bisa negatif), dan angkanya menyatakan jumlah bit.
+Ukuran `int` bisa berbeda di mikrokontroler lain: di Arduino Uno, `int` hanya 2 byte [2]. Supaya ukurannya pasti, gunakan **tipe berukuran pasti** dari pustaka `<stdint.h>` (sudah ikut dengan `Arduino.h`). Huruf `u` berarti *unsigned* (tanpa tanda, tidak bisa negatif), dan angkanya menyatakan jumlah bit.
 
 | Tipe | Ukuran | Rentang |
 | --- | --- | --- |
-| `uint8_t` / `int8_t` | 1 bita | 0 sampai 255 / −128 sampai 127 |
-| `uint16_t` / `int16_t` | 2 bita | 0 sampai 65.535 / −32.768 sampai 32.767 |
-| `uint32_t` / `int32_t` | 4 bita | 0 sampai 4.294.967.295 / −2.147.483.648 sampai 2.147.483.647 |
+| `uint8_t` / `int8_t` | 1 byte | 0 sampai 255 / −128 sampai 127 |
+| `uint16_t` / `int16_t` | 2 byte | 0 sampai 65.535 / −32.768 sampai 32.767 |
+| `uint32_t` / `int32_t` | 4 byte | 0 sampai 4.294.967.295 / −2.147.483.648 sampai 2.147.483.647 |
 
-Operator **`sizeof`** memberi tahu ukuran sebuah tipe atau variabel dalam bita, misalnya `sizeof(float)` bernilai 4.
+Operator **`sizeof`** memberi tahu ukuran sebuah tipe atau variabel dalam byte, misalnya `sizeof(float)` bernilai 4.
 
 > [!TIP]
 > **Memilih tipe:** pakai `int` untuk bilangan bulat biasa, `uint8_t` untuk nilai kecil 0–255 (misalnya kecerahan), dan `float` untuk pecahan. ESP32 punya unit perangkat keras untuk `float`, sedangkan `double` dihitung secara perangkat lunak sehingga jauh lebih lambat [5]. Hindari `double` kecuali benar-benar perlu.
@@ -324,7 +324,7 @@ Hasil perbandingan dan logika bertipe `bool`: `true` (dicetak 1) atau `false` (d
 
 ### Operator Bit: Mengatur Sakelar Satu per Satu
 
-Bayangkan satu bita sebagai **deretan 8 sakelar lampu**, bernomor bit 7 (kiri) sampai bit 0 (kanan). Operator bit mengubah sakelar tertentu tanpa mengganggu sakelar lain.
+Bayangkan satu byte sebagai **deretan 8 sakelar lampu**, bernomor bit 7 (kiri) sampai bit 0 (kanan). Operator bit mengubah sakelar tertentu tanpa mengganggu sakelar lain.
 
 Mengapa ini penting di sistem tertanam? Pengaturan perangkat keras mikrokontroler disimpan di **register**, yaitu memori khusus yang setiap bitnya punya arti. Satu register bisa menyimpan keadaan banyak pin GPIO sekaligus, satu bit untuk satu pin. Program juga sering menyimpan beberapa status ya/tidak, yang disebut ***flag*** (bendera), dalam satu variabel untuk menghemat memori.
 
@@ -453,7 +453,7 @@ Di stasiun ada **loker berderet**: satu nama, banyak pintu bernomor. **Larik** (
 
 ```cpp
 float suhu[] = {26.5, 27.8, 29.4, 31.6, 30.2, 28.0};  // 6 isi: indeks 0 sampai 5
-const int JUMLAH = sizeof(suhu) / sizeof(suhu[0]);    // 24 bita / 4 bita = 6
+const int JUMLAH = sizeof(suhu) / sizeof(suhu[0]);    // 24 byte / 4 byte = 6
 
 for (int i = 0; i < JUMLAH; i++) {   // i < JUMLAH, BUKAN i <= JUMLAH
   Serial.println(suhu[i]);
@@ -472,7 +472,7 @@ Tiga hal penting:
 | | Larik `char` | `String` (Arduino) |
 | --- | --- | --- |
 | Contoh | `char namaSensor[] = "DHT22";` | `String lokasi = "Lab";` |
-| Ukuran | Tetap: 1 bita per huruf + 1 bita penutup `'\0'` | Bisa bertambah: `lokasi += " Elektro";` |
+| Ukuran | Tetap: 1 byte per huruf + 1 byte penutup `'\0'` | Bisa bertambah: `lokasi += " Elektro";` |
 | Kemudahan | Perlu fungsi khusus (`strlen`, `strcpy`) | Banyak fungsi siap pakai: `length()`, `trim()`, `toInt()`, `substring()` |
 | Memori | Hemat dan ukurannya pasti | Memakai memori dinamis (*heap*) yang dipesan saat program berjalan |
 | Dicetak dengan `%s` | Langsung | Tambahkan `.c_str()` |
@@ -533,7 +533,7 @@ void loop() {
 
 | Fungsi | Gunanya |
 | --- | --- |
-| `Serial.available()` | Jumlah bita yang menunggu dibaca; lebih dari 0 berarti ada data |
+| `Serial.available()` | Jumlah byte yang menunggu dibaca; lebih dari 0 berarti ada data |
 | `Serial.readStringUntil('\n')` | Membaca sampai bertemu `\n` (Enter) atau sampai batas waktu habis (bawaan 1 detik, diubah dengan `Serial.setTimeout()`) [2] |
 | `trim()` | Membuang spasi dan karakter pindah baris (`\r`, `\n`) di kedua ujung teks |
 | `toInt()`, `toFloat()` | Mengubah teks menjadi angka; hasilnya 0 jika teks tidak diawali angka |
@@ -579,13 +579,13 @@ Program Praktikum 1–4 mencetak semua hasilnya **sekali** di `setup()`, lalu di
 ```cpp
 #define JUMLAH_SENSOR 4
 const float BATAS_PANAS = 35.0;
-uint8_t kecerahan = 200;      // bulat 0..255 saja -> uint8_t (1 bita)
+uint8_t kecerahan = 200;      // bulat 0..255 saja -> uint8_t (1 byte)
 
 void setup() {
   Serial.begin(115200);
   delay(1000);                // beri waktu Serial Monitor siap
   // ...
-  Serial.printf("  int       : %u bita\n", sizeof(int));
+  Serial.printf("  int       : %u byte\n", sizeof(int));
   // ...
   uint8_t angka = 255;
   angka = angka + 1;          // 256 tidak muat di 8 bit -> kembali ke 0
@@ -616,16 +616,16 @@ void setup() {
   JUMLAH_SENSOR   = 4 (#define)
 
 [2] Ukuran tipe data di ESP32 (sizeof):
-  bool      : 1 bita
-  char      : 1 bita
-  uint8_t   : 1 bita
-  int16_t   : 2 bita
-  int       : 4 bita
-  uint32_t  : 4 bita
-  long      : 4 bita
-  long long : 8 bita
-  float     : 4 bita
-  double    : 8 bita
+  bool      : 1 byte
+  char      : 1 byte
+  uint8_t   : 1 byte
+  int16_t   : 2 byte
+  int       : 4 byte
+  uint32_t  : 4 byte
+  long      : 4 byte
+  long long : 8 byte
+  float     : 4 byte
+  double    : 8 byte
 
 [3] Rentang nilai tipe berukuran pasti:
   uint8_t  : 0 sampai 255
@@ -673,7 +673,7 @@ Perhatikan `kodeRuang = B (disimpan sebagai angka 66)`: karakter sebenarnya disi
 
 📁 *Folder*: [`kode/02-operator-dan-bit`](kode/02-operator-dan-bit)
 
-**Tujuan:** mencoba operator aritmetika, penugasan majemuk, perbandingan, dan logika, lalu memakai operator bit untuk mengatur 8 "lampu" di dalam satu bita, mirip cara kerja register mikrokontroler.
+**Tujuan:** mencoba operator aritmetika, penugasan majemuk, perbandingan, dan logika, lalu memakai operator bit untuk mengatur 8 "lampu" di dalam satu byte, mirip cara kerja register mikrokontroler.
 
 **Rangkaian:** tidak perlu komponen; lampu hanya disimulasikan sebagai bit. **Cara menjalankan:** Jalur A atau Jalur B di [Sebelum Mulai](#sebelum-mulai).
 
@@ -725,7 +725,7 @@ void tampilkanBit(const char *keterangan, uint8_t nilai) {
   !(suhu > 30)              -> 0  (BUKAN: membalik)
   suhu == 31                -> 1  (== membandingkan, = mengisi)
 
-[3] Operator bit: 8 lampu dalam satu bita (bit 7 ... bit 0):
+[3] Operator bit: 8 lampu dalam satu byte (bit 7 ... bit 0):
   Awal              : 00000000  (0x00 =   0)
   Nyalakan lampu 3  : 00001000  (0x08 =   8)
   Nyalakan lampu 0  : 00001001  (0x09 =   9)
@@ -914,11 +914,11 @@ void hitungPanggilan() {
   Panggilan ke-3: lokal = 1, static = 3
 
 [4] Teks: larik char vs String:
-  namaSensor = DHT22 (5 huruf, 6 bita)
+  namaSensor = DHT22 (5 huruf, 6 byte)
   lokasi     = Lab Elektro (11 huruf)
 ```
 
-Nilai maksimum ada di indeks 3, yaitu pembacaan **keempat**. `lokal` selalu 1 karena dibuat ulang di setiap pemanggilan, sedangkan nilai `static` terus bertambah. `namaSensor` berisi 5 huruf tetapi memakai 6 bita; bita terakhir adalah penutup teks `'\0'`.
+Nilai maksimum ada di indeks 3, yaitu pembacaan **keempat**. `lokal` selalu 1 karena dibuat ulang di setiap pemanggilan, sedangkan nilai `static` terus bertambah. `namaSensor` berisi 5 huruf tetapi memakai 6 byte; byte terakhir adalah penutup teks `'\0'`.
 
 **Kalau belum berhasil:**
 
@@ -1072,7 +1072,7 @@ Di PlatformIO, ketikanmu juga tampil di layar berkat `monitor_echo = yes`, sehin
 <details>
 <summary><b>Lihat jawaban</b></summary>
 
-1. **C.** `int` di ESP32 berukuran 4 bita (hasil Praktikum 1).
+1. **C.** `int` di ESP32 berukuran 4 byte (hasil Praktikum 1).
 2. **B.** 260 tidak muat di 8 bit, sehingga berputar: 260 − 256 = 4.
 3. **B.** Bulat dibagi bulat menghasilkan bulat; pecahannya dibuang.
 4. **B.** `~(1 << 2)` bernilai 0 hanya di bit 2, sehingga `&` memadamkan bit itu saja.
@@ -1086,7 +1086,7 @@ Di PlatformIO, ketikanmu juga tampil di layar berkat `monitor_echo = yes`, sehin
 - C/C++ dipakai karena dekat dengan perangkat keras, hemat, dan menjadi standar industri. "Bahasa Arduino" adalah C++ ditambah pustaka.
 - Di balik layar, ESP32 menjalankan `app_main()` yang membuat *task* `loopTask`: `setup()` sekali, lalu `loop()` selamanya.
 - Di `src/main.cpp` (PlatformIO), `#include <Arduino.h>` dan prototipe fungsi wajib ditulis; `sketch.ino` (Wokwi) menambahkannya otomatis.
-- Ukuran di ESP32: `bool`/`char`/`uint8_t` 1 bita, `int16_t` 2 bita, `int`/`long`/`float` 4 bita, `long long`/`double` 8 bita. Pakai tipe berukuran pasti dan `sizeof`.
+- Ukuran di ESP32: `bool`/`char`/`uint8_t` 1 byte, `int16_t` 2 byte, `int`/`long`/`float` 4 byte, `long long`/`double` 8 byte. Pakai tipe berukuran pasti dan `sizeof`.
 - Waspadai *overflow*, pembagian bulat (`7 / 2` = 3), pemotongan saat konversi tipe, dan perbandingan pecahan dengan `==`.
 - Operator bit: `|=` menyalakan, `&= ~` memadamkan, `^=` membalik, dan `(x >> n) & 1` membaca bit ke-n.
 - Alur program disusun dengan percabangan (`if`, `switch`), perulangan (`for`, `while`, `do-while`), fungsi (parameter, `return`, prototipe), dan larik (indeks 0 sampai N − 1).
